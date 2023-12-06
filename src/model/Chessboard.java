@@ -61,8 +61,12 @@ public class Chessboard {
     public void swapChessPiece(ChessboardPoint point1, ChessboardPoint point2) {
         var p1 = getChessPieceAt(point1);
         var p2 = getChessPieceAt(point2);
-        setChessPiece(point1, p2);
-        setChessPiece(point2, p1);
+        if(calculateDistance(point1,point2)==1){
+            setChessPiece(point1, p2);
+            setChessPiece(point2, p1);
+
+
+        }
     }
 
 
