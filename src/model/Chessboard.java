@@ -1,5 +1,6 @@
 package model;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 /**
@@ -61,18 +62,92 @@ public class Chessboard {
     public void swapChessPiece(ChessboardPoint point1, ChessboardPoint point2) {
         var p1 = getChessPieceAt(point1);
         var p2 = getChessPieceAt(point2);
-        if(calculateDistance(point1,point2)==1){
-            setChessPiece(point1, p2);
-            setChessPiece(point2, p1);
+        setChessPiece(point1, p2);
+        setChessPiece(point2, p1);
+    }
+    public void scanTheChessBoard(){     //Detect chess pieces that can be eliminated
+        for(int i=0;i<Constant.CHESSBOARD_ROW_SIZE.getNum();i++){
+            for(int j=0;j<Constant.CHESSBOARD_COL_SIZE.getNum()-3+1;j++){
+                if(grid[i][j].isToRemoveRow()==true){continue;}
+                ChessPiece currentPiece=grid[i][j].getPiece();
+                ArrayList<Cell> rowPossibleRemoveList=new ArrayList<Cell>();
+                rowPossibleRemoveList.add(grid[i][j]);
+                int count=1;
+                for(int k=j+1;k<Constant.CHESSBOARD_COL_SIZE.getNum();k++){
+                    if(grid[i][k].getPiece()==currentPiece){
+                        count++;
+                        rowPossibleRemoveList.add(grid[i][k]);
+                    }else {break;}
+                }
+                if(count>=3){
+                    for(Cell a:rowPossibleRemoveList){
+                        a.setToRemoveRow(true);
+                    }
+                }
 
+            }
 
         }
+        for(int i=0;i<Constant.CHESSBOARD_COL_SIZE.getNum();i++){
+            for(int j=0;j<Constant.CHESSBOARD_ROW_SIZE.getNum()-3+1;j++){
+                if(grid[j][i].isToRemoveCol()==true){continue;}
+                ChessPiece currentPiece=grid[j][i].getPiece();
+                ArrayList<Cell> colPossibleRemoveList=new ArrayList<Cell>();
+                colPossibleRemoveList.add(grid[j][i]);
+                int count=1;
+                for(int k=j+1;k<Constant.CHESSBOARD_ROW_SIZE.getNum();k++){
+                    if(grid[k][i].getPiece()==currentPiece){
+                        count++;
+                        colPossibleRemoveList.add(grid[k][i]);
+                    }else {break;}
+                }
+                if (count>=3){
+                    for(Cell a:colPossibleRemoveList){
+                        a.setToRemoveCol(true);
+                    }
+                }
+            }
+        }
+
+
+
     }
 
-
+    public int basicCountPoint(){      //在这个方法下消去一个得到一分one point for each
+        int point=0;
+        for(int i=0;i<Constant.CHESSBOARD_ROW_SIZE.getNum();i++){
+            for(int j=0;j<Constant.CHESSBOARD_COL_SIZE.getNum();j++){
+                if(grid[i][j].isToRemoveRow()==true|grid[i][j].isToRemoveCol()==true){
+                    point++;
+                }
+            }
+        }
+        return point;
+    }
     public Cell[][] getGrid() {
         return grid;
     }
+    public void setToDefault(){   //把是否消去恢复默认状态
+        for(int i=0;i<Constant.CHESSBOARD_ROW_SIZE.getNum();i++){
+            for(int j=0;j<Constant.CHESSBOARD_COL_SIZE.getNum();j++){
+                grid[i][j].setToRemoveRow(false);
+                grid[i][j].setToRemoveCol(false);
+            }
+        }
+    }
+
+    public void basicElimilation(){             //基本消去法
+        for(int i=0;i<Constant.CHESSBOARD_ROW_SIZE.getNum();i++){
+            for(int j=0;j<Constant.CHESSBOARD_COL_SIZE.getNum();j++){
+                if(grid[i][j].isToRemoveRow()==true|grid[i][j].isToRemoveCol()==true){
+                    grid[i][j].removePiece();
+                }
+            }
+        }
+
+    }
+
+
 
 
 

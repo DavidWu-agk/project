@@ -7,8 +7,8 @@ import java.io.Serializable;
 public class Cell implements Serializable {
     // the position for chess
     private ChessPiece piece;
-
-
+    private boolean isToRemoveRow=false;
+    private boolean isToRemoveCol=false;
     public ChessPiece getPiece() {
         return piece;
     }
@@ -19,5 +19,21 @@ public class Cell implements Serializable {
 
     public void removePiece() {
         this.piece = null;
+    }
+
+    public boolean isToRemoveRow() {
+        return isToRemoveRow;
+    }
+
+    public boolean isToRemoveCol() {
+        return isToRemoveCol;
+    }
+
+    public void setToRemoveCol(boolean toRemoveCol) {
+        isToRemoveCol = toRemoveCol;
+    }
+
+    public void setToRemoveRow(boolean toRemove) {
+        isToRemoveRow = toRemove;
     }
 }
