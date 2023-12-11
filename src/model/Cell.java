@@ -9,6 +9,7 @@ public class Cell implements Serializable {//没看懂
     private ChessPiece piece;
 
 
+
     public ChessPiece getPiece() {
         return piece;
     }
