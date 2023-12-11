@@ -64,8 +64,20 @@ public class GameController implements GameListener {
 
     @Override
     public void onPlayerSwapChess() {
+        //交换的控制方法
         // TODO: Init your swap function here.
+        if(selectedPoint!=null && selectedPoint2!=null&&model.CanSwap(selectedPoint,selectedPoint2)==true){
+            model.swapChessPiece(selectedPoint,selectedPoint2);//这是调用了model层的方法，model层是project的底层，有着各种判断棋子间关系与胜负等的方法
+            ChessComponent chess1= view.removeChessComponentAtGrid(selectedPoint);
+            ChessComponent chess2= view.removeChessComponentAtGrid(selectedPoint2);
+            view.setChessComponentAtGrid(selectedPoint2,chess1);//这是对view层进行了修改，model层改变后，还需要把变化导入到view层并repaint才可视化
+            view.setChessComponentAtGrid(selectedPoint,chess2);
+            chess1.repaint();
+            chess2.repaint();
+        }
+
         System.out.println("Implement your swap here.");
+
     }
 
     @Override

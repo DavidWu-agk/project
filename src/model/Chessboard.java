@@ -134,7 +134,7 @@ public class Chessboard {
                 //rowPossibleRemoveList.add(grid[i][j]);
                 int count=1;
                 for(int k=j+1;k<Constant.CHESSBOARD_COL_SIZE.getNum();k++){
-                    if(temp[i][k].getPiece()==currentPiece){
+                    if(temp[i][k].getPiece().getName().equals(currentPiece.getName())){
                         count++;
                         //rowPossibleRemoveList.add(grid[i][k]);
                     }else {break;}
@@ -157,7 +157,7 @@ public class Chessboard {
                 //colPossibleRemoveList.add(grid[j][i]);
                 int count=1;
                 for(int k=j+1;k<Constant.CHESSBOARD_ROW_SIZE.getNum();k++){
-                    if(temp[k][i].getPiece()==currentPiece){
+                    if(temp[k][i].getPiece().getName().equals(currentPiece.getName())){
                         count++;
                         //colPossibleRemoveList.add(grid[k][i]);
                     }else {break;}
