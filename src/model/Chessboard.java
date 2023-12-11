@@ -10,11 +10,10 @@ public class Chessboard {
     private Cell[][] grid;
 
     public Chessboard() {
-        this.grid =
-                new Cell[Constant.CHESSBOARD_ROW_SIZE.getNum()][Constant.CHESSBOARD_COL_SIZE.getNum()];
+        this.grid = new Cell[Constant.CHESSBOARD_ROW_SIZE.getNum()][Constant.CHESSBOARD_COL_SIZE.getNum()];//grid是一个cell的二维数组
 
-        initGrid();
-        initPieces();
+        initGrid();//把每一个cell都设置成空的
+        initPieces();//随机分配棋子
     }
 
     private void initGrid() {
@@ -25,7 +24,7 @@ public class Chessboard {
         }
     }
 
-    private void initPieces() {
+    private void initPieces() {//初始化棋子
 
         for (int i = 0; i < Constant.CHESSBOARD_ROW_SIZE.getNum(); i++) {
             for (int j = 0; j < Constant.CHESSBOARD_COL_SIZE.getNum(); j++) {
@@ -43,11 +42,11 @@ public class Chessboard {
         return grid[point.getRow()][point.getCol()];
     }
 
-    private int calculateDistance(ChessboardPoint src, ChessboardPoint dest) {
+    private int calculateDistance(ChessboardPoint src, ChessboardPoint dest) {//两棋子之间的切比雪夫距离
         return Math.abs(src.getRow() - dest.getRow()) + Math.abs(src.getCol() - dest.getCol());
     }
 
-    public ChessPiece removeChessPiece(ChessboardPoint point) {
+    public ChessPiece removeChessPiece(ChessboardPoint point) {//消除point处的棋子
         ChessPiece chessPiece = getChessPieceAt(point);
         getGridAt(point).removePiece();
         return chessPiece;
@@ -58,13 +57,12 @@ public class Chessboard {
     }
 
 
-    public void swapChessPiece(ChessboardPoint point1, ChessboardPoint point2) {
-        var p1 = getChessPieceAt(point1);
-        var p2 = getChessPieceAt(point2);
-        setChessPiece(point1, p2);
-        setChessPiece(point2, p1);
+    public void swapChessPiece(ChessboardPoint point1, ChessboardPoint point2) {//交换棋子
+        ChessPiece midpiece1 = getChessPieceAt(point1);
+        ChessPiece midpiece2 = getChessPieceAt(point2);
+        setChessPiece(point1,midpiece2);
+        setChessPiece(point2,midpiece1);
     }
-
 
     public Cell[][] getGrid() {
         return grid;

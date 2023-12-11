@@ -17,7 +17,9 @@ import static model.Constant.CHESSBOARD_ROW_SIZE;
  * This class represents the checkerboard component object on the panel
  */
 public class ChessboardComponent extends JComponent {
+    //棋盘的component
     private final CellComponent[][] gridComponents = new CellComponent[CHESSBOARD_ROW_SIZE.getNum()][CHESSBOARD_COL_SIZE.getNum()];
+
     private final int CHESS_SIZE;
     private final Set<ChessboardPoint> riverCell = new HashSet<>();
 
@@ -83,6 +85,7 @@ public class ChessboardComponent extends JComponent {
 
     public void removeAllChessComponentsAtGrids(){
         //todo:  complete the method
+
     }
 
     public ChessComponent removeChessComponentAtGrid(ChessboardPoint point) {
@@ -108,6 +111,7 @@ public class ChessboardComponent extends JComponent {
 
     public void swapChess(){
         gameController.onPlayerSwapChess();
+        repaint();
     }
 
     public void nextStep(){

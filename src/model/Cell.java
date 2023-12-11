@@ -2,9 +2,9 @@ package model;
 
 import java.io.Serializable;
 /**
- * This class describe the slot for Chess in Chessboard
+ * This class describe the slot(wei4zhi0) for Chess in Chessboard
  * */
-public class Cell implements Serializable {
+public class Cell implements Serializable {//没看懂
     // the position for chess
     private ChessPiece piece;
 

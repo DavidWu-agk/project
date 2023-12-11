@@ -1,6 +1,7 @@
 package controller;
 
 import listener.GameListener;
+import model.ChessPiece;
 import model.Constant;
 import model.Chessboard;
 import model.ChessboardPoint;
@@ -19,6 +20,7 @@ import javax.swing.*;
  * onPlayerClickChessPiece()]
  */
 public class GameController implements GameListener {
+    //游戏控制，接入GameListener接口
 
     private Chessboard model;
     private ChessboardComponent view;
@@ -41,8 +43,8 @@ public class GameController implements GameListener {
     }
 
     public GameController(ChessboardComponent view, Chessboard model) {
-        this.view = view;
-        this.model = model;
+        this.view = view;//
+        this.model = model;//告诉程序是哪一个棋盘
 
         view.registerController(this);
         view.initiateChessComponent(model);
@@ -53,6 +55,7 @@ public class GameController implements GameListener {
         for (int i = 0; i < Constant.CHESSBOARD_ROW_SIZE.getNum(); i++) {
             for (int j = 0; j < Constant.CHESSBOARD_COL_SIZE.getNum(); j++) {
                 //todo: complete it when restart game
+
             }
         }
     }
@@ -63,8 +66,19 @@ public class GameController implements GameListener {
     }
 
     @Override
-    public void onPlayerSwapChess() {
+    public void onPlayerSwapChess() {//交换的控制方法
         // TODO: Init your swap function here.
+        if(selectedPoint!=null && selectedPoint2!=null){
+            model.swapChessPiece(selectedPoint,selectedPoint2);//这是调用了model层的方法，model层是project的底层，有着各种判断棋子间关系与胜负等的方法
+
+            ChessComponent chess1= view.removeChessComponentAtGrid(selectedPoint);
+            ChessComponent chess2= view.removeChessComponentAtGrid(selectedPoint2);
+            view.setChessComponentAtGrid(selectedPoint2,chess1);//这是对view层进行了修改，model层改变后，还需要把变化导入到view层并repaint才可视化
+            view.setChessComponentAtGrid(selectedPoint,chess2);
+            chess1.repaint();
+            chess2.repaint();
+        }
+
         System.out.println("Implement your swap here.");
     }
 
@@ -79,7 +93,7 @@ public class GameController implements GameListener {
 
     // click a cell with a chess
     @Override
-    public void onPlayerClickChessPiece(ChessboardPoint point, ChessComponent component) {
+    public void onPlayerClickChessPiece(ChessboardPoint point, ChessComponent component) {//点了哪个棋子
         if (selectedPoint2 != null) {
             var distance2point1 = Math.abs(selectedPoint.getCol() - point.getCol()) + Math.abs(selectedPoint.getRow() - point.getRow());
             var distance2point2 = Math.abs(selectedPoint2.getCol() - point.getCol()) + Math.abs(selectedPoint2.getRow() - point.getRow());
