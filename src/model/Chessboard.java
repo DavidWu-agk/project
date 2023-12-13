@@ -136,7 +136,7 @@ public class Chessboard {
                 ChessPiece currentPiece=temp[i][j].getPiece();
                 int count=1;
                 for(int k=j+1;k<Constant.CHESSBOARD_COL_SIZE.getNum();k++){
-                    if(temp[i][k].getPiece().getName().equals(currentPiece.getName())){
+                     if(temp[i][k].getPiece().getName().equals(currentPiece.getName())){
                         count++;
                     }else {break;}
                 }

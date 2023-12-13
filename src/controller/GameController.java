@@ -76,6 +76,10 @@ public class GameController implements GameListener {
             chess1.repaint();
             chess2.repaint();
             model.scanTheChessBoard();
+            score=score+model.basicCountPoint();
+            chessComponentBasicElimilation();
+            model.basicElimilation();
+            model.setToDefault();
         }
 
         System.out.println("Implement your swap here.");
@@ -86,10 +90,6 @@ public class GameController implements GameListener {
     public void onPlayerNextStep() {
         // TODO: Init your next step function here.
         System.out.println("Implement your next step here.");
-        score=score+model.basicCountPoint();
-        chessComponentBasicElimilation();
-        model.basicElimilation();
-        model.setToDefault();
         this.statusLabel.setText("Score:" + score);
 
     }

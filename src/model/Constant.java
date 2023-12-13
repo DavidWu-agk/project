@@ -21,7 +21,7 @@ public enum Constant {
         put("⚪",Color.white);
         put("▲",Color.green);
         put("🔶",Color.orange);
-        put("-",Color.black);
+        put("-",Color.gray);
     }};
 
 }
