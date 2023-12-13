@@ -15,6 +15,7 @@ public class Cell implements Serializable {
 
     public void setPiece(ChessPiece piece) {
         this.piece = piece;
+
     }
 
     public void removePiece() {

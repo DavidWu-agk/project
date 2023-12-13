@@ -1,6 +1,7 @@
 package controller;
 
 import listener.GameListener;
+import model.ChessPiece;
 import model.Constant;
 import model.Chessboard;
 import model.ChessboardPoint;
@@ -74,6 +75,7 @@ public class GameController implements GameListener {
             view.setChessComponentAtGrid(selectedPoint,chess2);
             chess1.repaint();
             chess2.repaint();
+            model.scanTheChessBoard();
         }
 
         System.out.println("Implement your swap here.");
@@ -84,7 +86,10 @@ public class GameController implements GameListener {
     public void onPlayerNextStep() {
         // TODO: Init your next step function here.
         System.out.println("Implement your next step here.");
-        score++;
+        score=score+model.basicCountPoint();
+        chessComponentBasicElimilation();
+        model.basicElimilation();
+        model.setToDefault();
         this.statusLabel.setText("Score:" + score);
 
     }
@@ -158,6 +163,19 @@ public class GameController implements GameListener {
         }
 
 
+    }
+    public void chessComponentBasicElimilation(){
+        for(int i=0;i<Constant.CHESSBOARD_ROW_SIZE.getNum();i++){
+            for(int j=0;j<Constant.CHESSBOARD_COL_SIZE.getNum();j++){
+                if(model.getGrid()[i][j].isToRemoveRow()==true|model.getGrid()[i][j].isToRemoveCol()==true){
+                    ChessComponent noChess=new ChessComponent(view.getCHESS_SIZE(),new ChessPiece("-"));
+                    ChessboardPoint p=new ChessboardPoint(i,j);
+                    view.removeChessComponentAtGrid(p);
+                    view.setChessComponentAtGrid(p,noChess);
+                    noChess.repaint();
+                }
+            }
+        }
     }
 
 }

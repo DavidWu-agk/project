@@ -26,14 +26,19 @@ public class Chessboard {
         }
     }
 
-    private void initPieces() {
-
+    public void initLoop(){
         for (int i = 0; i < Constant.CHESSBOARD_ROW_SIZE.getNum(); i++) {
             for (int j = 0; j < Constant.CHESSBOARD_COL_SIZE.getNum(); j++) {
                 grid[i][j].setPiece(new ChessPiece( Util.RandomPick(new String[]{"💎", "⚪", "▲", "🔶"})));
             }
         }
+    }
 
+    private void initPieces() {
+        initLoop();
+        while(isGoodInit()==false){
+            initLoop();
+        }
     }
 
     public ChessPiece getChessPieceAt(ChessboardPoint point) {
@@ -74,7 +79,7 @@ public class Chessboard {
                 rowPossibleRemoveList.add(grid[i][j]);
                 int count=1;
                 for(int k=j+1;k<Constant.CHESSBOARD_COL_SIZE.getNum();k++){
-                    if(grid[i][k].getPiece()==currentPiece){
+                    if(grid[i][k].getPiece().getName().equals(currentPiece.getName())){
                         count++;
                         rowPossibleRemoveList.add(grid[i][k]);
                     }else {break;}
@@ -96,7 +101,7 @@ public class Chessboard {
                 colPossibleRemoveList.add(grid[j][i]);
                 int count=1;
                 for(int k=j+1;k<Constant.CHESSBOARD_ROW_SIZE.getNum();k++){
-                    if(grid[k][i].getPiece()==currentPiece){
+                    if(grid[k][i].getPiece().getName().equals(currentPiece.getName())){
                         count++;
                         colPossibleRemoveList.add(grid[k][i]);
                     }else {break;}
@@ -115,7 +120,7 @@ public class Chessboard {
 
 
 
-    public boolean CanSwap(ChessboardPoint point1,ChessboardPoint point2){     //Detect chess pieces that can be eliminated
+    public boolean CanSwap(ChessboardPoint point1,ChessboardPoint point2){     //检测能不能换？
         Cell[][] temp = new Cell[Constant.CHESSBOARD_ROW_SIZE.getNum()][Constant.CHESSBOARD_COL_SIZE.getNum()];
         for (int i = 0; i < Constant.CHESSBOARD_ROW_SIZE.getNum(); i++) {
             for (int j = 0; j < Constant.CHESSBOARD_COL_SIZE.getNum(); j++) {
@@ -128,22 +133,17 @@ public class Chessboard {
         temp[point2.getRow()][point2.getCol()].setPiece(p1);
         for(int i=0;i<Constant.CHESSBOARD_ROW_SIZE.getNum();i++){
             for(int j=0;j<Constant.CHESSBOARD_COL_SIZE.getNum()-3+1;j++){
-                //if(grid[i][j].isToRemoveRow()==true){continue;}
                 ChessPiece currentPiece=temp[i][j].getPiece();
-                //ArrayList<Cell> rowPossibleRemoveList=new ArrayList<Cell>();
-                //rowPossibleRemoveList.add(grid[i][j]);
                 int count=1;
                 for(int k=j+1;k<Constant.CHESSBOARD_COL_SIZE.getNum();k++){
                     if(temp[i][k].getPiece().getName().equals(currentPiece.getName())){
                         count++;
-                        //rowPossibleRemoveList.add(grid[i][k]);
                     }else {break;}
                 }
                 if(count>=3){
-                    //for(Cell a:rowPossibleRemoveList){
-                        //a.setToRemoveRow(true);
+                    temp[point1.getRow()][point1.getCol()].setPiece(p1);
+                    temp[point2.getRow()][point2.getCol()].setPiece(p2);
                     return true;
-                    //}
                 }
 
             }
@@ -151,29 +151,80 @@ public class Chessboard {
         }
         for(int i=0;i<Constant.CHESSBOARD_COL_SIZE.getNum();i++){
             for(int j=0;j<Constant.CHESSBOARD_ROW_SIZE.getNum()-3+1;j++){
-                //if(temp[j][i].isToRemoveCol()==true){continue;}
                 ChessPiece currentPiece=temp[j][i].getPiece();
-                //ArrayList<Cell> colPossibleRemoveList=new ArrayList<Cell>();
-                //colPossibleRemoveList.add(grid[j][i]);
                 int count=1;
                 for(int k=j+1;k<Constant.CHESSBOARD_ROW_SIZE.getNum();k++){
                     if(temp[k][i].getPiece().getName().equals(currentPiece.getName())){
                         count++;
-                        //colPossibleRemoveList.add(grid[k][i]);
                     }else {break;}
                 }
                 if (count>=3){
-                    //for(Cell a:colPossibleRemoveList){
-                        //a.setToRemoveCol(true);
-                   // }
+                    temp[point1.getRow()][point1.getCol()].setPiece(p1);
+                    temp[point2.getRow()][point2.getCol()].setPiece(p2);
                     return true;
                 }
             }
         }
+        temp[point1.getRow()][point1.getCol()].setPiece(p1);
+        temp[point2.getRow()][point2.getCol()].setPiece(p2);
         return false;
 
 
     }
+
+    public boolean isGoodInit(){   //初始化和不合规
+        for(int i=0;i<Constant.CHESSBOARD_ROW_SIZE.getNum();i++){
+            for(int j=0;j<Constant.CHESSBOARD_COL_SIZE.getNum()-3+1;j++){
+                ChessPiece currentPiece=grid[i][j].getPiece();
+                int count=1;
+                for(int k=j+1;k<Constant.CHESSBOARD_COL_SIZE.getNum();k++){
+                    if(grid[i][k].getPiece().getName().equals(currentPiece.getName())){
+                        count++;
+                    }else {break;}
+                }
+                if(count>=3){
+                    return false;
+                }
+
+            }
+
+        }
+        for(int i=0;i<Constant.CHESSBOARD_COL_SIZE.getNum();i++){
+            for(int j=0;j<Constant.CHESSBOARD_ROW_SIZE.getNum()-3+1;j++){
+                ChessPiece currentPiece=grid[j][i].getPiece();
+                int count=1;
+                for(int k=j+1;k<Constant.CHESSBOARD_ROW_SIZE.getNum();k++){
+                    if(grid[k][i].getPiece().getName().equals(currentPiece.getName())){
+                        count++;
+                    }else {break;}
+                }
+                if (count>=3){
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     public int basicCountPoint(){      //在这个方法下消去一个得到一分one point for each
         int point=0;
