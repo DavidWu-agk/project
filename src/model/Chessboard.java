@@ -268,6 +268,18 @@ public class Chessboard {
                         if(grid[k][j].getPiece()!=null){
                             grid[i][j].setPiece(grid[k][j].getPiece());
                             grid[k][j].removePiece();
+                            /*for(int m=0;m<Constant.CHESSBOARD_ROW_SIZE.getNum();m++) {
+                                for (int l = 0; l < Constant.CHESSBOARD_COL_SIZE.getNum(); l++) {
+                                    if (grid[m][l].getPiece()==null){
+                                        System.out.printf("-\t");
+                                    }
+                                    else {
+                                        System.out.printf("%s\t",grid[m][l].getPiece().getName());
+                                    }
+                                }
+                                System.out.printf("\n");
+                            }
+                            System.out.printf("\n\n\n");*/
                             break;
                         }
                     }
