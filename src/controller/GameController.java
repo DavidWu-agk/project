@@ -92,6 +92,29 @@ public class GameController implements GameListener {
         System.out.println("Implement your next step here.");
         this.statusLabel.setText("Score:" + score);
         chessDownInGameController();
+        model.scanTheChessBoard();
+        score=score+model.basicCountPoint();
+        chessComponentBasicElimilation();
+        model.basicElimilation();
+        model.setToDefault();
+        this.statusLabel.setText("Score:" + score);
+        for(int i=Constant.CHESSBOARD_ROW_SIZE.getNum()-1;i>=0;i--) {
+            for (int j = Constant.CHESSBOARD_COL_SIZE.getNum() - 1; j >= 0; j--) {
+                ChessboardPoint p=new ChessboardPoint(i,j);
+                if (model.getGridAt(p).getPiece()==null){
+                    this.statusLabel.setText("Score:" + score);
+                    chessDownInGameController();
+                    model.scanTheChessBoard();
+                    score=score+model.basicCountPoint();
+                    chessComponentBasicElimilation();
+                    model.basicElimilation();
+                    model.setToDefault();
+                    this.statusLabel.setText("Score:" + score);
+                    i=Constant.CHESSBOARD_ROW_SIZE.getNum()-1;
+                    j=Constant.CHESSBOARD_COL_SIZE.getNum()-1;
+                }
+            }
+        }
     }
 
     // click a cell with a chess
