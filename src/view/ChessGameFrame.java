@@ -102,10 +102,7 @@ public class ChessGameFrame extends JFrame {
 
     private void addSwapConfirmButton() {
         JButton button = new JButton("Confirm Swap");
-        button.addActionListener((e) -> {
-            chessboardComponent.swapChess();
-            repaint();
-        });
+        button.addActionListener((e) -> chessboardComponent.swapChess());
         button.setLocation(HEIGTH, HEIGTH / 10 + 200);
         button.setSize(200, 60);
         button.setFont(new Font("Rockwell", Font.BOLD, 20));
