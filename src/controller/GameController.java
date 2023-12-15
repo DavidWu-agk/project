@@ -21,6 +21,8 @@ import javax.swing.*;
  */
 public class GameController implements GameListener {
 
+    private int isJustSwap=0;
+
     private Chessboard model;
     private ChessboardComponent view;
 
@@ -84,7 +86,7 @@ public class GameController implements GameListener {
         }
 
         System.out.println("Implement your swap here.");
-
+        isJustSwap=0;
     }
 
     @Override
@@ -93,12 +95,23 @@ public class GameController implements GameListener {
         System.out.println("Implement your next step here.");
         this.statusLabel.setText("Score:" + score);
         chessDownInGameController();
+        if(isJustSwap!=0){
+            model.scanTheChessBoard();
+            score=score+model.basicCountPoint();
+            chessComponentBasicElimilation();
+            model.basicElimilation();
+            model.setToDefault();
+            this.statusLabel.setText("Score:" + score);
+            chessDownInGameController();
+        }
+        isJustSwap=1;
         //下面这两句似乎没什么卵用
         //model.scanTheChessBoard();
         //model.setToDefault();
 
         //TODO:重复消去生成的三连
-        model.scanTheChessBoard();
+        //TODO：这里暂时神隐，等到后面自动模式才用得上
+        /*model.scanTheChessBoard();
         score=score+model.basicCountPoint();
         chessComponentBasicElimilation();
         model.basicElimilation();
@@ -120,7 +133,7 @@ public class GameController implements GameListener {
                     j=0;//下落重消后重新扫描棋盘
                 }
             }
-        }
+        }*/
     }
 
     // click a cell with a chess
