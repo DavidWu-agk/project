@@ -210,11 +210,12 @@ public class GameController implements GameListener {
         for(int i=0;i<Constant.CHESSBOARD_ROW_SIZE.getNum();i++){
             for(int j=0;j<Constant.CHESSBOARD_COL_SIZE.getNum();j++){
                 if(model.getGrid()[i][j].isToRemoveRow()==true|model.getGrid()[i][j].isToRemoveCol()==true){
-                    ChessComponent noChess=new ChessComponent(view.getCHESS_SIZE(),new ChessPiece("-"));
+                    //ChessComponent noChess=new ChessComponent(view.getCHESS_SIZE(),new ChessPiece("-"));
                     ChessboardPoint p=new ChessboardPoint(i,j);
                     view.removeChessComponentAtGrid(p);
-                    view.setChessComponentAtGrid(p,noChess);
-                    noChess.repaint();
+                    view.getGridComponentAt(p).repaint();
+                    //view.setChessComponentAtGrid(p,noChess);
+                    //noChess.repaint();
                 }
             }
         }
@@ -226,13 +227,16 @@ public class GameController implements GameListener {
             for (int j = Constant.CHESSBOARD_COL_SIZE.getNum()-1; j >= 0; j--) {
                 ChessboardPoint p=new ChessboardPoint(i,j);
                 ChessComponent thisChess;
-                if(model.getGridAt(p).getPiece()!=null){
+                //if(model.getGridAt(p).getPiece()!=null){
                     thisChess=new ChessComponent(view.getCHESS_SIZE(),new ChessPiece(model.getGridAt(p).getPiece().getName()));//MAYBE NULL
+                //}
+                //else {
+                    //thisChess=new ChessComponent(view.getCHESS_SIZE(),new ChessPiece("-"));
+                //}
+                if(view.getGridComponentAt(p).getComponents().length!=0) {
+                    view.removeChessComponentAtGrid(p);
                 }
-                else {
-                    thisChess=new ChessComponent(view.getCHESS_SIZE(),new ChessPiece("-"));
-                }
-                view.removeChessComponentAtGrid(p);
+                //view.removeChessComponentAtGrid(p);
                 view.setChessComponentAtGrid(p,thisChess);
                 thisChess.repaint();
                 //System.out.printf("114514");
