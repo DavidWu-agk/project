@@ -260,8 +260,52 @@ public class Chessboard {
 
     }
 
-
-
+    public void chessDown(){
+        for(int i=Constant.CHESSBOARD_ROW_SIZE.getNum()-1;i>=0;i--){
+            for(int j=Constant.CHESSBOARD_COL_SIZE.getNum()-1;j>=0;j--){
+                if(grid[i][j].getPiece()==null){
+                    for(int k=i;k>=0;k--){
+                        if(grid[k][j].getPiece()!=null){
+                            grid[i][j].setPiece(grid[k][j].getPiece());
+                            grid[k][j].removePiece();
+                            /*for(int m=0;m<Constant.CHESSBOARD_ROW_SIZE.getNum();m++) {
+                                for (int l = 0; l < Constant.CHESSBOARD_COL_SIZE.getNum(); l++) {
+                                    if (grid[m][l].getPiece()==null){
+                                        System.out.printf("-\t");
+                                    }
+                                    else {
+                                        System.out.printf("%s\t",grid[m][l].getPiece().getName());
+                                    }
+                                }
+                                System.out.printf("\n");
+                            }
+                            System.out.printf("\n\n\n");*/
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+        for(int i=Constant.CHESSBOARD_ROW_SIZE.getNum()-1;i>=0;i--) {
+            for (int j = Constant.CHESSBOARD_COL_SIZE.getNum()-1; j >= 0; j--) {
+                //grid[i][j].setPiece(new ChessPiece( Util.RandomPick(new String[]{"💎", "⚪", "▲", "🔶"})));
+                if(grid[i][j].getPiece()==null){
+                    grid[i][j].setPiece(new ChessPiece( Util.RandomPick(new String[]{"💎", "⚪", "▲", "🔶"})));
+                }
+            }
+        }
+        /*for(int i=0;i<Constant.CHESSBOARD_ROW_SIZE.getNum();i++) {
+            for (int j = 0; j < Constant.CHESSBOARD_COL_SIZE.getNum(); j++) {
+                if (grid[i][j].getPiece()==null){
+                    System.out.printf("-\t");
+                }
+                else {
+                    System.out.printf("%s\t",grid[i][j].getPiece().getName());
+                }
+            }
+            System.out.printf("\n");
+        }*/
+    }
 
 
 }

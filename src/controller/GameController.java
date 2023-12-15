@@ -75,11 +75,15 @@ public class GameController implements GameListener {
             view.setChessComponentAtGrid(selectedPoint,chess2);
             chess1.repaint();
             chess2.repaint();
+            //以下几行为消去代码
             model.scanTheChessBoard();
             score=score+model.basicCountPoint();
+            this.statusLabel.setText("Score:" + score);
             chessComponentBasicElimilation();
             model.basicElimilation();
             model.setToDefault();
+            selectedPoint=null;
+            selectedPoint2=null;//修复消了以后无法自由点击格子的bug
         }
 
         System.out.println("Implement your swap here.");
@@ -90,8 +94,34 @@ public class GameController implements GameListener {
     public void onPlayerNextStep() {
         // TODO: Init your next step function here.
         System.out.println("Implement your next step here.");
-        this.statusLabel.setText("Score:" + score);
+        chessDownInGameController();//下落
 
+
+        //TODO:重复消去生成的三连
+        model.scanTheChessBoard();
+        score=score+model.basicCountPoint();
+        chessComponentBasicElimilation();
+        model.basicElimilation();
+        model.setToDefault();//这些是第一次重复消去
+        this.statusLabel.setText("Score:" + score);//再次计分
+        selectedPoint=null;
+        selectedPoint2=null;
+        /*for(int i=0;i<Constant.CHESSBOARD_ROW_SIZE.getNum();i++){
+            for(int j=0;j<Constant.CHESSBOARD_COL_SIZE.getNum();j++){
+                ChessboardPoint p = new ChessboardPoint(i,j);
+                if(model.getGridAt(p).getPiece()==null){//若有空，则下落后继续检查重消
+                    chessDownInGameController();//下落
+                    model.scanTheChessBoard();
+                    score=score+model.basicCountPoint();
+                    chessComponentBasicElimilation();
+                    model.basicElimilation();
+                    model.setToDefault();//这些是后面的重复消去
+                    this.statusLabel.setText("Score:" + score);//再次计分
+                    i=0;
+                    j=0;//下落重消后重新扫描棋盘
+                }
+            }
+        }*///这段暂时可以不要，现在先点一次nextstep连环消去一次//
     }
 
     // click a cell with a chess
@@ -178,4 +208,23 @@ public class GameController implements GameListener {
         }
     }
 
+    public void chessDownInGameController(){
+        model.chessDown();//抽象棋盘里的下降
+        for(int i=Constant.CHESSBOARD_ROW_SIZE.getNum()-1;i>=0;i--) {
+            for (int j = Constant.CHESSBOARD_COL_SIZE.getNum()-1; j >= 0; j--) {
+                ChessboardPoint p=new ChessboardPoint(i,j);
+                ChessComponent thisChess;
+                if(model.getGridAt(p).getPiece()!=null){
+                    thisChess=new ChessComponent(view.getCHESS_SIZE(),new ChessPiece(model.getGridAt(p).getPiece().getName()));//MAYBE NULL
+                }
+                else {
+                    thisChess=new ChessComponent(view.getCHESS_SIZE(),new ChessPiece("-"));
+                }
+                view.removeChessComponentAtGrid(p);
+                view.setChessComponentAtGrid(p,thisChess);
+                thisChess.repaint();
+                //System.out.printf("114514");
+            }
+        }
+    }
 }
