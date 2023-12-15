@@ -135,4 +135,7 @@ public class ChessboardComponent extends JComponent {
             }
         }
     }
+    public void cantSwap(){
+        JOptionPane.showMessageDialog(this, "Can't swap");
+    }
 }

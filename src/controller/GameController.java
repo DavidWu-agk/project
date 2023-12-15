@@ -84,6 +84,18 @@ public class GameController implements GameListener {
             model.setToDefault();
             selectedPoint=null;
             selectedPoint2=null;//修复消了以后无法自由点击格子的bug
+        }else {
+            ChessComponent chess1= view.removeChessComponentAtGrid(selectedPoint);
+            ChessComponent chess2= view.removeChessComponentAtGrid(selectedPoint2);
+            view.setChessComponentAtGrid(selectedPoint2,chess1);//这是对view层进行了修改，model层改变后，还需要把变化导入到view层并repaint才可视化
+            view.setChessComponentAtGrid(selectedPoint,chess2);
+            chess1.repaint();
+            chess2.repaint();
+            view.cantSwap();
+            view.setChessComponentAtGrid(selectedPoint2,chess2);//这是对view层进行了修改，model层改变后，还需要把变化导入到view层并repaint才可视化
+            view.setChessComponentAtGrid(selectedPoint,chess1);
+            chess1.repaint();
+            chess2.repaint();
         }
 
         System.out.println("Implement your swap here.");
@@ -212,23 +224,36 @@ public class GameController implements GameListener {
 
     public void chessDownInGameController(){
         model.chessDown();//抽象棋盘里的下降
-        for(int i=Constant.CHESSBOARD_ROW_SIZE.getNum()-1;i>=0;i--) {
-            for (int j = Constant.CHESSBOARD_COL_SIZE.getNum()-1; j >= 0; j--) {
-                ChessboardPoint p=new ChessboardPoint(i,j);
-                ChessComponent thisChess;
-                //if(model.getGridAt(p).getPiece()!=null){
-                    thisChess=new ChessComponent(view.getCHESS_SIZE(),new ChessPiece(model.getGridAt(p).getPiece().getName()));//MAYBE NULL
-                //}
-                //else {
-                    //thisChess=new ChessComponent(view.getCHESS_SIZE(),new ChessPiece("-"));
-                //}
-                if(view.getGridComponentAt(p).getComponents().length!=0){
-                    view.removeChessComponentAtGrid(p);
+        sync();
+        sync();
+    }
+    public void sync(){//需要时同步model和view
+        for(int i=0;i<Constant.CHESSBOARD_ROW_SIZE.getNum();i++){
+            for(int j=0;j<Constant.CHESSBOARD_COL_SIZE.getNum();j++){
+                ChessboardPoint p =new ChessboardPoint(i,j);
+                if(model.getGrid()[i][j].getPiece()!=null){
+                    ChessComponent thisChess=new ChessComponent(view.getCHESS_SIZE(),new ChessPiece(model.getGridAt(p).getPiece().getName()));
+                    if(view.getGridComponentAt(p).getComponents().length!=0){
+                        view.removeChessComponentAtGrid(p);
+                    }
+                    view.setChessComponentAtGrid(p,thisChess);
+                    thisChess.repaint();
+                }else {
+                    if(view.getGridComponentAt(p).getComponents().length!=0){
+                        view.removeChessComponentAtGrid(p);
+                        view.getGridComponentAt(p).repaint();
+                    }
                 }
-                view.setChessComponentAtGrid(p,thisChess);
-                thisChess.repaint();
-                //System.out.printf("114514");
+
             }
         }
     }
+
+
+
+
+
+
+
+
 }

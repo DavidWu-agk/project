@@ -257,7 +257,7 @@ public class Chessboard {
                 }
             }
         }
-
+        setToDefault();
     }
 
     public void chessDown(){
