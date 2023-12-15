@@ -75,6 +75,7 @@ public class GameController implements GameListener {
             view.setChessComponentAtGrid(selectedPoint,chess2);
             chess1.repaint();
             chess2.repaint();
+            //以下几行为消去代码
             model.scanTheChessBoard();
             score=score+model.basicCountPoint();
             chessComponentBasicElimilation();
@@ -90,14 +91,36 @@ public class GameController implements GameListener {
     public void onPlayerNextStep() {
         // TODO: Init your next step function here.
         System.out.println("Implement your next step here.");
-        //score=score+model.basicCountPoint();
         this.statusLabel.setText("Score:" + score);
         chessDownInGameController();
-        model.scanTheChessBoard();
-        //model.basicElimilation();
-        model.setToDefault();
-        //this.statusLabel.setText("Score:" + score);
+        //下面这两句似乎没什么卵用
+        //model.scanTheChessBoard();
+        //model.setToDefault();
 
+        //TODO:重复消去生成的三连
+        model.scanTheChessBoard();
+        score=score+model.basicCountPoint();
+        chessComponentBasicElimilation();
+        model.basicElimilation();
+        model.setToDefault();//这些是第一次重复消去
+        this.statusLabel.setText("Score:" + score);//再次计分
+
+        for(int i=0;i<Constant.CHESSBOARD_ROW_SIZE.getNum();i++){
+            for(int j=0;j<Constant.CHESSBOARD_COL_SIZE.getNum();j++){
+                ChessboardPoint p = new ChessboardPoint(i,j);
+                if(model.getGridAt(p).getPiece()==null){//若有空，则下落后继续检查重消
+                    chessDownInGameController();//下落
+                    model.scanTheChessBoard();
+                    score=score+model.basicCountPoint();
+                    chessComponentBasicElimilation();
+                    model.basicElimilation();
+                    model.setToDefault();//这些是后面的重复消去
+                    this.statusLabel.setText("Score:" + score);//再次计分
+                    i=0;
+                    j=0;//下落重消后重新扫描棋盘
+                }
+            }
+        }
     }
 
     // click a cell with a chess
