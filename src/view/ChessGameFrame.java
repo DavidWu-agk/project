@@ -116,6 +116,7 @@ public class ChessGameFrame extends JFrame {
 
         JButton button = new JButton("Refresh:"+theChance);
         button.setText("Refresh:"+theChance);
+        button.setFont(new Font("Rockwell", Font.BOLD, 20));
         button.addActionListener(e -> {
             //JOptionPane.showMessageDialog(this, "Show hello world");
             if(theChance>0){
