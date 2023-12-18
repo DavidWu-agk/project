@@ -307,5 +307,8 @@ public class Chessboard {
         }*/
     }
 
+    public void toRefresh(){
+        initLoop();
+    }
 
 }

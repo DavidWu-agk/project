@@ -1,6 +1,7 @@
 package view;
 
 import controller.GameController;
+import model.Chessboard;
 
 import javax.swing.*;
 import java.awt.*;
@@ -10,6 +11,16 @@ import java.awt.*;
  */
 public class ChessGameFrame extends JFrame {
     //    public final Dimension FRAME_SIZE ;
+    private int theChance=3;
+
+    public int getTheChance() {
+        return theChance;
+    }
+
+    public void setTheChance(int theChance) {
+        this.theChance = theChance;
+    }
+
     private final int WIDTH;
     private final int HEIGTH;
 
@@ -35,10 +46,11 @@ public class ChessGameFrame extends JFrame {
 
         addChessboard();
         addLabel();
-        //addHelloButton();
+        addRefreshButton();
         addSwapConfirmButton();
         addNextStepButton();
         addLoadButton();
+        addRestartButton();
     }
 
     public ChessboardComponent getChessboardComponent() {
@@ -89,10 +101,27 @@ public class ChessGameFrame extends JFrame {
      * 在游戏面板中增加一个按钮，如果按下的话就会显示Hello, world!
      */
 
-    private void addHelloButton() {
-        JButton button = new JButton("Hello");
+    private void addRefreshButton() {
+
+        JButton button = new JButton("Refresh:"+theChance);
+        button.setText("Refresh:"+theChance);
         button.addActionListener(e -> {
-            JOptionPane.showMessageDialog(this, "Show hello world");
+            //JOptionPane.showMessageDialog(this, "Show hello world");
+            if(theChance>0){
+                chessboardComponent.refresh();
+                theChance--;
+                button.setText("Refresh:"+theChance);
+            }
+            else {
+                JDialog dialog = new JDialog();
+                dialog.setSize(300, 200);
+                dialog.setLocationRelativeTo(null); // 居中显示
+                JLabel label = new JLabel("the number of chance is 0.");
+                Font font = new Font("Serif",Font.BOLD,24);
+                label.setFont(font);
+                dialog.add(label,BorderLayout.CENTER);
+                dialog.setVisible(true);
+            }
         });
         button.setLocation(HEIGTH, HEIGTH / 10 + 120);
         button.setSize(200, 60);
@@ -133,5 +162,18 @@ public class ChessGameFrame extends JFrame {
         });
     }
 
+    private void addRestartButton() {
+        JButton button = new JButton("restart");
+        button.setLocation(HEIGTH, HEIGTH / 10 + 440);
+        button.setSize(200, 60);
+        button.setFont(new Font("Rockwell", Font.BOLD, 20));
+        add(button);
+
+        button.addActionListener(e -> {
+            chessboardComponent.restart();
+            theChance=3;
+            addRefreshButton();//TODO:有些bug
+        });
+    }
 
 }

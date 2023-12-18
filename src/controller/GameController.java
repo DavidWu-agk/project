@@ -243,4 +243,27 @@ public class GameController implements GameListener {
             }
         }
     }
+
+    public void onPlayerRefresh(){
+        model.toRefresh();
+        while (!(model.isGoodInit())){
+            model.toRefresh();
+        }
+        for(int i=Constant.CHESSBOARD_ROW_SIZE.getNum()-1;i>=0;i--) {
+            for (int j = Constant.CHESSBOARD_COL_SIZE.getNum() - 1; j >= 0; j--) {
+                ChessboardPoint p = new ChessboardPoint(i, j);
+                view.removeChessComponentAtGrid(p);
+                ChessComponent thisChess;
+                thisChess = new ChessComponent(view.getCHESS_SIZE(), new ChessPiece(model.getGridAt(p).getPiece().getName()));
+                view.setChessComponentAtGrid(p, thisChess);
+                thisChess.repaint();
+            }
+        }
+    }
+
+    public void onPlayerRestart(){
+        score=0;
+        this.statusLabel.setText("Score:" + score);
+        onPlayerRefresh();
+    }
 }
