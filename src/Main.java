@@ -6,6 +6,7 @@ import view.OpeningPage;
 import javax.swing.*;
 
 public class Main {
+
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
             OpeningPage op=new OpeningPage(1000,563);
