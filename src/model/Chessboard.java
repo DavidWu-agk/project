@@ -259,6 +259,9 @@ public class Chessboard {
         }
         setToDefault();
     }
+    public void toRefresh(){
+        initLoop();
+    }
 
     public void chessDown(){
         for(int i=Constant.CHESSBOARD_ROW_SIZE.getNum()-1;i>=0;i--){
@@ -286,7 +289,7 @@ public class Chessboard {
                 }
             }
         }
-        for(int i=Constant.CHESSBOARD_ROW_SIZE.getNum()-1;i>=0;i--) {
+        /*for(int i=Constant.CHESSBOARD_ROW_SIZE.getNum()-1;i>=0;i--) {
             for (int j = Constant.CHESSBOARD_COL_SIZE.getNum()-1; j >= 0; j--) {
                 //grid[i][j].setPiece(new ChessPiece( Util.RandomPick(new String[]{"💎", "⚪", "▲", "🔶"})));
                 if(grid[i][j].getPiece()==null){
@@ -305,6 +308,16 @@ public class Chessboard {
             }
             System.out.printf("\n");
         }*/
+    }
+    public void generate(){
+        for(int i=Constant.CHESSBOARD_ROW_SIZE.getNum()-1;i>=0;i--) {
+            for (int j = Constant.CHESSBOARD_COL_SIZE.getNum()-1; j >= 0; j--) {
+                //grid[i][j].setPiece(new ChessPiece( Util.RandomPick(new String[]{"💎", "⚪", "▲", "🔶"})));
+                if(grid[i][j].getPiece()==null){
+                    grid[i][j].setPiece(new ChessPiece( Util.RandomPick(new String[]{"💎", "⚪", "▲", "🔶"})));
+                }
+            }
+        }
     }
 
 

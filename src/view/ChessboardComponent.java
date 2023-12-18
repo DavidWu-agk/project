@@ -114,6 +114,10 @@ public class ChessboardComponent extends JComponent {
     public void nextStep(){
         gameController.onPlayerNextStep();
     }
+    public void refresh(){ gameController.onPlayerRefresh();}
+    public void restart(){
+        gameController.onPlayerRestart();
+    }
 
 
     @Override

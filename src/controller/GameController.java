@@ -23,7 +23,7 @@ public class GameController implements GameListener {
 
     private Chessboard model;
     private ChessboardComponent view;
-
+    private int nextstepCount=0;
 
     // Record whether there is a selected piece before
     private ChessboardPoint selectedPoint;
@@ -68,6 +68,7 @@ public class GameController implements GameListener {
         //交换的控制方法
         // TODO: Init your swap function here.
         if(selectedPoint!=null && selectedPoint2!=null&&model.CanSwap(selectedPoint,selectedPoint2)==true){
+            nextstepCount=0;
             model.swapChessPiece(selectedPoint,selectedPoint2);//这是调用了model层的方法，model层是project的底层，有着各种判断棋子间关系与胜负等的方法
             ChessComponent chess1= view.removeChessComponentAtGrid(selectedPoint);
             ChessComponent chess2= view.removeChessComponentAtGrid(selectedPoint2);
@@ -106,10 +107,15 @@ public class GameController implements GameListener {
     public void onPlayerNextStep() {
         // TODO: Init your next step function here.
         System.out.println("Implement your next step here.");
-        chessDownInGameController();//下落
-
-
-        //TODO:重复消去生成的三连
+        if(nextstepCount%3==0){
+            model.chessDown();
+            sync();
+            nextstepCount++;
+        } else if (nextstepCount%3==1) {
+            model.generate();
+            sync();
+            nextstepCount++;
+        }else{
         model.scanTheChessBoard();
         score=score+model.basicCountPoint();
         chessComponentBasicElimilation();
@@ -118,7 +124,22 @@ public class GameController implements GameListener {
         this.statusLabel.setText("Score:" + score);//再次计分
         selectedPoint=null;
         selectedPoint2=null;
-        /*for(int i=0;i<Constant.CHESSBOARD_ROW_SIZE.getNum();i++){
+        nextstepCount++;
+        }
+
+    }
+
+
+        //TODO:重复消去生成的三连
+        /*model.scanTheChessBoard();
+        score=score+model.basicCountPoint();
+        chessComponentBasicElimilation();
+        model.basicElimilation();
+        model.setToDefault();//这些是第一次重复消去
+        this.statusLabel.setText("Score:" + score);//再次计分
+        selectedPoint=null;
+        selectedPoint2=null;
+        for(int i=0;i<Constant.CHESSBOARD_ROW_SIZE.getNum();i++){
             for(int j=0;j<Constant.CHESSBOARD_COL_SIZE.getNum();j++){
                 ChessboardPoint p = new ChessboardPoint(i,j);
                 if(model.getGridAt(p).getPiece()==null){//若有空，则下落后继续检查重消
@@ -134,7 +155,7 @@ public class GameController implements GameListener {
                 }
             }
         }*///这段暂时可以不要，现在先点一次nextstep连环消去一次//
-    }
+
 
     // click a cell with a chess
     @Override
@@ -221,6 +242,30 @@ public class GameController implements GameListener {
             }
         }
     }
+
+    public void onPlayerRefresh(){
+        model.toRefresh();
+        while (!(model.isGoodInit())){
+            model.toRefresh();
+        }
+        for(int i=Constant.CHESSBOARD_ROW_SIZE.getNum()-1;i>=0;i--) {
+            for (int j = Constant.CHESSBOARD_COL_SIZE.getNum() - 1; j >= 0; j--) {
+                ChessboardPoint p = new ChessboardPoint(i, j);
+                view.removeChessComponentAtGrid(p);
+                ChessComponent thisChess;
+                thisChess = new ChessComponent(view.getCHESS_SIZE(), new ChessPiece(model.getGridAt(p).getPiece().getName()));
+                view.setChessComponentAtGrid(p, thisChess);
+                thisChess.repaint();
+            }
+        }
+    }
+
+    public void onPlayerRestart(){
+        score=0;
+        this.statusLabel.setText("Score:" + score);
+        onPlayerRefresh();
+    }
+
 
     public void chessDownInGameController(){
         model.chessDown();//抽象棋盘里的下降
