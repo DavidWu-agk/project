@@ -20,7 +20,14 @@ public class ChessGameFrame extends JFrame {
     private ChessboardComponent chessboardComponent;
 
     private JLabel statusLabel;
+
+    private JLabel theStepNumber;
+
+    private int step;
+
     private int theChance=3;
+
+
 
     public ChessGameFrame(int width, int height) {
         setTitle("2023 CS109 Project Demo"); //设置标题
@@ -36,6 +43,7 @@ public class ChessGameFrame extends JFrame {
 
         addChessboard();
         addLabel();
+        //addTheStepLabel();
         //addHelloButton();
         addRefreshButton();
         addRestartButton();
@@ -78,15 +86,33 @@ public class ChessGameFrame extends JFrame {
         statusLabel.setSize(200, 60);
         statusLabel.setFont(new Font("Rockwell", Font.BOLD, 20));
         add(statusLabel);
+        this.theStepNumber = new JLabel("Sample label");
+        theStepNumber.setLocation(HEIGTH, HEIGTH / 10+50);
+        theStepNumber.setSize(200, 60);
+        theStepNumber.setFont(new Font("Rockwell", Font.BOLD, 20));
+        add(theStepNumber);
     }
 
     public JLabel getStatusLabel() {
         return statusLabel;
     }
 
+
+
     public void setStatusLabel(JLabel statusLabel) {
         this.statusLabel = statusLabel;
     }
+
+    //TODO:写一个label，用以表示剩下的步数
+    /*public void addTheStepLabel(){
+        setStep(10);
+        this.theStepNumber = new JLabel("the step you have:"+ getStep());
+        theStepNumber.setLocation(HEIGTH, HEIGTH / 10+30);
+        theStepNumber.setSize(200, 60);
+        theStepNumber.setFont(new Font("Rockwell", Font.BOLD, 20));
+        add(theStepNumber);
+    }*/
+
 
     /**
      * 在游戏面板中增加一个按钮，如果按下的话就会显示Hello, world!
@@ -154,7 +180,9 @@ public class ChessGameFrame extends JFrame {
     }
     private void addSwapConfirmButton() {
         JButton button = new JButton("Confirm Swap");
-        button.addActionListener((e) -> chessboardComponent.swapChess());
+        button.addActionListener((e) -> {
+            chessboardComponent.swapChess();
+        });
         button.setLocation(HEIGTH, HEIGTH / 10 + 200);
         button.setSize(200, 60);
         button.setFont(new Font("Rockwell", Font.BOLD, 20));
@@ -186,5 +214,19 @@ public class ChessGameFrame extends JFrame {
     }
 
 
+    public int getStep() {
+        return step;
+    }
 
+    public void setStep(int step) {
+        this.step = step;
+    }
+
+    public JLabel getTheStepNumber() {
+        return theStepNumber;
+    }
+
+    public void setTheStepNumber(JLabel theStepNumber) {
+        this.theStepNumber = theStepNumber;
+    }
 }

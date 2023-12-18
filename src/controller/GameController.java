@@ -11,6 +11,9 @@ import view.ChessGameFrame;
 import view.ChessboardComponent;
 
 import javax.swing.*;
+import java.awt.*;
+
+import static java.awt.AWTEventMulticaster.add;
 
 /**
  * Controller is the connection between model and view,
@@ -20,6 +23,7 @@ import javax.swing.*;
  * onPlayerClickChessPiece()]
  */
 public class GameController implements GameListener {
+    private int step=10;
 
     private Chessboard model;
     private ChessboardComponent view;
@@ -33,8 +37,18 @@ public class GameController implements GameListener {
 
     private JLabel statusLabel;
 
+    private JLabel theStepNumber;
+
     public JLabel getStatusLabel() {
         return statusLabel;
+    }
+
+    public JLabel getTheStepNumber() {
+        return theStepNumber;
+    }
+
+    public void setTheStepNumber(JLabel theStepNumber) {
+        this.theStepNumber = theStepNumber;
     }
 
     public void setStatusLabel(JLabel statusLabel) {
@@ -67,7 +81,10 @@ public class GameController implements GameListener {
     public void onPlayerSwapChess() {
         //交换的控制方法
         // TODO: Init your swap function here.
-        if(selectedPoint!=null && selectedPoint2!=null&&model.CanSwap(selectedPoint,selectedPoint2)==true){
+        if(step<=0){
+
+        }
+        else if(selectedPoint!=null && selectedPoint2!=null&&model.CanSwap(selectedPoint,selectedPoint2)==true){
             nextstepCount=0;
             model.swapChessPiece(selectedPoint,selectedPoint2);//这是调用了model层的方法，model层是project的底层，有着各种判断棋子间关系与胜负等的方法
             ChessComponent chess1= view.removeChessComponentAtGrid(selectedPoint);
@@ -79,12 +96,19 @@ public class GameController implements GameListener {
             //以下几行为消去代码
             model.scanTheChessBoard();
             score=score+model.basicCountPoint();
-            this.statusLabel.setText("Score:" + score);
+            step--;
+            this.statusLabel.setText("Score:" + score/*+"\nthe step you have:"+step*/);
+            this.theStepNumber.setText("the step you have:"+step);
             chessComponentBasicElimilation();
             model.basicElimilation();
             model.setToDefault();
             selectedPoint=null;
             selectedPoint2=null;//修复消了以后无法自由点击格子的bug
+            //step--;
+            this.theStepNumber.setText("the step you have:"+ step);
+            this.theStepNumber.repaint();
+            this.theStepNumber.setVisible(true);
+            view.setDeltaStep(-1);
         }else {
             ChessComponent chess1= view.removeChessComponentAtGrid(selectedPoint);
             ChessComponent chess2= view.removeChessComponentAtGrid(selectedPoint2);
@@ -97,6 +121,7 @@ public class GameController implements GameListener {
             view.setChessComponentAtGrid(selectedPoint,chess1);
             chess1.repaint();
             chess2.repaint();
+            view.setDeltaStep(0);
         }
 
         System.out.println("Implement your swap here.");
@@ -293,8 +318,6 @@ public class GameController implements GameListener {
             }
         }
     }
-
-
 
 
 
