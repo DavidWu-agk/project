@@ -31,7 +31,7 @@ public class OpeningPage extends JFrame {
                super.paintComponent(g);
                try {
                    // 读取背景图片并绘制在面板上
-                   Image backgroundImage = ImageIO.read(new File("/Users/davidwu/IdeaProjects/project/src/view/output.jpg")); // 用你的图片路径替换此处路径
+                   Image backgroundImage = ImageIO.read(new File("src/view/output.jpg")); // 用你的图片路径替换此处路径
                    g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
                } catch (IOException e) {
                    e.printStackTrace();
