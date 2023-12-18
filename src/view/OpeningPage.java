@@ -31,7 +31,7 @@ public class OpeningPage extends JFrame {
                super.paintComponent(g);
                try {
                    // 读取背景图片并绘制在面板上
-                   Image backgroundImage = ImageIO.read(new File("src/view/output.jpg")); // 用你的图片路径替换此处路径
+                   Image backgroundImage = ImageIO.read(new File("src/view/output1.png")); // 用你的图片路径替换此处路径
                    g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
                } catch (IOException e) {
                    e.printStackTrace();
@@ -48,7 +48,7 @@ public class OpeningPage extends JFrame {
        buttonPanel.setOpaque(false); // 使按钮面板透明，以便显示背景图片
 
        // 设置按钮面板的位置和大小
-       buttonPanel.setBounds((WIDTH - 200) / 2, (HEIGHT - 80 * 3 - 20 * 2) / 2+300, 200, 80 * 3 + 20 * 2);
+       buttonPanel.setBounds((WIDTH - 200) / 2, (HEIGHT - 80 * 3 - 20 * 2) / 2+200, 200, 80 * 3 + 20 * 2);
        layeredPane.add(buttonPanel, JLayeredPane.POPUP_LAYER); // 将按钮面板添加到图层面板中
 
        validate(); // 重新验证布局
