@@ -230,8 +230,12 @@ public class Chessboard {
         int point=0;
         for(int i=0;i<Constant.CHESSBOARD_ROW_SIZE.getNum();i++){
             for(int j=0;j<Constant.CHESSBOARD_COL_SIZE.getNum();j++){
-                if(grid[i][j].isToRemoveRow()==true|grid[i][j].isToRemoveCol()==true){
+                if(grid[i][j].isToRemoveRow()==true&grid[i][j].isToRemoveCol()==false){
                     point++;
+                } else if (grid[i][j].isToRemoveRow()==false&grid[i][j].isToRemoveCol()==true) {
+                    point++;
+                } else if (grid[i][j].isToRemoveRow()==true&grid[i][j].isToRemoveCol()==true) {
+                    point=point+2;
                 }
             }
         }
