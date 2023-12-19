@@ -8,6 +8,7 @@ import view.OpeningPage;
 import javax.swing.*;
 
 public class Main {
+
     private static OpeningPage op;
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
