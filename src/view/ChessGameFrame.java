@@ -4,6 +4,7 @@ import controller.GameController;
 
 import javax.swing.*;
 import java.awt.*;
+import major.Main;
 
 /**
  * 这个类表示游戏过程中的整个游戏界面，是一切的载体
@@ -39,7 +40,7 @@ public class ChessGameFrame extends JFrame {
         setLocationRelativeTo(null); // Center the window.
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE); //设置程序关闭按键，如果点击右上方的叉就游戏全部关闭了
         setLayout(null);
-        ImageIcon backgroundImage = new ImageIcon("src/view/output1.png"); // 替换为你的图片路径
+        ImageIcon backgroundImage = new ImageIcon(Main.getOp().getPath()); // 替换为你的图片路径
         JLabel backgroundLabel = new JLabel(backgroundImage);
         backgroundLabel.setBounds(0, 0, width,height);
         addChessboard();

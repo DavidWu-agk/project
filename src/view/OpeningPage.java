@@ -17,7 +17,11 @@ public class OpeningPage extends JFrame {
     public String [] filePath=new String[]{"src/view/output1.png","src/view/output2.png","src/view/output3.png"};
     public String path=null;
 
-   public OpeningPage(int width, int height) {
+    public String getPath() {
+        return path;
+    }
+
+    public OpeningPage(int width, int height) {
        this.WIDTH = width;
        this.HEIGHT = height;
        setSize(WIDTH, HEIGHT);
