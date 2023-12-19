@@ -62,6 +62,8 @@ public class GameController implements GameListener {
         view.registerController(this);
         view.initiateChessComponent(model);
         view.repaint();
+//        this.statusLabel.setText("Score:" + score);
+//        this.theStepNumber.setText("the step you have:"+step);
     }
 
     public void initialize() {
@@ -105,10 +107,10 @@ public class GameController implements GameListener {
             selectedPoint=null;
             selectedPoint2=null;//修复消了以后无法自由点击格子的bug
             //step--;
-            this.theStepNumber.setText("the step you have:"+ step);
-            this.theStepNumber.repaint();
-            this.theStepNumber.setVisible(true);
-            view.setDeltaStep(-1);
+            //this.theStepNumber.setText("the step you have:"+ step);
+            //this.theStepNumber.repaint();
+            //this.theStepNumber.setVisible(true);
+            //view.setDeltaStep(-1);
         }else {
             ChessComponent chess1= view.removeChessComponentAtGrid(selectedPoint);
             ChessComponent chess2= view.removeChessComponentAtGrid(selectedPoint2);
@@ -121,7 +123,7 @@ public class GameController implements GameListener {
             view.setChessComponentAtGrid(selectedPoint,chess1);
             chess1.repaint();
             chess2.repaint();
-            view.setDeltaStep(0);
+            //view.setDeltaStep(0);
         }
 
         System.out.println("Implement your swap here.");
@@ -319,9 +321,25 @@ public class GameController implements GameListener {
         }
     }
 
+    public int getStep() {
+        return step;
+    }
 
+    public void setStep(int step) {
+        this.step = step;
+    }
 
+    public int getScore() {
+        return score;
+    }
 
+    public void setScore(int score) {
+        this.score = score;
+    }
 
+    public void setLabel(){
+        this.statusLabel.setText("Score:" + score);
+        this.theStepNumber.setText("the step you have:"+step);
+    }
 
 }

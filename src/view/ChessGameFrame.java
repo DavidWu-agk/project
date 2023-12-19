@@ -81,12 +81,12 @@ public class ChessGameFrame extends JFrame {
      * 在游戏面板中添加标签
      */
     private void addLabel() {
-        this.statusLabel = new JLabel("Sample label");
+        this.statusLabel = new JLabel("Score:");
         statusLabel.setLocation(HEIGTH, HEIGTH / 10);
         statusLabel.setSize(200, 60);
         statusLabel.setFont(new Font("Rockwell", Font.BOLD, 20));
         add(statusLabel);
-        this.theStepNumber = new JLabel("Sample label");
+        this.theStepNumber = new JLabel("the step you have:");
         theStepNumber.setLocation(HEIGTH, HEIGTH / 10+50);
         theStepNumber.setSize(200, 60);
         theStepNumber.setFont(new Font("Rockwell", Font.BOLD, 20));
