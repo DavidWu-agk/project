@@ -118,7 +118,7 @@ public class OpeningPage extends JFrame {
         JButton openOptionsButton = new JButton("Theme");
         p.add(openOptionsButton);
         openOptionsButton.addActionListener(e -> {
-            String[] options = {"Option 1", "Option 2", "Option 3"};
+            String[] options = {"ATRI", "TouHou", "K-ON"};
             int choice = JOptionPane.showOptionDialog(null,
                     "Choose an option:",
                     "Options",
