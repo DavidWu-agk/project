@@ -10,7 +10,26 @@ import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.util.Random;
+/*import javazoom.jl.player.Player;
+import java.io.FileInputStream;
 
+public class MP3Player {
+    public static void main(String[] args) {
+        try {
+            FileInputStream fileInputStream = new FileInputStream("path_to_your_audio_file.mp3");
+            Player player = new Player(fileInputStream);
+
+            // 开始播放音频文件
+            player.play();
+
+            // 播放完成后关闭流
+            fileInputStream.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+}*/
 public class OpeningPage extends JFrame {
    private int WIDTH;
    private int HEIGHT;
