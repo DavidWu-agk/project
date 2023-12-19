@@ -84,7 +84,8 @@ public class GameController implements GameListener {
         //交换的控制方法
         // TODO: Init your swap function here.
         if(step<=0){
-
+            view.stepOut();
+            view.winOrLose();
         }
         else if(selectedPoint!=null && selectedPoint2!=null&&model.CanSwap(selectedPoint,selectedPoint2)==true){
             nextstepCount=0;

@@ -142,8 +142,19 @@ public class ChessboardComponent extends JComponent {
         }
     }
     public void cantSwap(){
-        JOptionPane.showMessageDialog(this, "Can't swap");
+        JOptionPane.showMessageDialog(this, "Can't swap.");
     }
+    public void stepOut(){JOptionPane.showMessageDialog(this,"Game finish.");}
+
+    public void winOrLose(){
+        if(gameController.getScore()>=50){
+            JOptionPane.showMessageDialog(this,"You win!");
+        }
+        else {
+            JOptionPane.showMessageDialog(this,"You lose.");
+        }
+    }
+
 
     public int getDeltaStep() {
         return deltaStep;
