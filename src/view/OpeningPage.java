@@ -37,6 +37,16 @@ public class OpeningPage extends JFrame {
    private int HEIGHT;
     public String [] filePath=new String[]{"src/view/output1.png","src/view/output2.png","src/view/output3.png"};
     public String path=null;
+    private ChessGameFrame mainFrame;
+    private GameController gameController;
+
+    public ChessGameFrame getMainFrame() {
+        return mainFrame;
+    }
+
+    public GameController getGameController() {
+        return gameController;
+    }
 
     public String getPath() {
         return path;
@@ -85,37 +95,15 @@ public class OpeningPage extends JFrame {
        validate(); // 重新验证布局
 
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-            private void addStartButton(JPanel p) {
+        private void addStartButton(JPanel p) {
         JButton button = new JButton("Start");
         button.addActionListener(e -> {
             //MusicPlayer.playMusic("src\\view\\music.mp3");
             MusicPlayer myClassInstance = new MusicPlayer();
             Thread thread1 = new Thread(myClassInstance);
             thread1.start();
-            ChessGameFrame mainFrame = new ChessGameFrame(1100, 810);
-            GameController gameController = new GameController(mainFrame.getChessboardComponent(), new Chessboard());
+            mainFrame = new ChessGameFrame(1100, 810);
+            gameController = new GameController(mainFrame.getChessboardComponent(), new Chessboard());
             mainFrame.setGameController(gameController);
             gameController.setStatusLabel(mainFrame.getStatusLabel());
             gameController.setTheStepNumber(mainFrame.getTheStepNumber());

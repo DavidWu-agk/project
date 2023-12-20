@@ -1,15 +1,18 @@
 package view;
 
-import controller.GameController;
+import controller.*;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.Serializable;
+
 import major.Main;
+import model.Chessboard;
 
 /**
  * 这个类表示游戏过程中的整个游戏界面，是一切的载体
  */
-public class ChessGameFrame extends JFrame {
+public class ChessGameFrame extends JFrame implements Serializable {
     //    public final Dimension FRAME_SIZE ;
     private final int WIDTH;
     private final int HEIGTH;
@@ -52,6 +55,7 @@ public class ChessGameFrame extends JFrame {
         addSwapConfirmButton();
         addNextStepButton();
         addLoadButton();
+        addSaveButton();
         add(backgroundLabel);
     }
 
@@ -170,7 +174,7 @@ public class ChessGameFrame extends JFrame {
     }
     private void addRestartButton() {
         JButton button = new JButton("restart");
-        button.setLocation(HEIGTH, HEIGTH / 10 + 440);
+        button.setLocation(HEIGTH, HEIGTH / 10 + 520);
         button.setSize(200, 60);
         button.setFont(new Font("Rockwell", Font.BOLD, 20));
         add(button);
@@ -209,10 +213,28 @@ public class ChessGameFrame extends JFrame {
         add(button);
 
         button.addActionListener(e -> {
-            System.out.println("Click load");
-            String path = JOptionPane.showInputDialog(this, "Input Path here");
-            System.out.println(path);
+            //System.out.println("Click load");
+            //String path = JOptionPane.showInputDialog(this, "Input Path here");
+            //System.out.println(path);
 //            gameController.loadGameFromFile(path);
+            GameController gameController = Load.loadGameController();
+            ChessGameFrame frame=gameController.getFrame();
+            gameController.setStatusLabel(frame.getStatusLabel());
+            gameController.setTheStepNumber(frame.getTheStepNumber());
+            gameController.setLabel();
+            frame.setVisible(true);
+            this.setVisible(false);
+        });
+    }
+    public void addSaveButton(){
+        JButton button = new JButton("Save");
+        button.setLocation(HEIGTH, HEIGTH / 10 + 440);
+        button.setSize(200, 60);
+        button.setFont(new Font("Rockwell", Font.BOLD, 20));
+        add(button);
+
+        button.addActionListener(e -> {
+                Main.getOp().getGameController().save();
         });
     }
 
