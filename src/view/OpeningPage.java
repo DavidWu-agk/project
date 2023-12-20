@@ -3,6 +3,7 @@ package view;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import controller.GameController;
+import controller.Load;
 import view.*;
 import model.*;
 
@@ -133,7 +134,20 @@ public class OpeningPage extends JFrame {
     private void addLoadButton(JPanel p) {
         JButton button = new JButton("Load");
         button.addActionListener(e -> {
-            //do later
+            ChessGameFrame mainFrame = new ChessGameFrame(1100, 810);
+            GameController gameController = new GameController(mainFrame.getChessboardComponent(), new Chessboard());
+            mainFrame.setGameController(gameController);
+            gameController.setStatusLabel(mainFrame.getStatusLabel());
+            gameController.setTheStepNumber(mainFrame.getTheStepNumber());
+            gameController.setLabel();
+            GameController gc=Load.loadController();
+            gameController.getModel().setGrid(gc.getModel().getGrid());
+            gameController.sync();
+            gameController.setStep(gc.getStep());
+            gameController.setScore(gc.getScore());
+            gameController.getStatusLabel().setText("Score:"+gameController.getScore()/*+"\nthe step you have:"+step*/);
+            gameController.getTheStepNumber().setText("the step you have:"+gameController.getStep());
+            mainFrame.setVisible(true);
         });
         button.setAlignmentX(Component.CENTER_ALIGNMENT);
         button.setPreferredSize(new Dimension(200, 80));

@@ -12,6 +12,7 @@ import view.ChessboardComponent;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.Serializable;
 
 import static java.awt.AWTEventMulticaster.add;
 
@@ -22,7 +23,7 @@ import static java.awt.AWTEventMulticaster.add;
  * [in this demo the request methods are onPlayerClickCell() and
  * onPlayerClickChessPiece()]
  */
-public class GameController implements GameListener {
+public class GameController implements GameListener, Serializable {
     private int step=10;
 
     private Chessboard model;
@@ -336,6 +337,10 @@ public class GameController implements GameListener {
 
     public void setScore(int score) {
         this.score = score;
+    }
+
+    public Chessboard getModel() {
+        return model;
     }
 
     public void setLabel(){
