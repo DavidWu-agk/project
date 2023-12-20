@@ -10,6 +10,8 @@ import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.util.Random;
+import javazoom.jl.player.Player;
+import java.io.FileInputStream;
 /*import javazoom.jl.player.Player;
 import java.io.FileInputStream;
 
@@ -108,6 +110,10 @@ public class OpeningPage extends JFrame {
             private void addStartButton(JPanel p) {
         JButton button = new JButton("Start");
         button.addActionListener(e -> {
+            //MusicPlayer.playMusic("src\\view\\music.mp3");
+            MusicPlayer myClassInstance = new MusicPlayer();
+            Thread thread1 = new Thread(myClassInstance);
+            thread1.start();
             ChessGameFrame mainFrame = new ChessGameFrame(1100, 810);
             GameController gameController = new GameController(mainFrame.getChessboardComponent(), new Chessboard());
             mainFrame.setGameController(gameController);
