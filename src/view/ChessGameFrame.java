@@ -4,6 +4,9 @@ import controller.GameController;
 
 import javax.swing.*;
 import java.awt.*;
+
+import controller.Load;
+import controller.Save;
 import major.Main;
 
 /**
@@ -52,6 +55,7 @@ public class ChessGameFrame extends JFrame {
         addSwapConfirmButton();
         addNextStepButton();
         addLoadButton();
+        addSaveButton();
         add(backgroundLabel);
     }
 
@@ -170,7 +174,7 @@ public class ChessGameFrame extends JFrame {
     }
     private void addRestartButton() {
         JButton button = new JButton("restart");
-        button.setLocation(HEIGTH, HEIGTH / 10 + 440);
+        button.setLocation(HEIGTH, HEIGTH / 10 + 520);
         button.setSize(200, 60);
         button.setFont(new Font("Rockwell", Font.BOLD, 20));
         add(button);
@@ -209,13 +213,25 @@ public class ChessGameFrame extends JFrame {
         add(button);
 
         button.addActionListener(e -> {
-            System.out.println("Click load");
-            String path = JOptionPane.showInputDialog(this, "Input Path here");
-            System.out.println(path);
-//            gameController.loadGameFromFile(path);
+            GameController gc=Load.loadController();
+            gameController.getModel().setGrid(gc.getModel().getGrid());
+            gameController.sync();
+            gameController.setStep(gc.getStep());
+            gameController.setScore(gc.getScore());
+            gameController.getStatusLabel().setText("Score:"+gameController.getScore()/*+"\nthe step you have:"+step*/);
+            gameController.getTheStepNumber().setText("the step you have:"+gameController.getStep());
         });
     }
-
+    private void addSaveButton() {
+        JButton button = new JButton("Save");
+        button.setLocation(HEIGTH, HEIGTH / 10 + 440);
+        button.setSize(200, 60);
+        button.setFont(new Font("Rockwell", Font.BOLD, 20));
+        add(button);
+        button.addActionListener(e -> {
+            Save.saveGame(gameController);
+        });
+    }
 
     public int getStep() {
         return step;

@@ -9,7 +9,7 @@ public class MusicPlayer implements Runnable{
     @Override
     public void run() {
         try {
-            FileInputStream fileInputStream = new FileInputStream("src\\view\\music.mp3");
+            FileInputStream fileInputStream = new FileInputStream("src/view/music.mp3");
             Player player = new Player(fileInputStream);
 
             // 开始播放音频文件

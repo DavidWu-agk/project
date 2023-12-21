@@ -6,7 +6,7 @@ import view.ChessGameFrame;
 import view.OpeningPage;
 
 import javax.swing.*;
-
+//nmsl
 public class Main {
 
     private static OpeningPage op;

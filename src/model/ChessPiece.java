@@ -2,8 +2,9 @@ package model;
 
 
 import java.awt.*;
+import java.io.Serializable;
 
-public class ChessPiece {
+public class ChessPiece implements Serializable {
     // Diamond, Circle, ...
     private String name;
 

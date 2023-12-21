@@ -1,5 +1,6 @@
 package model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -7,7 +8,7 @@ import java.util.Random;
  * This class store the real chess information.
  * The Chessboard has 8 * 8 cells, and each cell has a position for chess
  */
-public class Chessboard {
+public class Chessboard implements Serializable {
     private Cell[][] grid;
 
     public Chessboard() {
@@ -324,5 +325,7 @@ public class Chessboard {
         }
     }
 
-
+    public void setGrid(Cell[][] grid) {
+        this.grid = grid;
+    }
 }
