@@ -88,6 +88,7 @@ public class ChessboardComponent extends JComponent {
         //todo:  complete the method
     }
 
+
     public ChessComponent removeChessComponentAtGrid(ChessboardPoint point) {
         // Note re-validation is required after remove / removeAll.
         ChessComponent chess = null;
