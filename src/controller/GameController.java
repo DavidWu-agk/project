@@ -25,6 +25,7 @@ import static java.awt.AWTEventMulticaster.add;
  */
 public class GameController implements GameListener, Serializable {
 
+
     private int step=10;
 
     private Chessboard model;
