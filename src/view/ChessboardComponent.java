@@ -98,7 +98,6 @@ public class ChessboardComponent extends JComponent {
             chess.setSelected(false);
         }
         else {
-
         }
         return chess;
     }
