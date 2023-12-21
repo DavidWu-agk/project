@@ -1,6 +1,7 @@
 package controller;
 
 import listener.GameListener;
+import major.Main;
 import model.ChessPiece;
 import model.Constant;
 import model.Chessboard;
@@ -28,6 +29,7 @@ public class GameController implements GameListener, Serializable {
 
     private Chessboard model;
     private ChessboardComponent view;
+    private ChessGameFrame frame=Main.getOp().getMainFrame();
     private int nextstepCount=0;
 
     // Record whether there is a selected piece before
@@ -39,6 +41,10 @@ public class GameController implements GameListener, Serializable {
     private JLabel statusLabel;
 
     private JLabel theStepNumber;
+
+    public ChessGameFrame getFrame() {
+        return frame;
+    }
 
     public JLabel getStatusLabel() {
         return statusLabel;
@@ -346,6 +352,9 @@ public class GameController implements GameListener, Serializable {
     public void setLabel(){
         this.statusLabel.setText("Score:" + score);
         this.theStepNumber.setText("the step you have:"+step);
+    }
+    public void save(){
+        Save.saveGameController(this);
     }
 
 }
