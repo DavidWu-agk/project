@@ -90,10 +90,16 @@ public class ChessboardComponent extends JComponent {
 
     public ChessComponent removeChessComponentAtGrid(ChessboardPoint point) {
         // Note re-validation is required after remove / removeAll.
-        ChessComponent chess = (ChessComponent) getGridComponentAt(point).getComponents()[0];
-        getGridComponentAt(point).removeAll();
-        getGridComponentAt(point).revalidate();
-        chess.setSelected(false);
+        ChessComponent chess = null;
+        if(getGridComponentAt(point).getComponents().length!=0) {
+            chess = (ChessComponent) getGridComponentAt(point).getComponents()[0];
+            getGridComponentAt(point).removeAll();
+            getGridComponentAt(point).revalidate();
+            chess.setSelected(false);
+        }
+        else {
+
+        }
         return chess;
     }
 
