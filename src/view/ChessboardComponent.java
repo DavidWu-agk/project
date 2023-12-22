@@ -153,7 +153,7 @@ public class ChessboardComponent extends JComponent {
     public void stepOut(){JOptionPane.showMessageDialog(this,"Game finish.");}
 
     public void winOrLose(){
-        if(gameController.getScore()>=50){
+        if(gameController.getScore()>=gameController.getAim()){
             JOptionPane.showMessageDialog(this,"You win!");
         }
         else {
@@ -161,6 +161,7 @@ public class ChessboardComponent extends JComponent {
         }
     }
 
+    public void chooseLevel(){gameController.onChooseLevel();}
 
     public int getDeltaStep() {
         return deltaStep;

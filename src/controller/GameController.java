@@ -26,7 +26,7 @@ import static java.awt.AWTEventMulticaster.add;
 public class GameController implements GameListener, Serializable {
 
     private int step=10;
-
+    private int aim=100;
     private Chessboard model;
     private ChessboardComponent view;
     private int nextstepCount=0;
@@ -40,6 +40,8 @@ public class GameController implements GameListener, Serializable {
     private JLabel statusLabel;
 
     private JLabel theStepNumber;
+
+
 
     public JLabel getStatusLabel() {
         return statusLabel;
@@ -324,6 +326,52 @@ public class GameController implements GameListener, Serializable {
         }
     }
 
+    public void onChooseLevel(){
+
+            String[] options = {"Easy", "Hard", "Customize"};
+            int choice = JOptionPane.showOptionDialog(null,
+                    "Choose an option:",
+                    "Options",
+                    JOptionPane.NO_OPTION,
+                    JOptionPane.QUESTION_MESSAGE,
+                    null,
+                    options,
+                    options[0]);
+            if(choice==0){
+                //TODO:easy
+                step=10;
+                aim=60;
+                score=0;
+                onPlayerRefresh();
+                this.statusLabel.setText("Score:" + score/*+"\nthe step you have:"+step*/);
+                this.theStepNumber.setText("the step you have:"+step);
+            }
+            else if(choice==1){
+                //TODO:hard
+                step=8;
+                aim=80;
+                score=0;
+                onPlayerRefresh();
+                this.statusLabel.setText("Score:" + score/*+"\nthe step you have:"+step*/);
+                this.theStepNumber.setText("the step you have:"+step);
+            }
+            else if(choice==2){
+                //TODO:customize
+                System.out.printf("t2");
+                String str1 = JOptionPane.showInputDialog("Enter step");
+                String str2 = JOptionPane.showInputDialog("Enter aim score");
+                step= Integer.parseInt(str1);
+                aim= Integer.parseInt(str2);
+                score=0;
+                onPlayerRefresh();
+                this.statusLabel.setText("Score:" + score/*+"\nthe step you have:"+step*/);
+                this.theStepNumber.setText("the step you have:"+step);
+            }
+            else {
+            }
+    }
+
+
     public int getStep() {
         return step;
     }
@@ -349,4 +397,11 @@ public class GameController implements GameListener, Serializable {
         this.theStepNumber.setText("the step you have:"+step);
     }
 
+    public int getAim() {
+        return aim;
+    }
+
+    public void setAim(int aim) {
+        this.aim = aim;
+    }
 }

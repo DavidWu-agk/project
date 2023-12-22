@@ -122,6 +122,7 @@ public class OpeningPage extends JFrame {
             gameController.setTheStepNumber(mainFrame.getTheStepNumber());
             gameController.setLabel();
             mainFrame.setVisible(true);
+            this.setVisible(false);
         });
         button.setAlignmentX(Component.CENTER_ALIGNMENT);
         button.setPreferredSize(new Dimension(200, 80));
@@ -169,7 +170,7 @@ public class OpeningPage extends JFrame {
                     JOptionPane.QUESTION_MESSAGE,
                     null,
                     options,
-                    options[2]);
+                    options[0]);
 
             // 处理用户选择
             if (choice >= 0) {
@@ -177,11 +178,11 @@ public class OpeningPage extends JFrame {
                 repaint();
             }
         });
-        openOptionsButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+        openOptionsButton.setAlignmentX(Component.CENTER_ALIGNMENT);//排列方式
         openOptionsButton.setPreferredSize(new Dimension(200, 80));
         openOptionsButton.setFont(new Font("Rockwell", Font.BOLD, 24));
-        openOptionsButton.setMargin(new Insets(10, 10, 10, 10));
-        openOptionsButton.setVerticalTextPosition(SwingConstants.CENTER);
+        openOptionsButton.setMargin(new Insets(10, 10, 10, 10));//边缘距离
+        openOptionsButton.setVerticalTextPosition(SwingConstants.CENTER);//文字在按钮中的竖直位置
         openOptionsButton.setHorizontalTextPosition(SwingConstants.CENTER);
     }
 

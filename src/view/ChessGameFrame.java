@@ -56,6 +56,7 @@ public class ChessGameFrame extends JFrame {
         addNextStepButton();
         addLoadButton();
         addSaveButton();
+        addLevelButton();
         add(backgroundLabel);
     }
 
@@ -230,6 +231,17 @@ public class ChessGameFrame extends JFrame {
         add(button);
         button.addActionListener(e -> {
             Save.saveGame(gameController);
+        });
+    }
+
+    public void addLevelButton(){
+        JButton button=new JButton("Level");
+        button.setLocation(HEIGTH, HEIGTH / 10 + 600);
+        button.setSize(200, 60);
+        button.setFont(new Font("Rockwell", Font.BOLD, 20));
+        add(button);
+        button.addActionListener(e -> {
+            chessboardComponent.chooseLevel();
         });
     }
 
