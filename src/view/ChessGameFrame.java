@@ -94,7 +94,7 @@ public class ChessGameFrame extends JFrame {
         statusLabel.setSize(200, 60);
         statusLabel.setFont(new Font("Rockwell", Font.BOLD, 20));
         add(statusLabel);
-        this.theStepNumber = new JLabel("the step you have:");
+        this.theStepNumber = new JLabel("step:");
         theStepNumber.setLocation(HEIGTH, HEIGTH / 10+50);
         theStepNumber.setSize(200, 60);
         theStepNumber.setFont(new Font("Rockwell", Font.BOLD, 20));
@@ -220,7 +220,7 @@ public class ChessGameFrame extends JFrame {
             gameController.setStep(gc.getStep());
             gameController.setScore(gc.getScore());
             gameController.getStatusLabel().setText("Score:"+gameController.getScore()/*+"\nthe step you have:"+step*/);
-            gameController.getTheStepNumber().setText("the step you have:"+gameController.getStep());
+            gameController.getTheStepNumber().setText("step:"+gameController.getStep());
         });
     }
     private void addSaveButton() {

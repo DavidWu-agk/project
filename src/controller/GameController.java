@@ -105,7 +105,7 @@ public class GameController implements GameListener, Serializable {
             score=score+model.basicCountPoint();
             step--;
             this.statusLabel.setText("Score:" + score/*+"\nthe step you have:"+step*/);
-            this.theStepNumber.setText("the step you have:"+step);
+            this.theStepNumber.setText("step:"+step);
             chessComponentBasicElimilation();
             model.basicElimilation();
             model.setToDefault();
@@ -130,7 +130,10 @@ public class GameController implements GameListener, Serializable {
             chess2.repaint();
             //view.setDeltaStep(0);
         }
-
+        if(score>=aim){
+            view.stepOut();
+            view.winOrLose();
+        }
         System.out.println("Implement your swap here.");
 
     }
@@ -158,7 +161,10 @@ public class GameController implements GameListener, Serializable {
         selectedPoint2=null;
         nextstepCount++;
         }
-
+        if(score>=aim){
+            view.stepOut();
+            view.winOrLose();
+        }
     }
 
 
@@ -344,7 +350,7 @@ public class GameController implements GameListener, Serializable {
                 score=0;
                 onPlayerRefresh();
                 this.statusLabel.setText("Score:" + score/*+"\nthe step you have:"+step*/);
-                this.theStepNumber.setText("the step you have:"+step);
+                this.theStepNumber.setText("step:"+step);
             }
             else if(choice==1){
                 //TODO:hard
@@ -353,11 +359,10 @@ public class GameController implements GameListener, Serializable {
                 score=0;
                 onPlayerRefresh();
                 this.statusLabel.setText("Score:" + score/*+"\nthe step you have:"+step*/);
-                this.theStepNumber.setText("the step you have:"+step);
+                this.theStepNumber.setText("step:"+step);
             }
             else if(choice==2){
                 //TODO:customize
-                System.out.printf("t2");
                 String str1 = JOptionPane.showInputDialog("Enter step");
                 String str2 = JOptionPane.showInputDialog("Enter aim score");
                 step= Integer.parseInt(str1);
@@ -365,7 +370,7 @@ public class GameController implements GameListener, Serializable {
                 score=0;
                 onPlayerRefresh();
                 this.statusLabel.setText("Score:" + score/*+"\nthe step you have:"+step*/);
-                this.theStepNumber.setText("the step you have:"+step);
+                this.theStepNumber.setText("step:"+step);
             }
             else {
             }
@@ -394,7 +399,7 @@ public class GameController implements GameListener, Serializable {
 
     public void setLabel(){
         this.statusLabel.setText("Score:" + score);
-        this.theStepNumber.setText("the step you have:"+step);
+        this.theStepNumber.setText("step:"+step);
     }
 
     public int getAim() {
