@@ -120,6 +120,7 @@ public class OpeningPage extends JFrame {
             mainFrame.setGameController(gameController);
             gameController.setStatusLabel(mainFrame.getStatusLabel());
             gameController.setTheStepNumber(mainFrame.getTheStepNumber());
+
             gameController.setLabel();
             mainFrame.setVisible(true);
             this.setVisible(false);

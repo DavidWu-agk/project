@@ -150,6 +150,9 @@ public class ChessboardComponent extends JComponent {
     public void cantSwap(){
         JOptionPane.showMessageDialog(this, "Can't swap.");
     }
+    public void numError(){
+        JOptionPane.showMessageDialog(this, "Not a positive integer.");
+    }
     public void stepOut(){JOptionPane.showMessageDialog(this,"Game finish.");}
 
     public void winOrLose(){
@@ -158,6 +161,7 @@ public class ChessboardComponent extends JComponent {
         }
         else {
             JOptionPane.showMessageDialog(this,"You lose.");
+            gameController.onPlayerRestart();
         }
     }
 

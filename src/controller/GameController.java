@@ -26,6 +26,8 @@ import static java.awt.AWTEventMulticaster.add;
 public class GameController implements GameListener, Serializable {
 
     private int step=10;
+
+    private int allStep=10;
     private int aim=100;
     private Chessboard model;
     private ChessboardComponent view;
@@ -41,7 +43,7 @@ public class GameController implements GameListener, Serializable {
 
     private JLabel theStepNumber;
 
-
+    private JLabel aimNum;
     public void setSelectedPoint(ChessboardPoint selectedPoint) {
         this.selectedPoint = selectedPoint;
     }
@@ -150,6 +152,7 @@ public class GameController implements GameListener, Serializable {
     @Override
     public void onPlayerNextStep() {
         // TODO: Init your next step function here.
+        //TODO:如果不能再下落或消去，则提示需要swap
         System.out.println("Implement your next step here.");
         if(nextstepCount%3==0){
             model.chessDown();
@@ -309,7 +312,9 @@ public class GameController implements GameListener, Serializable {
 
     public void onPlayerRestart(){
         score=0;
+        step=allStep;
         this.statusLabel.setText("Score:" + score);
+        this.theStepNumber.setText("step:"+step);
         onPlayerRefresh();
     }
 
@@ -355,15 +360,18 @@ public class GameController implements GameListener, Serializable {
             if(choice==0){
                 //TODO:easy
                 step=10;
+                allStep=step;
                 aim=60;
                 score=0;
                 onPlayerRefresh();
                 this.statusLabel.setText("Score:" + score/*+"\nthe step you have:"+step*/);
                 this.theStepNumber.setText("step:"+step);
+
             }
             else if(choice==1){
                 //TODO:hard
                 step=8;
+                allStep=step;
                 aim=80;
                 score=0;
                 onPlayerRefresh();
@@ -372,14 +380,38 @@ public class GameController implements GameListener, Serializable {
             }
             else if(choice==2){
                 //TODO:customize
-                String str1 = JOptionPane.showInputDialog("Enter step");
-                String str2 = JOptionPane.showInputDialog("Enter aim score");
-                step= Integer.parseInt(str1);
-                aim= Integer.parseInt(str2);
-                score=0;
-                onPlayerRefresh();
-                this.statusLabel.setText("Score:" + score/*+"\nthe step you have:"+step*/);
-                this.theStepNumber.setText("step:"+step);
+                int step0 = step;
+                int aim0 = aim;
+                String str1;
+                String str2;
+                    try{
+                        str1 = JOptionPane.showInputDialog("Enter step");
+                        step= Integer.parseInt(str1);
+                        if(step<=0){
+                            view.numError();
+                            step=step0;
+                        }
+                        else {
+                            str2 = JOptionPane.showInputDialog("Enter aim score");
+                            aim= Integer.parseInt(str2);
+                            if(aim<=0){
+                                view.numError();
+                                aim=aim0;
+                            }
+                            else {
+                                allStep=step;
+                                score=0;
+                                onPlayerRefresh();
+                                this.statusLabel.setText("Score:" + score/*+"\nthe step you have:"+step*/);
+                                this.theStepNumber.setText("step:"+step);
+                            }
+                        }
+                    }catch (NumberFormatException e){
+                        view.numError();
+                        step=step0;
+                        aim=aim0;
+                    }
+
             }
             else {
             }
@@ -417,5 +449,13 @@ public class GameController implements GameListener, Serializable {
 
     public void setAim(int aim) {
         this.aim = aim;
+    }
+
+    public JLabel getAimNum() {
+        return aimNum;
+    }
+
+    public void setAimNum(JLabel aimNum) {
+        this.aimNum = aimNum;
     }
 }

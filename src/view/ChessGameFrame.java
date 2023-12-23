@@ -25,6 +25,8 @@ public class ChessGameFrame extends JFrame {
 
     private JLabel statusLabel;
 
+    private JLabel aimNum;
+
     private JLabel theStepNumber;
 
     private int step;
@@ -94,6 +96,11 @@ public class ChessGameFrame extends JFrame {
         statusLabel.setSize(200, 60);
         statusLabel.setFont(new Font("Rockwell", Font.BOLD, 20));
         add(statusLabel);
+        this.aimNum = new JLabel("aim:");
+        aimNum.setLocation(HEIGTH, HEIGTH / 10+25);
+        aimNum.setSize(200, 60);
+        aimNum.setFont(new Font("Rockwell", Font.BOLD, 20));
+        add(aimNum);
         this.theStepNumber = new JLabel("step:");
         theStepNumber.setLocation(HEIGTH, HEIGTH / 10+50);
         theStepNumber.setSize(200, 60);
@@ -259,5 +266,13 @@ public class ChessGameFrame extends JFrame {
 
     public void setTheStepNumber(JLabel theStepNumber) {
         this.theStepNumber = theStepNumber;
+    }
+
+    public JLabel getAimNum() {
+        return aimNum;
+    }
+
+    public void setAimNum(JLabel aimNum) {
+        this.aimNum = aimNum;
     }
 }
