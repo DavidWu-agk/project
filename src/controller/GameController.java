@@ -135,6 +135,8 @@ public class GameController implements GameListener, Serializable {
             view.setChessComponentAtGrid(selectedPoint,chess1);
             chess1.repaint();
             chess2.repaint();
+            selectedPoint=null;
+            selectedPoint2=null;
             //view.setDeltaStep(0);
         }
         if(score>=aim){

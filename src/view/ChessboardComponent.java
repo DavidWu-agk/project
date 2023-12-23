@@ -149,8 +149,6 @@ public class ChessboardComponent extends JComponent {
     }
     public void cantSwap(){
         JOptionPane.showMessageDialog(this, "Can't swap.");
-        gameController.setSelectedPoint(null);
-        gameController.setSelectedPoint2(null);
     }
     public void stepOut(){JOptionPane.showMessageDialog(this,"Game finish.");}
 
