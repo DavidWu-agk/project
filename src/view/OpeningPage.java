@@ -120,7 +120,7 @@ public class OpeningPage extends JFrame {
             mainFrame.setGameController(gameController);
             gameController.setStatusLabel(mainFrame.getStatusLabel());
             gameController.setTheStepNumber(mainFrame.getTheStepNumber());
-
+            gameController.setAimNum(mainFrame.getAimNum());
             gameController.setLabel();
             mainFrame.setVisible(true);
             this.setVisible(false);
@@ -141,6 +141,7 @@ public class OpeningPage extends JFrame {
             mainFrame.setGameController(gameController);
             gameController.setStatusLabel(mainFrame.getStatusLabel());
             gameController.setTheStepNumber(mainFrame.getTheStepNumber());
+            gameController.setAimNum(mainFrame.getAimNum());//TODO:when load, we also need load the aim score!
             gameController.setLabel();
             GameController gc=Load.loadController();
             gameController.getModel().setGrid(gc.getModel().getGrid());
@@ -148,7 +149,8 @@ public class OpeningPage extends JFrame {
             gameController.setStep(gc.getStep());
             gameController.setScore(gc.getScore());
             gameController.getStatusLabel().setText("Score:"+gameController.getScore()/*+"\nthe step you have:"+step*/);
-            gameController.getTheStepNumber().setText("the step you have:"+gameController.getStep());
+            gameController.getTheStepNumber().setText("step:"+gameController.getStep());
+            gameController.getAimNum().setText("aim:"+gameController.getAim());
             mainFrame.setVisible(true);
         });
         button.setAlignmentX(Component.CENTER_ALIGNMENT);

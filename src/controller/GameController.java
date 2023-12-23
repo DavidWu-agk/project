@@ -28,7 +28,7 @@ public class GameController implements GameListener, Serializable {
     private int step=10;
 
     private int allStep=10;
-    private int aim=100;
+    private int aim=80;
     private Chessboard model;
     private ChessboardComponent view;
     private int nextstepCount=0;
@@ -115,6 +115,7 @@ public class GameController implements GameListener, Serializable {
             step--;
             this.statusLabel.setText("Score:" + score/*+"\nthe step you have:"+step*/);
             this.theStepNumber.setText("step:"+step);
+            this.aimNum.setText("aim:"+aim);
             chessComponentBasicElimilation();
             model.basicElimilation();
             model.setToDefault();
@@ -315,6 +316,7 @@ public class GameController implements GameListener, Serializable {
         step=allStep;
         this.statusLabel.setText("Score:" + score);
         this.theStepNumber.setText("step:"+step);
+        this.aimNum.setText("aim:"+aim);
         onPlayerRefresh();
     }
 
@@ -366,7 +368,7 @@ public class GameController implements GameListener, Serializable {
                 onPlayerRefresh();
                 this.statusLabel.setText("Score:" + score/*+"\nthe step you have:"+step*/);
                 this.theStepNumber.setText("step:"+step);
-
+                this.aimNum.setText("aim:"+aim);
             }
             else if(choice==1){
                 //TODO:hard
@@ -377,6 +379,7 @@ public class GameController implements GameListener, Serializable {
                 onPlayerRefresh();
                 this.statusLabel.setText("Score:" + score/*+"\nthe step you have:"+step*/);
                 this.theStepNumber.setText("step:"+step);
+                this.aimNum.setText("aim:"+aim);
             }
             else if(choice==2){
                 //TODO:customize
@@ -404,6 +407,7 @@ public class GameController implements GameListener, Serializable {
                                 onPlayerRefresh();
                                 this.statusLabel.setText("Score:" + score/*+"\nthe step you have:"+step*/);
                                 this.theStepNumber.setText("step:"+step);
+                                this.aimNum.setText("aim:"+aim);
                             }
                         }
                     }catch (NumberFormatException e){
@@ -441,6 +445,7 @@ public class GameController implements GameListener, Serializable {
     public void setLabel(){
         this.statusLabel.setText("Score:" + score);
         this.theStepNumber.setText("step:"+step);
+        this.aimNum.setText("aim:"+aim);
     }
 
     public int getAim() {
@@ -458,4 +463,6 @@ public class GameController implements GameListener, Serializable {
     public void setAimNum(JLabel aimNum) {
         this.aimNum = aimNum;
     }
+
+
 }
