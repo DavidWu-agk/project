@@ -28,7 +28,7 @@ public class GameController implements GameListener, Serializable {
     private int step=10;
 
     private int allStep=10;
-    private int aim=80;
+    private int aim=60;
     private Chessboard model;
     private ChessboardComponent view;
     private int nextstepCount=0;
