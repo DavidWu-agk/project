@@ -226,7 +226,7 @@ public class ChessGameFrame extends JFrame {
             gameController.sync();
             gameController.setStep(gc.getStep());
             gameController.setScore(gc.getScore());
-            gameController.setAimNum(gc.getAimNum());
+            gameController.setAim(gc.getAim());
             gameController.getStatusLabel().setText("Score:"+gameController.getScore()/*+"\nthe step you have:"+step*/);
             gameController.getTheStepNumber().setText("step:"+gameController.getStep());
             gameController.getAimNum().setText("aim:"+gameController.getAim());

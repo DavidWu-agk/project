@@ -44,6 +44,7 @@ public class GameController implements GameListener, Serializable {
     private JLabel theStepNumber;
 
     private JLabel aimNum;
+
     public void setSelectedPoint(ChessboardPoint selectedPoint) {
         this.selectedPoint = selectedPoint;
     }
