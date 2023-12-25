@@ -115,7 +115,7 @@ public class OpeningPage extends JFrame {
             MusicPlayer myClassInstance = new MusicPlayer();
             Thread thread1 = new Thread(myClassInstance);
             thread1.start();
-            ChessGameFrame mainFrame = new ChessGameFrame(1100, 810);
+            ChessGameFrame mainFrame = new ChessGameFrame(1600, 900);
             GameController gameController = new GameController(mainFrame.getChessboardComponent(), new Chessboard());
             mainFrame.setGameController(gameController);
             gameController.setStatusLabel(mainFrame.getStatusLabel());
