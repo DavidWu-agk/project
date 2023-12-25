@@ -324,8 +324,71 @@ public class Chessboard implements Serializable {
             }
         }
     }
+    public boolean isInMiddleState(){
+        for(int i=0;i<Constant.CHESSBOARD_ROW_SIZE.getNum();i++){
+            for(int j=0;j<Constant.CHESSBOARD_COL_SIZE.getNum();j++){
+                if (grid[i][j].getPiece()==null){
+                    return true;
+                }
+            }
+        }
 
+
+
+        for(int i=0;i<Constant.CHESSBOARD_ROW_SIZE.getNum();i++){
+            for(int j=0;j<Constant.CHESSBOARD_COL_SIZE.getNum()-3+1;j++){
+                if(grid[i][j].isToRemoveRow()==true){continue;}
+                ChessPiece currentPiece=grid[i][j].getPiece();
+                int count=1;
+                for(int k=j+1;k<Constant.CHESSBOARD_COL_SIZE.getNum();k++){
+                    if(grid[i][k].getPiece().getName().equals(currentPiece.getName())){
+                        count++;
+                    }else {break;}
+                }
+                if(count>=3){
+                    return true;
+                }
+
+            }
+
+        }
+        for(int i=0;i<Constant.CHESSBOARD_COL_SIZE.getNum();i++){
+            for(int j=0;j<Constant.CHESSBOARD_ROW_SIZE.getNum()-3+1;j++){
+                if(grid[j][i].isToRemoveCol()==true){continue;}
+                ChessPiece currentPiece=grid[j][i].getPiece();
+                int count=1;
+                for(int k=j+1;k<Constant.CHESSBOARD_ROW_SIZE.getNum();k++){
+                    if(grid[k][i].getPiece().getName().equals(currentPiece.getName())){
+                        count++;
+                    }else {break;}
+                }
+                if (count>=3){
+                  return true;
+                }
+            }
+
+        }
+        return false;
+    }
     public void setGrid(Cell[][] grid) {
         this.grid = grid;
+    }
+    public boolean isStuck(){
+        for(int i=0;i<Constant.CHESSBOARD_ROW_SIZE.getNum();i++){
+            for(int j=0;j<Constant.CHESSBOARD_COL_SIZE.getNum()-1;j++){
+                if (CanSwap(new ChessboardPoint(i,j),new ChessboardPoint(i,j+1))==true){
+                    return false;
+                }
+            }
+        }
+        for(int i=0;i<Constant.CHESSBOARD_COL_SIZE.getNum();i++){
+            for(int j=0;j<Constant.CHESSBOARD_ROW_SIZE.getNum()-1;j++){
+                if (CanSwap(new ChessboardPoint(j,i),new ChessboardPoint(j+1,i))==true){
+                    return false;
+                }
+            }
+        }
+        return true;
+
     }
 }

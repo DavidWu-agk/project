@@ -1,10 +1,8 @@
 package controller;
 
 import model.Chessboard;
-
 import javax.swing.*;
 import java.io.*;
-
 public class Load {
     public static GameController loadController() {
         GameController gameController = null;
@@ -24,7 +22,7 @@ public class Load {
                 System.out.println("Game has been loaded from: " + selectedFile.getAbsolutePath());
 
             } catch (IOException | ClassNotFoundException e) {
-                e.printStackTrace();
+                GameController.showErrorDialog("The file isn't correct");
             }
         }
 

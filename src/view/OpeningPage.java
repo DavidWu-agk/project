@@ -121,6 +121,7 @@ public class OpeningPage extends JFrame {
             gameController.setStatusLabel(mainFrame.getStatusLabel());
             gameController.setTheStepNumber(mainFrame.getTheStepNumber());
             gameController.setAimNum(mainFrame.getAimNum());
+            gameController.setToDO(mainFrame.getToDO());
             gameController.setLabel();
             mainFrame.setVisible(true);
             this.setVisible(false);
@@ -136,14 +137,16 @@ public class OpeningPage extends JFrame {
     private void addLoadButton(JPanel p) {
         JButton button = new JButton("Load");
         button.addActionListener(e -> {
+            GameController gc=Load.loadController();
+            if (gc!=null){
             ChessGameFrame mainFrame = new ChessGameFrame(1100, 810);
             GameController gameController = new GameController(mainFrame.getChessboardComponent(), new Chessboard());
             mainFrame.setGameController(gameController);
             gameController.setStatusLabel(mainFrame.getStatusLabel());
             gameController.setTheStepNumber(mainFrame.getTheStepNumber());
             gameController.setAimNum(mainFrame.getAimNum());//TODO:when load, we also need load the aim score!
+            gameController.setToDO(mainFrame.getToDO());
             gameController.setLabel();
-            GameController gc=Load.loadController();
             gameController.getModel().setGrid(gc.getModel().getGrid());
             gameController.sync();
             gameController.setStep(gc.getStep());
@@ -152,6 +155,7 @@ public class OpeningPage extends JFrame {
             gameController.getTheStepNumber().setText("step:"+gameController.getStep());
             gameController.getAimNum().setText("aim:"+gameController.getAim());
             mainFrame.setVisible(true);
+            }
         });
         button.setAlignmentX(Component.CENTER_ALIGNMENT);
         button.setPreferredSize(new Dimension(200, 80));

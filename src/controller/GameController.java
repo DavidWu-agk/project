@@ -25,10 +25,11 @@ import static java.awt.AWTEventMulticaster.add;
  */
 public class GameController implements GameListener, Serializable {
 
+
     private int step=10;
 
     private int allStep=10;
-    private int aim=60;
+    private int aim=50;
     private Chessboard model;
     private ChessboardComponent view;
     private int nextstepCount=0;
@@ -44,6 +45,15 @@ public class GameController implements GameListener, Serializable {
     private JLabel theStepNumber;
 
     private JLabel aimNum;
+    private JLabel toDO;
+
+    public JLabel getToDO() {
+        return toDO;
+    }
+
+    public void setToDO(JLabel toDO) {
+        this.toDO = toDO;
+    }
 
     public void setSelectedPoint(ChessboardPoint selectedPoint) {
         this.selectedPoint = selectedPoint;
@@ -97,6 +107,18 @@ public class GameController implements GameListener, Serializable {
     public void onPlayerSwapChess() {
         //交换的控制方法
         // TODO: Init your swap function here.
+        if (model.isInMiddleState()==true){
+            showErrorDialog("Can't swap now.");
+            return;
+        }
+        if (selectedPoint==null|selectedPoint2==null){
+            showErrorDialog("you haven't selected two point.");
+            return;
+        }
+        if (model.isStuck()==true){
+            showErrorDialog("you stuck,please refreash");
+        }
+
         if(step<=0){
             view.stepOut();
             view.winOrLose();
@@ -122,6 +144,7 @@ public class GameController implements GameListener, Serializable {
             model.setToDefault();
             selectedPoint=null;
             selectedPoint2=null;//修复消了以后无法自由点击格子的bug
+            this.toDO.setText("toDo:nextStep");
             //step--;
             //this.theStepNumber.setText("the step you have:"+ step);
             //this.theStepNumber.repaint();
@@ -155,6 +178,10 @@ public class GameController implements GameListener, Serializable {
     public void onPlayerNextStep() {
         // TODO: Init your next step function here.
         //TODO:如果不能再下落或消去，则提示需要swap
+        if(model.isInMiddleState()==false){
+            showErrorDialog("Can't implement next step now.");
+            return;
+        }
         System.out.println("Implement your next step here.");
         if(nextstepCount%3==0){
             model.chessDown();
@@ -179,6 +206,10 @@ public class GameController implements GameListener, Serializable {
             view.stepOut();
             view.winOrLose();
         }
+        if(model.isInMiddleState()==false){
+            this.toDO.setText("toDo:swap");
+        }
+
     }
 
 
@@ -364,7 +395,7 @@ public class GameController implements GameListener, Serializable {
                 //TODO:easy
                 step=10;
                 allStep=step;
-                aim=60;
+                aim=50;
                 score=0;
                 onPlayerRefresh();
                 this.statusLabel.setText("Score:" + score/*+"\nthe step you have:"+step*/);
@@ -375,7 +406,7 @@ public class GameController implements GameListener, Serializable {
                 //TODO:hard
                 step=8;
                 allStep=step;
-                aim=80;
+                aim=50;
                 score=0;
                 onPlayerRefresh();
                 this.statusLabel.setText("Score:" + score/*+"\nthe step you have:"+step*/);
@@ -447,6 +478,7 @@ public class GameController implements GameListener, Serializable {
         this.statusLabel.setText("Score:" + score);
         this.theStepNumber.setText("step:"+step);
         this.aimNum.setText("aim:"+aim);
+        this.toDO.setText("toDo:swap");
     }
 
     public int getAim() {
@@ -464,6 +496,8 @@ public class GameController implements GameListener, Serializable {
     public void setAimNum(JLabel aimNum) {
         this.aimNum = aimNum;
     }
-
+    public static void showErrorDialog(String message) {
+        JOptionPane.showMessageDialog(null, message, null, JOptionPane.ERROR_MESSAGE);
+    }
 
 }

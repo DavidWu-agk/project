@@ -28,7 +28,7 @@ public class ChessGameFrame extends JFrame {
     private JLabel aimNum;
 
     private JLabel theStepNumber;
-
+    private JLabel toDO;
     private int step;
 
     private int theChance=3;
@@ -106,6 +106,11 @@ public class ChessGameFrame extends JFrame {
         theStepNumber.setSize(200, 60);
         theStepNumber.setFont(new Font("Rockwell", Font.BOLD, 20));
         add(theStepNumber);
+        this.toDO =new JLabel("toDo:swap");
+        toDO.setLocation(HEIGTH, HEIGTH / 10+75);
+        toDO.setSize(200, 60);
+        toDO.setFont(new Font("Rockwell", Font.BOLD, 20));
+        add(toDO);
     }
 
     public JLabel getStatusLabel() {
@@ -160,6 +165,10 @@ public class ChessGameFrame extends JFrame {
         button.setFont(new Font("Rockwell", Font.BOLD, 20));
         button.addActionListener(e -> {
             //JOptionPane.showMessageDialog(this, "Show hello world");
+            if (gameController.getModel().isInMiddleState()==true){
+                GameController.showErrorDialog("Can't refresh now.");
+                return;
+            }
             if(theChance>0){
                 chessboardComponent.refresh();
                 theChance--;
@@ -222,6 +231,7 @@ public class ChessGameFrame extends JFrame {
 
         button.addActionListener(e -> {
             GameController gc=Load.loadController();
+            if(gc!=null){
             gameController.getModel().setGrid(gc.getModel().getGrid());
             gameController.sync();
             gameController.setStep(gc.getStep());
@@ -230,6 +240,7 @@ public class ChessGameFrame extends JFrame {
             gameController.getStatusLabel().setText("Score:"+gameController.getScore()/*+"\nthe step you have:"+step*/);
             gameController.getTheStepNumber().setText("step:"+gameController.getStep());
             gameController.getAimNum().setText("aim:"+gameController.getAim());
+            }
         });
     }
     private void addSaveButton() {
@@ -239,6 +250,10 @@ public class ChessGameFrame extends JFrame {
         button.setFont(new Font("Rockwell", Font.BOLD, 20));
         add(button);
         button.addActionListener(e -> {
+            if (gameController.getModel().isInMiddleState()==true){
+                GameController.showErrorDialog("Can't save now");
+                return;
+            }
             Save.saveGame(gameController);
         });
     }
@@ -272,6 +287,10 @@ public class ChessGameFrame extends JFrame {
 
     public JLabel getAimNum() {
         return aimNum;
+    }
+
+    public JLabel getToDO() {
+        return toDO;
     }
 
     public void setAimNum(JLabel aimNum) {
