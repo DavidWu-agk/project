@@ -22,7 +22,7 @@ public class Load {
                 System.out.println("Game has been loaded from: " + selectedFile.getAbsolutePath());
 
             } catch (IOException | ClassNotFoundException e) {
-                GameController.showErrorDialog("The file isn't correct");
+                GameController.showErrorDialog("101,the file isn't correct");
             }
         }
 
