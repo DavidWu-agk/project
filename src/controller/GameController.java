@@ -32,6 +32,7 @@ public class GameController implements GameListener, Serializable {
     private int aim=50;
     private Chessboard model;
     private ChessboardComponent view;
+    private ChessGameFrame fr;
     private int nextstepCount=0;
 
     // Record whether there is a selected piece before
@@ -46,6 +47,18 @@ public class GameController implements GameListener, Serializable {
 
     private JLabel aimNum;
     private JLabel toDO;
+
+    public int getNextstepCount() {
+        return nextstepCount;
+    }
+
+    public ChessGameFrame getFr() {
+        return fr;
+    }
+
+    public void setFr(ChessGameFrame fr) {
+        this.fr = fr;
+    }
 
     public JLabel getToDO() {
         return toDO;
@@ -77,6 +90,18 @@ public class GameController implements GameListener, Serializable {
 
     public void setStatusLabel(JLabel statusLabel) {
         this.statusLabel = statusLabel;
+    }
+
+    public ChessboardPoint getSelectedPoint() {
+        return selectedPoint;
+    }
+
+    public ChessboardPoint getSelectedPoint2() {
+        return selectedPoint2;
+    }
+
+    public ChessboardComponent getView() {
+        return view;
     }
 
     public GameController(ChessboardComponent view, Chessboard model) {
@@ -381,76 +406,82 @@ public class GameController implements GameListener, Serializable {
     }
 
     public void onChooseLevel(){
-
-            String[] options = {"Easy", "Hard", "Customize"};
-            int choice = JOptionPane.showOptionDialog(null,
-                    "Choose an option:",
-                    "Options",
-                    JOptionPane.NO_OPTION,
-                    JOptionPane.QUESTION_MESSAGE,
-                    null,
-                    options,
-                    options[0]);
-            if(choice==0){
-                //TODO:easy
-                step=10;
-                allStep=step;
-                aim=50;
-                score=0;
-                onPlayerRefresh();
-                this.statusLabel.setText("Score:" + score/*+"\nthe step you have:"+step*/);
-                this.theStepNumber.setText("step:"+step);
-                this.aimNum.setText("aim:"+aim);
-            }
-            else if(choice==1){
-                //TODO:hard
-                step=8;
-                allStep=step;
-                aim=50;
-                score=0;
-                onPlayerRefresh();
-                this.statusLabel.setText("Score:" + score/*+"\nthe step you have:"+step*/);
-                this.theStepNumber.setText("step:"+step);
-                this.aimNum.setText("aim:"+aim);
-            }
-            else if(choice==2){
-                //TODO:customize
-                int step0 = step;
-                int aim0 = aim;
-                String str1;
-                String str2;
-                    try{
-                        str1 = JOptionPane.showInputDialog("Enter step");
-                        step= Integer.parseInt(str1);
-                        if(step<=0){
-                            view.numError();
-                            step=step0;
-                        }
-                        else {
-                            str2 = JOptionPane.showInputDialog("Enter aim score");
-                            aim= Integer.parseInt(str2);
-                            if(aim<=0){
-                                view.numError();
-                                aim=aim0;
-                            }
-                            else {
-                                allStep=step;
-                                score=0;
-                                onPlayerRefresh();
-                                this.statusLabel.setText("Score:" + score/*+"\nthe step you have:"+step*/);
-                                this.theStepNumber.setText("step:"+step);
-                                this.aimNum.setText("aim:"+aim);
-                            }
-                        }
-                    }catch (NumberFormatException e){
+        String[] options = {"Easy", "Hard", "Customize"};
+        int choice = JOptionPane.showOptionDialog(null,
+                "Choose an option:",
+                "Options",
+                JOptionPane.NO_OPTION,
+                JOptionPane.QUESTION_MESSAGE,
+                null,
+                options,
+                options[0]);
+        if(choice==0){
+            //TODO:easy
+            step=10;
+            allStep=step;
+            aim=50;
+            score=0;
+            onPlayerRefresh();
+            this.statusLabel.setText("Score:" + score/*+"\nthe step you have:"+step*/);
+            this.theStepNumber.setText("step:"+step);
+            this.aimNum.setText("aim:"+aim);
+        }
+        else if(choice==1){
+            //TODO:hard
+            step=8;
+            allStep=step;
+            aim=50;
+            score=0;
+            onPlayerRefresh();
+            this.statusLabel.setText("Score:" + score/*+"\nthe step you have:"+step*/);
+            this.theStepNumber.setText("step:"+step);
+            this.aimNum.setText("aim:"+aim);
+        }
+        else if(choice==2){
+            //TODO:customize
+            int step0 = step;
+            int aim0 = aim;
+            String str1;
+            String str2;
+            try{
+                str1 = JOptionPane.showInputDialog("Enter step");
+                if(str1==null){
+                }
+                else {
+                    step= Integer.parseInt(str1);
+                    if(step<=0){
                         view.numError();
                         step=step0;
-                        aim=aim0;
                     }
+                    else {
+                        str2 = JOptionPane.showInputDialog("Enter aim score");
+                        if (str2==null){
+                        }
+                        else {
+                            aim = Integer.parseInt(str2);
+                            if (aim <= 0) {
+                                view.numError();
+                                aim = aim0;
+                            } else {
+                                allStep = step;
+                                score = 0;
+                                onPlayerRefresh();
+                                this.statusLabel.setText("Score:" + score/*+"\nthe step you have:"+step*/);
+                                this.theStepNumber.setText("step:" + step);
+                                this.aimNum.setText("aim:" + aim);
+                            }
+                        }
+                    }
+                }
+            }catch (NumberFormatException e){
+                view.numError();
+                step=step0;
+                aim=aim0;
+            }
 
-            }
-            else {
-            }
+        }
+        else {
+        }
     }
 
 
@@ -499,5 +530,6 @@ public class GameController implements GameListener, Serializable {
     public static void showErrorDialog(String message) {
         JOptionPane.showMessageDialog(null, message, null, JOptionPane.ERROR_MESSAGE);
     }
+
 
 }

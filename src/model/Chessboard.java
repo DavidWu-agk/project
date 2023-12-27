@@ -1,5 +1,7 @@
 package model;
 
+import controller.GameController;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Random;
@@ -30,7 +32,7 @@ public class Chessboard implements Serializable {
     public void initLoop(){
         for (int i = 0; i < Constant.CHESSBOARD_ROW_SIZE.getNum(); i++) {
             for (int j = 0; j < Constant.CHESSBOARD_COL_SIZE.getNum(); j++) {
-                grid[i][j].setPiece(new ChessPiece( Util.RandomPick(new String[]{"💎", "⚪", "▲", "🔶"})));
+                grid[i][j].setPiece(new ChessPiece( Util.RandomPick(new String[]{"😅", "😍", "😋", "😡"})));
             }
         }
     }
@@ -296,9 +298,9 @@ public class Chessboard implements Serializable {
         }
         /*for(int i=Constant.CHESSBOARD_ROW_SIZE.getNum()-1;i>=0;i--) {
             for (int j = Constant.CHESSBOARD_COL_SIZE.getNum()-1; j >= 0; j--) {
-                //grid[i][j].setPiece(new ChessPiece( Util.RandomPick(new String[]{"💎", "⚪", "▲", "🔶"})));
+                //grid[i][j].setPiece(new ChessPiece( Util.RandomPick(new String[]{"😅", "😍", "😋", "😡"})));
                 if(grid[i][j].getPiece()==null){
-                    grid[i][j].setPiece(new ChessPiece( Util.RandomPick(new String[]{"💎", "⚪", "▲", "🔶"})));
+                    grid[i][j].setPiece(new ChessPiece( Util.RandomPick(new String[]{"😅", "😍", "😋", "😡"})));
                 }
             }
         }
@@ -317,9 +319,9 @@ public class Chessboard implements Serializable {
     public void generate(){
         for(int i=Constant.CHESSBOARD_ROW_SIZE.getNum()-1;i>=0;i--) {
             for (int j = Constant.CHESSBOARD_COL_SIZE.getNum()-1; j >= 0; j--) {
-                //grid[i][j].setPiece(new ChessPiece( Util.RandomPick(new String[]{"💎", "⚪", "▲", "🔶"})));
+                //grid[i][j].setPiece(new ChessPiece( Util.RandomPick(new String[]{"😅", "😍", "😋", "😡"})));
                 if(grid[i][j].getPiece()==null){
-                    grid[i][j].setPiece(new ChessPiece( Util.RandomPick(new String[]{"💎", "⚪", "▲", "🔶"})));
+                    grid[i][j].setPiece(new ChessPiece( Util.RandomPick(new String[]{"😅", "😍", "😋", "😡"})));
                 }
             }
         }
@@ -390,5 +392,32 @@ public class Chessboard implements Serializable {
         }
         return true;
 
+    }
+    public ArrayList<ChessboardPoint> hint(){
+        if(isInMiddleState()==true){
+            GameController.showErrorDialog("not now");
+            return null;
+        }
+        ArrayList<ChessboardPoint> p=new ArrayList<ChessboardPoint>();
+        for(int i=0;i<Constant.CHESSBOARD_ROW_SIZE.getNum();i++){
+            for(int j=0;j<Constant.CHESSBOARD_COL_SIZE.getNum()-1;j++){
+                if (CanSwap(new ChessboardPoint(i,j),new ChessboardPoint(i,j+1))==true){
+                    p.add(new ChessboardPoint(i,j));
+                    p.add(new ChessboardPoint(i,j+1));
+                    return p;
+                }
+            }
+        }
+        for(int i=0;i<Constant.CHESSBOARD_COL_SIZE.getNum();i++){
+            for(int j=0;j<Constant.CHESSBOARD_ROW_SIZE.getNum()-1;j++){
+                if (CanSwap(new ChessboardPoint(j,i),new ChessboardPoint(j+1,i))==true){
+                    p.add(new ChessboardPoint(j,i));
+                    p.add(new ChessboardPoint(j+1,i));
+                    return p;
+                }
+            }
+        }
+        GameController.showErrorDialog("you are stucked");
+        return null;
     }
 }

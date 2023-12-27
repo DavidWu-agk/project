@@ -4,6 +4,9 @@ import controller.GameController;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 import controller.Load;
 import controller.Save;
@@ -20,7 +23,7 @@ public class ChessGameFrame extends JFrame {
     private final int ONE_CHESS_SIZE;
 
     private GameController gameController;
-
+    ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
     private ChessboardComponent chessboardComponent;
 
     private JLabel statusLabel;
@@ -33,7 +36,9 @@ public class ChessGameFrame extends JFrame {
 
     private int theChance=3;
 
-
+    public ScheduledExecutorService getExecutor() {
+        return executor;
+    }
 
     public ChessGameFrame(int width, int height) {
         setTitle("2023 CS109 Project Demo"); //设置标题
@@ -59,6 +64,8 @@ public class ChessGameFrame extends JFrame {
         addLoadButton();
         addSaveButton();
         addLevelButton();
+        addAutoModeButton();
+        addHintButton();
         add(backgroundLabel);
     }
 
@@ -268,6 +275,67 @@ public class ChessGameFrame extends JFrame {
             chessboardComponent.chooseLevel();
         });
     }
+    public void addAutoModeButton(){
+        JButton button=new JButton("Auto mode");
+        button.setLocation(HEIGTH+200, HEIGTH / 10 + 120);
+        button.setSize(200, 60);
+        button.setFont(new Font("Rockwell", Font.BOLD, 20));
+        add(button);
+        button.addActionListener(e -> {
+            if(gameController.getModel().isStuck()==false&isGameFinish()==false){
+
+                ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
+                executor.schedule(() -> {//这大概是起到了一个保护的作用
+                    while (isGameFinish()==false) {
+                        automode();
+                        sleep();
+                        if (isGameFinish()==true){
+                            if (gameController.getModel().isInMiddleState()==false){
+                                gameController.setSelectedPoint(gameController.getModel().hint().get(0));
+                                gameController.setSelectedPoint2(gameController.getModel().hint().get(1));
+                                var point1 = (ChessComponent) gameController.getView().getGridComponentAt(gameController.getSelectedPoint()).getComponent(0);
+                                var point2 = (ChessComponent) gameController.getView().getGridComponentAt(gameController.getSelectedPoint2()).getComponent(0);
+                                point1.setSelected(true);
+                                point2.setSelected(true);
+                                point1.repaint();
+                                point2.repaint();
+                                gameController.onPlayerSwapChess();
+
+                            }
+                    }
+                }
+                executor.shutdown();// 停止执行后关闭 executor
+
+                }, 0, TimeUnit.MILLISECONDS);
+            }
+
+
+
+
+
+
+
+
+        });
+    }
+    public void addHintButton(){
+        JButton button=new JButton("Hint");
+        button.setLocation(HEIGTH+200, HEIGTH / 10 +200 );
+        button.setSize(200, 60);
+        button.setFont(new Font("Rockwell", Font.BOLD, 20));
+        add(button);
+        button.addActionListener(e -> {
+            gameController.setSelectedPoint(gameController.getModel().hint().get(0));
+            gameController.setSelectedPoint2(gameController.getModel().hint().get(1));
+            var point1 = (ChessComponent) gameController.getView().getGridComponentAt(gameController.getSelectedPoint()).getComponent(0);
+            var point2 = (ChessComponent) gameController.getView().getGridComponentAt(gameController.getSelectedPoint2()).getComponent(0);
+            point1.setSelected(true);
+            point2.setSelected(true);
+            point1.repaint();
+            point2.repaint();
+        });
+    }
+
 
     public int getStep() {
         return step;
@@ -295,5 +363,46 @@ public class ChessGameFrame extends JFrame {
 
     public void setAimNum(JLabel aimNum) {
         this.aimNum = aimNum;
+    }
+    public void automode(){
+        if (gameController.getModel().isInMiddleState()==false&isGameFinish()==false){
+            gameController.setSelectedPoint(gameController.getModel().hint().get(0));
+            gameController.setSelectedPoint2(gameController.getModel().hint().get(1));
+            var point1 = (ChessComponent) gameController.getView().getGridComponentAt(gameController.getSelectedPoint()).getComponent(0);
+            var point2 = (ChessComponent) gameController.getView().getGridComponentAt(gameController.getSelectedPoint2()).getComponent(0);
+            point1.setSelected(true);
+            point2.setSelected(true);
+            point1.repaint();
+            point2.repaint();
+            sleep();
+            gameController.onPlayerSwapChess();
+            sleep();
+            while (gameController.getModel().isInMiddleState()==true) {
+                    gameController.onPlayerNextStep();
+                    sleep();
+            }
+
+
+
+        }
+
+    }
+    public void sleep(){
+        System.out.println("Start");
+
+        try {
+            // 让当前线程暂停5秒钟
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        System.out.println("End after 0.5 seconds");
+    }
+    public boolean isGameFinish(){
+        if ((gameController.getStep()<=0)|(gameController.getScore()>=gameController.getAim())){
+            return true;
+        }
+        return false;
     }
 }

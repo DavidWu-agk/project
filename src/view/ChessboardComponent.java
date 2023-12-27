@@ -157,6 +157,7 @@ public class ChessboardComponent extends JComponent {
 
     public void winOrLose(){
         if(gameController.getScore()>=gameController.getAim()){
+
             String[] options = {"Next level", "Exit"};
             int choice = JOptionPane.showOptionDialog(null,
                     "You win!",
@@ -169,13 +170,24 @@ public class ChessboardComponent extends JComponent {
             if(choice==0){
                 gameController.setAim(gameController.getAim()+10);
                 gameController.onPlayerRestart();
+                gameController.getFr().getExecutor().shutdown();
+                //System.out.println("to stop");
+                gameController.getFr().getExecutor().shutdownNow();
             }
             else {
+                gameController.getFr().getExecutor().shutdown();
+                //System.out.println("to stop");
+                gameController.getFr().getExecutor().shutdownNow();
             }
         }
         else {
             JOptionPane.showMessageDialog(this,"You lose.");
             gameController.onPlayerRestart();
+            gameController.setSelectedPoint(null);
+            gameController.setSelectedPoint2(null);
+            gameController.getFr().getExecutor().shutdown();
+            gameController.getFr().getExecutor().shutdownNow();
+
         }
     }
 

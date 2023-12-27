@@ -141,6 +141,7 @@ public class OpeningPage extends JFrame {
             if (gc!=null){
             ChessGameFrame mainFrame = new ChessGameFrame(1100, 810);
             GameController gameController = new GameController(mainFrame.getChessboardComponent(), new Chessboard());
+            gameController.setFr(mainFrame);
             mainFrame.setGameController(gameController);
             gameController.setStatusLabel(mainFrame.getStatusLabel());
             gameController.setTheStepNumber(mainFrame.getTheStepNumber());
@@ -169,7 +170,7 @@ public class OpeningPage extends JFrame {
         JButton openOptionsButton = new JButton("Theme");
         p.add(openOptionsButton);
         openOptionsButton.addActionListener(e -> {
-            String[] options = {"ATRI", "TouHou", "K-ON"};
+            String[] options = {"ATRI", "BTR", "K-ON"};
             int choice = JOptionPane.showOptionDialog(null,
                     "Choose an option:",
                     "Options",
