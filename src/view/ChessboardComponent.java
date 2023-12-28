@@ -201,5 +201,5 @@ public class ChessboardComponent extends JComponent {
         this.deltaStep = deltaStep;
     }
 
-
+    public void changeMusic(){gameController.onChangeMusic();}
 }

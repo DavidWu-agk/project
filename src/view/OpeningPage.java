@@ -38,6 +38,7 @@ public class OpeningPage extends JFrame {
    private int HEIGHT;
     public String [] filePath=new String[]{"src/view/output1.png","src/view/output2.png","src/view/output3.png"};
     public String path=null;
+    public MusicPlayer backMusic;
 
     public String getPath() {
         return path;
@@ -112,8 +113,8 @@ public class OpeningPage extends JFrame {
         JButton button = new JButton("Start");
         button.addActionListener(e -> {
             //MusicPlayer.playMusic("src\\view\\music.mp3");
-            MusicPlayer myClassInstance = new MusicPlayer();
-            Thread thread1 = new Thread(myClassInstance);
+            backMusic = new MusicPlayer();
+            Thread thread1 = new Thread(backMusic);
             thread1.start();
             ChessGameFrame mainFrame = new ChessGameFrame(1600, 900);
             GameController gameController = new GameController(mainFrame.getChessboardComponent(), new Chessboard());

@@ -4,6 +4,9 @@ import controller.GameController;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -66,6 +69,8 @@ public class ChessGameFrame extends JFrame {
         addLevelButton();
         addAutoModeButton();
         addHintButton();
+        addBackButton();
+        addMusicButton();
         add(backgroundLabel);
     }
 
@@ -336,7 +341,37 @@ public class ChessGameFrame extends JFrame {
         });
     }
 
+    private void addBackButton() {
+        JButton button = new JButton("Back");
+        button.setLocation(HEIGTH+200, HEIGTH / 10 + 280);
+        button.setSize(200, 60);
+        button.setFont(new Font("Rockwell", Font.BOLD, 20));
+        add(button);
 
+        button.addActionListener(e -> {
+            try (FileInputStream fileIn = new FileInputStream("src/AutoSave.ser");
+                 ObjectInputStream objectIn = new ObjectInputStream(fileIn)) {
+
+                gameController = (GameController) objectIn.readObject();
+                System.out.println("Game has been loaded" );
+
+            } catch (IOException | ClassNotFoundException f) {
+                GameController.showErrorDialog("101,the file isn't correct");
+            }
+        });
+    }
+
+    private void addMusicButton() {
+        JButton button = new JButton("Music");
+        button.setLocation(HEIGTH+200, HEIGTH / 10 + 360);
+        button.setSize(200, 60);
+        button.setFont(new Font("Rockwell", Font.BOLD, 20));
+        add(button);
+
+        button.addActionListener(e -> {
+            chessboardComponent.changeMusic();
+        });
+    }
     public int getStep() {
         return step;
     }
@@ -387,6 +422,8 @@ public class ChessGameFrame extends JFrame {
         }
 
     }
+
+
     public void sleep(){
         System.out.println("Start");
 

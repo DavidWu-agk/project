@@ -1,18 +1,16 @@
 package controller;
 
 import listener.GameListener;
+import major.Main;
 import model.ChessPiece;
 import model.Constant;
 import model.Chessboard;
 import model.ChessboardPoint;
-import view.CellComponent;
-import view.ChessComponent;
-import view.ChessGameFrame;
-import view.ChessboardComponent;
+import view.*;
 
 import javax.swing.*;
 import java.awt.*;
-import java.io.Serializable;
+import java.io.*;
 
 import static java.awt.AWTEventMulticaster.add;
 
@@ -169,7 +167,12 @@ public class GameController implements GameListener, Serializable {
             model.setToDefault();
             selectedPoint=null;
             selectedPoint2=null;//修复消了以后无法自由点击格子的bug
+            DownPlayer myClassInstance = new DownPlayer();
+            Thread thread2 = new Thread(myClassInstance);
+            System.out.printf("test");
+            thread2.start();
             this.toDO.setText("toDo:nextStep");
+
             //step--;
             //this.theStepNumber.setText("the step you have:"+ step);
             //this.theStepNumber.repaint();
@@ -211,10 +214,18 @@ public class GameController implements GameListener, Serializable {
         if(nextstepCount%3==0){
             model.chessDown();
             sync();
+            DownPlayer myClassInstance = new DownPlayer();
+            Thread thread2 = new Thread(myClassInstance);
+            System.out.printf("test");
+            thread2.start();
             nextstepCount++;
         } else if (nextstepCount%3==1) {
             model.generate();
             sync();
+            DownPlayer myClassInstance = new DownPlayer();
+            Thread thread2 = new Thread(myClassInstance);
+            System.out.printf("test");
+            thread2.start();
             nextstepCount++;
         }else{
         model.scanTheChessBoard();
@@ -225,6 +236,10 @@ public class GameController implements GameListener, Serializable {
         this.statusLabel.setText("Score:" + score);//再次计分
         selectedPoint=null;
         selectedPoint2=null;
+            DownPlayer myClassInstance = new DownPlayer();
+            Thread thread2 = new Thread(myClassInstance);
+            System.out.printf("test");
+            thread2.start();
         nextstepCount++;
         }
         if(score>=aim){
@@ -232,6 +247,18 @@ public class GameController implements GameListener, Serializable {
             view.winOrLose();
         }
         if(model.isInMiddleState()==false){
+            //TODO:自动存档，以便于悔棋，并删除前面一个存档
+            File theAutoSave= new File("src/AutoSave.ser");
+            try (FileOutputStream fileOut = new FileOutputStream(theAutoSave);
+                 ObjectOutputStream objectOut = new ObjectOutputStream(fileOut)) {
+
+                objectOut.writeObject(this);
+                System.out.println("Game has been saved to: " + theAutoSave.getAbsolutePath());
+
+            } catch (IOException e) {
+                e.printStackTrace();
+                System.out.printf("error");
+            }
             this.toDO.setText("toDo:swap");
         }
 
@@ -404,7 +431,6 @@ public class GameController implements GameListener, Serializable {
             }
         }
     }
-
     public void onChooseLevel(){
         String[] options = {"Easy", "Hard", "Customize"};
         int choice = JOptionPane.showOptionDialog(null,
@@ -531,5 +557,26 @@ public class GameController implements GameListener, Serializable {
         JOptionPane.showMessageDialog(null, message, null, JOptionPane.ERROR_MESSAGE);
     }
 
+    public void onChangeMusic(){
+        String[] options = {"Play", "Break"};
+        int choice = JOptionPane.showOptionDialog(null,
+                "Choose an option:",
+                "Options",
+                JOptionPane.NO_OPTION,
+                JOptionPane.QUESTION_MESSAGE,
+                null,
+                options,
+                options[0]);
+        if(choice==0){
+            Main.getOp().backMusic.run();
+        }
+        else if(choice==1){
+            if (Main.getOp().backMusic != null) {
+                Main.getOp().backMusic.pauseMusic();
+            }
+        }
+        else {
 
+        }
+    }
 }
