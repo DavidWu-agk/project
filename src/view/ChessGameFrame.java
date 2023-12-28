@@ -26,7 +26,7 @@ public class ChessGameFrame extends JFrame {
     private final int ONE_CHESS_SIZE;
 
     private GameController gameController;
-    ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
+    //ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
     private ChessboardComponent chessboardComponent;
 
     private JLabel statusLabel;
@@ -38,10 +38,10 @@ public class ChessGameFrame extends JFrame {
     private int step;
 
     private int theChance=3;
-
-    public ScheduledExecutorService getExecutor() {
-        return executor;
-    }
+    private int autoMode=0;
+    //public ScheduledExecutorService getExecutor() {
+        //return executor;
+    //}
 
     public ChessGameFrame(int width, int height) {
         setTitle("2023 CS109 Project Demo"); //设置标题
@@ -287,14 +287,15 @@ public class ChessGameFrame extends JFrame {
         button.setFont(new Font("Rockwell", Font.BOLD, 20));
         add(button);
         button.addActionListener(e -> {
+            if (autoMode%2==0){
             if(gameController.getModel().isStuck()==false&isGameFinish()==false){
-
+                autoMode++;
                 ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
                 executor.schedule(() -> {//这大概是起到了一个保护的作用
-                    while (isGameFinish()==false) {
+                    //while (isGameFinish()==false) {
                         automode();
-                        sleep();
-                        if (isGameFinish()==true){
+                        //sleep();
+                        /*if (isGameFinish()==true){
                             if (gameController.getModel().isInMiddleState()==false){
                                 gameController.setSelectedPoint(gameController.getModel().hint().get(0));
                                 gameController.setSelectedPoint2(gameController.getModel().hint().get(1));
@@ -307,11 +308,14 @@ public class ChessGameFrame extends JFrame {
                                 gameController.onPlayerSwapChess();
 
                             }
-                    }
-                }
+                    }*/
+                //}
+                    autoMode++;
                 executor.shutdown();// 停止执行后关闭 executor
 
                 }, 0, TimeUnit.MILLISECONDS);
+            }}else {
+                GameController.showErrorDialog("can't use now");
             }
 
 

@@ -170,14 +170,14 @@ public class ChessboardComponent extends JComponent {
             if(choice==0){
                 gameController.setAim(gameController.getAim()+10);
                 gameController.onPlayerRestart();
-                gameController.getFr().getExecutor().shutdown();
+                //gameController.getFr().getExecutor().shutdown();
                 //System.out.println("to stop");
-                gameController.getFr().getExecutor().shutdownNow();
+                //gameController.getFr().getExecutor().shutdownNow();
             }
             else {
-                gameController.getFr().getExecutor().shutdown();
+                //gameController.getFr().getExecutor().shutdown();
                 //System.out.println("to stop");
-                gameController.getFr().getExecutor().shutdownNow();
+                //gameController.getFr().getExecutor().shutdownNow();
             }
         }
         else {
@@ -185,8 +185,8 @@ public class ChessboardComponent extends JComponent {
             gameController.onPlayerRestart();
             gameController.setSelectedPoint(null);
             gameController.setSelectedPoint2(null);
-            gameController.getFr().getExecutor().shutdown();
-            gameController.getFr().getExecutor().shutdownNow();
+            //gameController.getFr().getExecutor().shutdown();
+            //gameController.getFr().getExecutor().shutdownNow();
 
         }
     }

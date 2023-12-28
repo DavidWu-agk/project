@@ -39,7 +39,10 @@ public class OpeningPage extends JFrame {
     public String [] filePath=new String[]{"src/view/output1.png","src/view/output2.png","src/view/output3.png"};
     public String path=null;
     public MusicPlayer backMusic;
-
+    public MusicPlayer backMusic1;
+    public MusicPlayer backMusic2;
+    public MusicPlayer backMusic3;
+    public Thread thread1;
     public String getPath() {
         return path;
     }
@@ -114,8 +117,11 @@ public class OpeningPage extends JFrame {
         button.addActionListener(e -> {
             //MusicPlayer.playMusic("src\\view\\music.mp3");
             backMusic = new MusicPlayer();
-            Thread thread1 = new Thread(backMusic);
+            thread1 = new Thread(backMusic);
             thread1.start();
+            backMusic1 = new MusicPlayer1();
+            backMusic2 = new MusicPlayer2();
+            backMusic3 = new MusicPlayer3();
             ChessGameFrame mainFrame = new ChessGameFrame(1600, 900);
             GameController gameController = new GameController(mainFrame.getChessboardComponent(), new Chessboard());
             mainFrame.setGameController(gameController);
@@ -140,9 +146,15 @@ public class OpeningPage extends JFrame {
         button.addActionListener(e -> {
             GameController gc=Load.loadController();
             if (gc!=null){
-            ChessGameFrame mainFrame = new ChessGameFrame(1100, 810);
+                backMusic = new MusicPlayer();
+                thread1 = new Thread(backMusic);
+                thread1.start();
+                backMusic1 = new MusicPlayer1();
+                backMusic2 = new MusicPlayer2();
+                backMusic3 = new MusicPlayer3();
+            ChessGameFrame mainFrame = new ChessGameFrame(1600, 900);
             GameController gameController = new GameController(mainFrame.getChessboardComponent(), new Chessboard());
-            gameController.setFr(mainFrame);
+            //gameController.setFr(mainFrame);
             mainFrame.setGameController(gameController);
             gameController.setStatusLabel(mainFrame.getStatusLabel());
             gameController.setTheStepNumber(mainFrame.getTheStepNumber());

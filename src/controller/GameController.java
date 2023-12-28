@@ -30,7 +30,7 @@ public class GameController implements GameListener, Serializable {
     private int aim=50;
     private Chessboard model;
     private ChessboardComponent view;
-    private ChessGameFrame fr;
+    //private ChessGameFrame fr;
     private int nextstepCount=0;
 
     // Record whether there is a selected piece before
@@ -38,7 +38,7 @@ public class GameController implements GameListener, Serializable {
     private ChessboardPoint selectedPoint2;
 
     private int score;
-
+    private int num=0;
     private JLabel statusLabel;
 
     private JLabel theStepNumber;
@@ -50,13 +50,13 @@ public class GameController implements GameListener, Serializable {
         return nextstepCount;
     }
 
-    public ChessGameFrame getFr() {
-        return fr;
-    }
+    //public ChessGameFrame getFr() {
+        //return fr;
+   //}
 
-    public void setFr(ChessGameFrame fr) {
-        this.fr = fr;
-    }
+    //public void setFr(ChessGameFrame fr) {
+        //this.fr = fr;
+    //}
 
     public JLabel getToDO() {
         return toDO;
@@ -568,11 +568,95 @@ public class GameController implements GameListener, Serializable {
                 options,
                 options[0]);
         if(choice==0){
-            Main.getOp().backMusic.run();
+            String[] options1 = {"All", "Music1", "Music2","Music3"};
+            int choice1 = JOptionPane.showOptionDialog(null,
+                    "Choose an option:",
+                    "Options",
+                    JOptionPane.NO_OPTION,
+                    JOptionPane.QUESTION_MESSAGE,
+                    null,
+                    options1,
+                    options1[0]);
+            if(choice1==0){
+                if (Main.getOp().backMusic != null) {
+                    Main.getOp().backMusic.pauseMusic();
+                }
+                if (Main.getOp().backMusic1 != null) {
+                    Main.getOp().backMusic1.pauseMusic();
+                }
+                if (Main.getOp().backMusic2 != null) {
+                    Main.getOp().backMusic2.pauseMusic();
+                }
+                if (Main.getOp().backMusic3 != null) {
+                    Main.getOp().backMusic3.pauseMusic();
+                }
+                Thread thread1 = new Thread(Main.getOp().backMusic);
+                thread1.start();
+            }
+            else if(choice==1){
+                if (Main.getOp().backMusic != null) {
+                    Main.getOp().backMusic.pauseMusic();
+                }
+                if (Main.getOp().backMusic1 != null) {
+                    Main.getOp().backMusic1.pauseMusic();
+                }
+                if (Main.getOp().backMusic2 != null) {
+                    Main.getOp().backMusic2.pauseMusic();
+                }
+                if (Main.getOp().backMusic3 != null) {
+                    Main.getOp().backMusic3.pauseMusic();
+                }
+                Thread thread1 = new Thread(Main.getOp().backMusic1);
+                thread1.start();
+            }
+            else if(choice==2){
+                if (Main.getOp().backMusic != null) {
+                    Main.getOp().backMusic.pauseMusic();
+                }
+                if (Main.getOp().backMusic1 != null) {
+                    Main.getOp().backMusic1.pauseMusic();
+                }
+                if (Main.getOp().backMusic2 != null) {
+                    Main.getOp().backMusic2.pauseMusic();
+                }
+                if (Main.getOp().backMusic3 != null) {
+                    Main.getOp().backMusic3.pauseMusic();
+                }
+                Thread thread1 = new Thread(Main.getOp().backMusic2);
+                thread1.start();
+            }
+            else if(choice==3){
+                if (Main.getOp().backMusic != null) {
+                    Main.getOp().backMusic.pauseMusic();
+                }
+                if (Main.getOp().backMusic1 != null) {
+                    Main.getOp().backMusic1.pauseMusic();
+                }
+                if (Main.getOp().backMusic2 != null) {
+                    Main.getOp().backMusic2.pauseMusic();
+                }
+                if (Main.getOp().backMusic3 != null) {
+                    Main.getOp().backMusic3.pauseMusic();
+                }
+                Thread thread1 = new Thread(Main.getOp().backMusic3);
+                thread1.start();
+            }
+            else {
+
+            }
         }
         else if(choice==1){
             if (Main.getOp().backMusic != null) {
                 Main.getOp().backMusic.pauseMusic();
+            }
+            if (Main.getOp().backMusic1 != null) {
+                Main.getOp().backMusic1.pauseMusic();
+            }
+            if (Main.getOp().backMusic2 != null) {
+                Main.getOp().backMusic2.pauseMusic();
+            }
+            if (Main.getOp().backMusic3 != null) {
+                Main.getOp().backMusic3.pauseMusic();
             }
         }
         else {
