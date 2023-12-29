@@ -260,9 +260,11 @@ public class ChessGameFrame extends JFrame {
             gameController.setStep(gc.getStep());
             gameController.setScore(gc.getScore());
             gameController.setAim(gc.getAim());
+            gameController.setToDOString(gc.getToDOString());
             gameController.getStatusLabel().setText("Score:"+gameController.getScore()/*+"\nthe step you have:"+step*/);
             gameController.getTheStepNumber().setText("step:"+gameController.getStep());
             gameController.getAimNum().setText("aim:"+gameController.getAim());
+            gameController.getToDO().setText(gameController.getToDOString());//???
             }
         });
     }
@@ -377,9 +379,11 @@ public class ChessGameFrame extends JFrame {
                     gameController.setStep(gc.getStep());
                     gameController.setScore(gc.getScore());
                     gameController.setAim(gc.getAim());
+                    gameController.setToDOString(gc.getToDOString());
                     gameController.getStatusLabel().setText("Score:" + gameController.getScore()/*+"\nthe step you have:"+step*/);
                     gameController.getTheStepNumber().setText("step:" + gameController.getStep());
                     gameController.getAimNum().setText("aim:" + gameController.getAim());
+                    gameController.getToDO().setText(gameController.getToDOString());//???
                 }
                 else {
                     GameController.showErrorDialog("Only can back after swap.");

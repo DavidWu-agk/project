@@ -38,6 +38,7 @@ public class GameController implements GameListener, Serializable {
 
     private int score;
     private int num=0;
+    private String toDOString="toDo:swap";
     private JLabel statusLabel;
 
     private JLabel theStepNumber;
@@ -170,7 +171,8 @@ public class GameController implements GameListener, Serializable {
             Thread thread2 = new Thread(myClassInstance);
             System.out.printf("test");
             thread2.start();
-            this.toDO.setText("toDo:nextStep");
+            toDOString="toDo:nextStep";
+            this.toDO.setText(toDOString);
 
             //step--;
             //this.theStepNumber.setText("the step you have:"+ step);
@@ -258,7 +260,8 @@ public class GameController implements GameListener, Serializable {
                 e.printStackTrace();
                 System.out.printf("error");
             }
-            this.toDO.setText("toDo:swap");
+            toDOString="toDo:swap";
+            this.toDO.setText(toDOString);
         }
 
     }
@@ -534,7 +537,8 @@ public class GameController implements GameListener, Serializable {
         this.statusLabel.setText("Score:" + score);
         this.theStepNumber.setText("step:"+step);
         this.aimNum.setText("aim:"+aim);
-        this.toDO.setText("toDo:swap");
+        toDOString="toDo:swap";
+        this.toDO.setText(toDOString);
     }
 
     public int getAim() {
@@ -691,5 +695,13 @@ public class GameController implements GameListener, Serializable {
 
     public void setNextstepCount(int nextstepCount) {
         this.nextstepCount = nextstepCount;
+    }
+
+    public String getToDOString() {
+        return toDOString;
+    }
+
+    public void setToDOString(String toDOString) {
+        this.toDOString = toDOString;
     }
 }
