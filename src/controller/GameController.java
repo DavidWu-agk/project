@@ -9,7 +9,6 @@ import model.ChessboardPoint;
 import view.*;
 
 import javax.swing.*;
-import java.awt.*;
 import java.io.*;
 
 import static java.awt.AWTEventMulticaster.add;
@@ -664,5 +663,33 @@ public class GameController implements GameListener, Serializable {
         else {
 
         }
+    }
+
+    @Override
+    public boolean equals(GameController gameController) {
+        System.out.printf("testtesttest");
+        for (int i=0;i<=Constant.CHESSBOARD_ROW_SIZE.getNum()-1;i++){
+            for(int j=0;j<=Constant.CHESSBOARD_ROW_SIZE.getNum()-1;j++){
+                if(this.model.getGrid()[i][j].getPiece()!=null && gameController.model.getGrid()[i][j].getPiece()!=null) {
+                    if (this.model.getGrid()[i][j].getPiece().getName().equals(gameController.model.getGrid()[i][j].getPiece().getName())) {
+                        System.out.printf("getGrid()[%d][%d] equals\n",i,j);
+                    } else {
+                        return false;
+                    }
+                }
+                else {
+                    return false;
+                }
+            }
+        }
+//        if (!(this.step==gameController.step && this.aimNum==gameController.aimNum && this.score==gameController.score)){
+//            System.out.printf("also OK");
+//            return false;
+//        }
+            return true;
+    }
+
+    public void setNextstepCount(int nextstepCount) {
+        this.nextstepCount = nextstepCount;
     }
 }

@@ -4,9 +4,7 @@ import controller.GameController;
 
 import javax.swing.*;
 import java.awt.*;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
+import java.io.*;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -72,6 +70,8 @@ public class ChessGameFrame extends JFrame {
         addBackButton();
         addMusicButton();
         add(backgroundLabel);
+
+
     }
 
     public ChessboardComponent getChessboardComponent() {
@@ -210,6 +210,17 @@ public class ChessGameFrame extends JFrame {
 
         button.addActionListener(e -> {
             chessboardComponent.restart();
+            File theAutoSave= new File("src/AutoSave.ser");
+            try (FileOutputStream fileOut = new FileOutputStream(theAutoSave);
+                 ObjectOutputStream objectOut = new ObjectOutputStream(fileOut)) {
+
+                objectOut.writeObject(gameController);
+                System.out.println("Game has been saved to: " + theAutoSave.getAbsolutePath());
+
+            } catch (IOException f) {
+                f.printStackTrace();
+                System.out.printf("error");
+            }
             theChance=3;
             addRefreshButton();//TODO:有些bug
         });
@@ -356,11 +367,26 @@ public class ChessGameFrame extends JFrame {
             try (FileInputStream fileIn = new FileInputStream("src/AutoSave.ser");
                  ObjectInputStream objectIn = new ObjectInputStream(fileIn)) {
 
-                gameController = (GameController) objectIn.readObject();
-                System.out.println("Game has been loaded" );
+                GameController gc = (GameController) objectIn.readObject();
+                if(!(gc.equals(gameController)) && gameController.getNextstepCount()==0) {
+                    System.out.printf("114514");
+                    System.out.println("Game has been back");
+                    //
+                    gameController.getModel().setGrid(gc.getModel().getGrid());
+                    gameController.sync();
+                    gameController.setStep(gc.getStep());
+                    gameController.setScore(gc.getScore());
+                    gameController.setAim(gc.getAim());
+                    gameController.getStatusLabel().setText("Score:" + gameController.getScore()/*+"\nthe step you have:"+step*/);
+                    gameController.getTheStepNumber().setText("step:" + gameController.getStep());
+                    gameController.getAimNum().setText("aim:" + gameController.getAim());
+                }
+                else {
+                    GameController.showErrorDialog("Only can back after swap.");
+                }
 
             } catch (IOException | ClassNotFoundException f) {
-                GameController.showErrorDialog("101,the file isn't correct");
+                GameController.showErrorDialog("Only can back after swap.");
             }
         });
     }

@@ -1,5 +1,6 @@
 package listener;
 
+import controller.GameController;
 import model.ChessboardPoint;
 import view.CellComponent;
 import view.ChessComponent;
@@ -15,4 +16,5 @@ public interface GameListener {
 
     public void onPlayerNextStep();
 
+    boolean equals(GameController gameController);
 }

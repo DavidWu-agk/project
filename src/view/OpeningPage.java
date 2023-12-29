@@ -8,11 +8,10 @@ import view.*;
 import model.*;
 
 import java.awt.*;
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.util.Random;
 import javazoom.jl.player.Player;
-import java.io.FileInputStream;
+
 /*import javazoom.jl.player.Player;
 import java.io.FileInputStream;
 
@@ -125,6 +124,17 @@ public class OpeningPage extends JFrame {
             backMusic3 = new MusicPlayer3();
             ChessGameFrame mainFrame = new ChessGameFrame(1600, 900);
             GameController gameController = new GameController(mainFrame.getChessboardComponent(), new Chessboard());
+            File theAutoSave= new File("src/AutoSave.ser");
+            try (FileOutputStream fileOut = new FileOutputStream(theAutoSave);
+                 ObjectOutputStream objectOut = new ObjectOutputStream(fileOut)) {
+
+                objectOut.writeObject(gameController);
+                System.out.println("Game has been saved to: " + theAutoSave.getAbsolutePath());
+
+            } catch (IOException f) {
+                f.printStackTrace();
+                System.out.printf("error");
+            }
             mainFrame.setGameController(gameController);
             gameController.setStatusLabel(mainFrame.getStatusLabel());
             gameController.setTheStepNumber(mainFrame.getTheStepNumber());
@@ -155,6 +165,17 @@ public class OpeningPage extends JFrame {
                 backMusic3 = new MusicPlayer3();
             ChessGameFrame mainFrame = new ChessGameFrame(1600, 900);
             GameController gameController = new GameController(mainFrame.getChessboardComponent(), new Chessboard());
+                File theAutoSave= new File("src/AutoSave.ser");
+                try (FileOutputStream fileOut = new FileOutputStream(theAutoSave);
+                     ObjectOutputStream objectOut = new ObjectOutputStream(fileOut)) {
+
+                    objectOut.writeObject(gameController);
+                    System.out.println("Game has been saved to: " + theAutoSave.getAbsolutePath());
+
+                } catch (IOException f) {
+                    f.printStackTrace();
+                    System.out.printf("error");
+                }
             //gameController.setFr(mainFrame);
             mainFrame.setGameController(gameController);
             gameController.setStatusLabel(mainFrame.getStatusLabel());
