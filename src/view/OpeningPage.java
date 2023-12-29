@@ -43,6 +43,7 @@ public class OpeningPage extends JFrame {
     public MusicPlayer backMusic2;
     public MusicPlayer backMusic3;
     public Thread thread1;
+    public Thread thread2;
     public String getPath() {
         return path;
     }

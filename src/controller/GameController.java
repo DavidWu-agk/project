@@ -593,7 +593,8 @@ public class GameController implements GameListener, Serializable {
                 Thread thread1 = new Thread(Main.getOp().backMusic);
                 thread1.start();
             }
-            else if(choice==1){
+            else if(choice1==1){
+                System.out.printf("test1");
                 if (Main.getOp().backMusic != null) {
                     Main.getOp().backMusic.pauseMusic();
                 }
@@ -606,10 +607,11 @@ public class GameController implements GameListener, Serializable {
                 if (Main.getOp().backMusic3 != null) {
                     Main.getOp().backMusic3.pauseMusic();
                 }
+                System.out.printf("test2");
                 Thread thread1 = new Thread(Main.getOp().backMusic1);
                 thread1.start();
             }
-            else if(choice==2){
+            else if(choice1==2){
                 if (Main.getOp().backMusic != null) {
                     Main.getOp().backMusic.pauseMusic();
                 }
@@ -625,7 +627,7 @@ public class GameController implements GameListener, Serializable {
                 Thread thread1 = new Thread(Main.getOp().backMusic2);
                 thread1.start();
             }
-            else if(choice==3){
+            else if(choice1==3){
                 if (Main.getOp().backMusic != null) {
                     Main.getOp().backMusic.pauseMusic();
                 }
