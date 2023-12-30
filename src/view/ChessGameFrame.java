@@ -357,6 +357,7 @@ public class ChessGameFrame extends JFrame {
         button.setFont(new Font("Rockwell", Font.BOLD, 20));
         add(button);
         button.addActionListener(e -> {
+            if(gameController.getSelectedPoint()==null&gameController.getSelectedPoint2()==null){
             gameController.setSelectedPoint(gameController.getModel().hint().get(0));
             gameController.setSelectedPoint2(gameController.getModel().hint().get(1));
             var point1 = (ChessComponent) gameController.getView().getGridComponentAt(gameController.getSelectedPoint()).getComponent(0);
@@ -365,6 +366,9 @@ public class ChessGameFrame extends JFrame {
             point2.setSelected(true);
             point1.repaint();
             point2.repaint();
+            }else{
+                GameController.showErrorDialog("please cancel your current selection");
+            }
         });
     }
 
