@@ -337,6 +337,13 @@ public class Chessboard implements Serializable {
                 //grid[i][j].setPiece(new ChessPiece( Util.RandomPick(new String[]{"😅", "😍", "😋", "😡"})));
                 if(grid[i][j].getPiece()==null){
                     grid[i][j].setPiece(new ChessPiece( Util.RandomPick(new String[]{"😅", "😍", "😋", "😡"})));
+                    //sync();
+                    try {
+                        // 让当前线程暂停5秒钟
+                        Thread.sleep(20);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
         }

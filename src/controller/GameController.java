@@ -2,10 +2,7 @@ package controller;
 
 import listener.GameListener;
 import major.Main;
-import model.ChessPiece;
-import model.Constant;
-import model.Chessboard;
-import model.ChessboardPoint;
+import model.*;
 import view.*;
 
 import javax.swing.*;
@@ -22,7 +19,7 @@ import static java.awt.AWTEventMulticaster.add;
  */
 public class GameController implements GameListener, Serializable {
 
-    private boolean avoidALotOfClick=false;
+    private boolean avoidALotOfClick = false;
 
     public boolean isAvoidALotOfClick() {
         return avoidALotOfClick;
@@ -32,22 +29,22 @@ public class GameController implements GameListener, Serializable {
         this.avoidALotOfClick = avoidALotOfClick;
     }
 
-    private int step=10;
+    private int step = 10;
 
-    private int allStep=10;
-    private int aim=50;
+    private int allStep = 10;
+    private int aim = 50;
     private Chessboard model;
     private ChessboardComponent view;
     //private ChessGameFrame fr;
-    private int nextstepCount=0;
+    private int nextstepCount = 0;
 
     // Record whether there is a selected piece before
     private ChessboardPoint selectedPoint;
     private ChessboardPoint selectedPoint2;
 
     private int score;
-    private int num=0;
-    private String toDOString="toDo:swap";
+    private int num = 0;
+    private String toDOString = "toDo:swap";
     private JLabel statusLabel;
 
     private JLabel theStepNumber;
@@ -60,11 +57,11 @@ public class GameController implements GameListener, Serializable {
     }
 
     //public ChessGameFrame getFr() {
-        //return fr;
-   //}
+    //return fr;
+    //}
 
     //public void setFr(ChessGameFrame fr) {
-        //this.fr = fr;
+    //this.fr = fr;
     //}
 
     public JLabel getToDO() {
@@ -139,50 +136,49 @@ public class GameController implements GameListener, Serializable {
     public void onPlayerSwapChess() {
         //交换的控制方法
         // TODO: Init your swap function here.
-        if (model.isInMiddleState()==true){
+        if (model.isInMiddleState() == true) {
             showErrorDialog("Can't swap now.");
             setSelectedPoint(null);
             setSelectedPoint2(null);
             return;
         }
-        if (selectedPoint==null|selectedPoint2==null){
+        if (selectedPoint == null | selectedPoint2 == null) {
             showErrorDialog("you haven't selected two point.");
             return;
         }
-        if (model.isStuck()==true){
+        if (model.isStuck() == true) {
             showErrorDialog("you stuck,please refreash");
         }
 
-        if(step<=0){
+        if (step <= 0) {
             view.stepOut();
             view.winOrLose();
-        }
-        else if(selectedPoint!=null && selectedPoint2!=null&&model.CanSwap(selectedPoint,selectedPoint2)==true){
-            nextstepCount=0;
-            model.swapChessPiece(selectedPoint,selectedPoint2);//这是调用了model层的方法，model层是project的底层，有着各种判断棋子间关系与胜负等的方法
-            ChessComponent chess1= view.removeChessComponentAtGrid(selectedPoint);
-            ChessComponent chess2= view.removeChessComponentAtGrid(selectedPoint2);
-            view.setChessComponentAtGrid(selectedPoint2,chess1);//这是对view层进行了修改，model层改变后，还需要把变化导入到view层并repaint才可视化
-            view.setChessComponentAtGrid(selectedPoint,chess2);
+        } else if (selectedPoint != null && selectedPoint2 != null && model.CanSwap(selectedPoint, selectedPoint2) == true) {
+            nextstepCount = 0;
+            model.swapChessPiece(selectedPoint, selectedPoint2);//这是调用了model层的方法，model层是project的底层，有着各种判断棋子间关系与胜负等的方法
+            ChessComponent chess1 = view.removeChessComponentAtGrid(selectedPoint);
+            ChessComponent chess2 = view.removeChessComponentAtGrid(selectedPoint2);
+            view.setChessComponentAtGrid(selectedPoint2, chess1);//这是对view层进行了修改，model层改变后，还需要把变化导入到view层并repaint才可视化
+            view.setChessComponentAtGrid(selectedPoint, chess2);
             chess1.repaint();
             chess2.repaint();
             //以下几行为消去代码
             model.scanTheChessBoard();
-            score=score+model.basicCountPoint();
+            score = score + model.basicCountPoint();
             step--;
             this.statusLabel.setText("Score:" + score/*+"\nthe step you have:"+step*/);
-            this.theStepNumber.setText("step:"+step);
-            this.aimNum.setText("aim:"+aim);
+            this.theStepNumber.setText("step:" + step);
+            this.aimNum.setText("aim:" + aim);
             chessComponentBasicElimilation();
             model.basicElimilation();
             model.setToDefault();
-            selectedPoint=null;
-            selectedPoint2=null;//修复消了以后无法自由点击格子的bug
+            selectedPoint = null;
+            selectedPoint2 = null;//修复消了以后无法自由点击格子的bug
             DownPlayer myClassInstance = new DownPlayer();
             Thread thread2 = new Thread(myClassInstance);
-            System.out.printf("test");
+            //System.out.printf("test");
             thread2.start();
-            toDOString="toDo:nextStep";
+            toDOString = "toDo:nextStep";
             this.toDO.setText(toDOString);
 
             //step--;
@@ -190,23 +186,23 @@ public class GameController implements GameListener, Serializable {
             //this.theStepNumber.repaint();
             //this.theStepNumber.setVisible(true);
             //view.setDeltaStep(-1);
-        }else {
-            ChessComponent chess1= view.removeChessComponentAtGrid(selectedPoint);
-            ChessComponent chess2= view.removeChessComponentAtGrid(selectedPoint2);
-            view.setChessComponentAtGrid(selectedPoint2,chess1);//这是对view层进行了修改，model层改变后，还需要把变化导入到view层并repaint才可视化
-            view.setChessComponentAtGrid(selectedPoint,chess2);
+        } else {
+            ChessComponent chess1 = view.removeChessComponentAtGrid(selectedPoint);
+            ChessComponent chess2 = view.removeChessComponentAtGrid(selectedPoint2);
+            view.setChessComponentAtGrid(selectedPoint2, chess1);//这是对view层进行了修改，model层改变后，还需要把变化导入到view层并repaint才可视化
+            view.setChessComponentAtGrid(selectedPoint, chess2);
             chess1.repaint();
             chess2.repaint();
             view.cantSwap();
-            view.setChessComponentAtGrid(selectedPoint2,chess2);//这是对view层进行了修改，model层改变后，还需要把变化导入到view层并repaint才可视化
-            view.setChessComponentAtGrid(selectedPoint,chess1);
+            view.setChessComponentAtGrid(selectedPoint2, chess2);//这是对view层进行了修改，model层改变后，还需要把变化导入到view层并repaint才可视化
+            view.setChessComponentAtGrid(selectedPoint, chess1);
             chess1.repaint();
             chess2.repaint();
-            selectedPoint=null;
-            selectedPoint2=null;
+            selectedPoint = null;
+            selectedPoint2 = null;
             //view.setDeltaStep(0);
         }
-        if(score>=aim){
+        if (score >= aim) {
             view.stepOut();
             view.winOrLose();
         }
@@ -219,14 +215,15 @@ public class GameController implements GameListener, Serializable {
         // TODO: Init your next step function here.
         //TODO:如果不能再下落或消去，则提示需要swap
 //        avoidALotOfClick=true;
-        if(model.isInMiddleState()==false){
+        if (model.isInMiddleState() == false) {
             showErrorDialog("Can't implement next step now.");
 //            avoidALotOfClick=false;
             return;
         }
         System.out.println("Implement your next step here.");
-        if(nextstepCount%3==0){
+        if (nextstepCount % 3 == 0) {
 //            model.chessDown();
+            System.out.printf("\n\n\nchess down");
             chessDown();//down the chess
             sync();
             DownPlayer myClassInstance = new DownPlayer();
@@ -234,13 +231,13 @@ public class GameController implements GameListener, Serializable {
             System.out.printf("test");
             thread2.start();
             nextstepCount++;
-        } else if (nextstepCount%3==1) {
+        } else if (nextstepCount % 3 == 1) {
             //todo: I try to use this to avoid the quick click on the NextStepButton
             if (!(canClick())) {
 
-            }
-            else {
+            } else {
                 model.generate();// generate the new chess in null grid
+                model.generate();
                 sync();
                 DownPlayer myClassInstance = new DownPlayer();
                 Thread thread2 = new Thread(myClassInstance);
@@ -249,28 +246,32 @@ public class GameController implements GameListener, Serializable {
                 nextstepCount++;
             }
 
-        }else{
-        model.scanTheChessBoard();
-        score=score+model.basicCountPoint();
-        chessComponentBasicElimilation();
-        model.basicElimilation();
-        model.setToDefault();//这些是第一次重复消去
-        this.statusLabel.setText("Score:" + score);//再次计分
-        selectedPoint=null;
-        selectedPoint2=null;
-            DownPlayer myClassInstance = new DownPlayer();
-            Thread thread2 = new Thread(myClassInstance);
-            System.out.printf("test");
-            thread2.start();
-        nextstepCount++;
+        } else {
+//            if (!(canClick1())) {
+//
+//            } else {
+                model.scanTheChessBoard();
+                score = score + model.basicCountPoint();
+                chessComponentBasicElimilation();
+                model.basicElimilation();
+                model.setToDefault();//这些是第一次重复消去
+                this.statusLabel.setText("Score:" + score);//再次计分
+                selectedPoint = null;
+                selectedPoint2 = null;
+                DownPlayer myClassInstance = new DownPlayer();
+                Thread thread2 = new Thread(myClassInstance);
+                System.out.printf("test");
+                thread2.start();
+                nextstepCount++;
+//            }
         }
-        if(score>=aim){
+        if (score >= aim) {
             view.stepOut();
             view.winOrLose();
         }
-        if(model.isInMiddleState()==false){
+        if (model.isInMiddleState() == false) {
             //TODO:自动存档，以便于悔棋，并删除前面一个存档
-            File theAutoSave= new File("src/AutoSave.ser");
+            File theAutoSave = new File("src/AutoSave.ser");
             try (FileOutputStream fileOut = new FileOutputStream(theAutoSave);
                  ObjectOutputStream objectOut = new ObjectOutputStream(fileOut)) {
 
@@ -281,13 +282,13 @@ public class GameController implements GameListener, Serializable {
                 e.printStackTrace();
                 System.out.printf("error");
             }
-            toDOString="toDo:swap";
+            toDOString = "toDo:swap";
             this.toDO.setText(toDOString);
         }
     }
 
 
-        //TODO:重复消去生成的三连
+    //TODO:重复消去生成的三连
         /*model.scanTheChessBoard();
         score=score+model.basicCountPoint();
         chessComponentBasicElimilation();
@@ -384,12 +385,13 @@ public class GameController implements GameListener, Serializable {
 
 
     }
-    public void chessComponentBasicElimilation(){
-        for(int i=0;i<Constant.CHESSBOARD_ROW_SIZE.getNum();i++){
-            for(int j=0;j<Constant.CHESSBOARD_COL_SIZE.getNum();j++){
-                if(model.getGrid()[i][j].isToRemoveRow()==true|model.getGrid()[i][j].isToRemoveCol()==true){
+
+    public void chessComponentBasicElimilation() {
+        for (int i = 0; i < Constant.CHESSBOARD_ROW_SIZE.getNum(); i++) {
+            for (int j = 0; j < Constant.CHESSBOARD_COL_SIZE.getNum(); j++) {
+                if (model.getGrid()[i][j].isToRemoveRow() == true | model.getGrid()[i][j].isToRemoveCol() == true) {
                     //ChessComponent noChess=new ChessComponent(view.getCHESS_SIZE(),new ChessPiece("-"));
-                    ChessboardPoint p=new ChessboardPoint(i,j);
+                    ChessboardPoint p = new ChessboardPoint(i, j);
                     view.removeChessComponentAtGrid(p);
                     view.getGridComponentAt(p).repaint();
                     //view.setChessComponentAtGrid(p,noChess);
@@ -400,12 +402,12 @@ public class GameController implements GameListener, Serializable {
         }
     }
 
-    public void onPlayerRefresh(){
+    public void onPlayerRefresh() {
         model.toRefresh();
-        while (!(model.isGoodInit())){
+        while (!(model.isGoodInit())) {
             model.toRefresh();
         }
-        for(int i=Constant.CHESSBOARD_ROW_SIZE.getNum()-1;i>=0;i--) {
+        for (int i = Constant.CHESSBOARD_ROW_SIZE.getNum() - 1; i >= 0; i--) {
             for (int j = Constant.CHESSBOARD_COL_SIZE.getNum() - 1; j >= 0; j--) {
                 ChessboardPoint p = new ChessboardPoint(i, j);
                 view.removeChessComponentAtGrid(p);
@@ -417,44 +419,50 @@ public class GameController implements GameListener, Serializable {
         }
     }
 
-    public void onPlayerRestart(){
-        score=0;
-        step=allStep;
+    public void onPlayerRestart() {
+        score = 0;
+        step = allStep;
         this.statusLabel.setText("Score:" + score);
-        this.theStepNumber.setText("step:"+step);
-        this.aimNum.setText("aim:"+aim);
+        this.theStepNumber.setText("step:" + step);
+        this.aimNum.setText("aim:" + aim);
         onPlayerRefresh();
     }
 
 
-    public void chessDownInGameController(){
+    public void chessDownInGameController() {
 //        model.chessDown();//抽象棋盘里的下降
         chessDown();
         sync();
         sync();
     }
-    public void sync(){//需要时同步model和view
-        for(int i=0;i<Constant.CHESSBOARD_ROW_SIZE.getNum();i++){
-            for(int j=0;j<Constant.CHESSBOARD_COL_SIZE.getNum();j++){
-                ChessboardPoint p =new ChessboardPoint(i,j);
-                if(model.getGrid()[i][j].getPiece()!=null){
-                    ChessComponent thisChess=new ChessComponent(view.getCHESS_SIZE(),new ChessPiece(model.getGridAt(p).getPiece().getName()));
-                    if(view.getGridComponentAt(p).getComponents().length!=0){
+
+    public void sync() {//需要时同步model和view
+        System.out.printf("sync begin\n");
+        for (int i = 0; i < Constant.CHESSBOARD_ROW_SIZE.getNum(); i++) {
+            for (int j = 0; j < Constant.CHESSBOARD_COL_SIZE.getNum(); j++) {
+                ChessboardPoint p = new ChessboardPoint(i, j);
+                if (model.getGrid()[i][j].getPiece() != null) {
+                    ChessComponent thisChess = new ChessComponent(view.getCHESS_SIZE(), new ChessPiece(model.getGridAt(p).getPiece().getName()));
+                    if (view.getGridComponentAt(p).getComponents().length != 0) {
                         view.removeChessComponentAtGrid(p);
                     }
-                    view.setChessComponentAtGrid(p,thisChess);
+                    view.setChessComponentAtGrid(p, thisChess);
                     thisChess.repaint();
-                }else {
-                    if(view.getGridComponentAt(p).getComponents().length!=0){
+                    System.out.printf("repaint1\n");
+                } else {
+                    if (view.getGridComponentAt(p).getComponents().length != 0) {
                         view.removeChessComponentAtGrid(p);
                         view.getGridComponentAt(p).repaint();
                     }
+                    System.out.printf("repaint2\n");
                 }
 
             }
         }
+        System.out.printf("sync finish\n");
     }
-    public void onChooseLevel(){
+
+    public void onChooseLevel() {
         String[] options = {"Easy", "Hard", "Customize"};
         int choice = JOptionPane.showOptionDialog(null,
                 "Choose an option:",
@@ -464,49 +472,44 @@ public class GameController implements GameListener, Serializable {
                 null,
                 options,
                 options[0]);
-        if(choice==0){
+        if (choice == 0) {
             //TODO:easy
-            step=10;
-            allStep=step;
-            aim=50;
-            score=0;
+            step = 10;
+            allStep = step;
+            aim = 50;
+            score = 0;
             onPlayerRefresh();
             this.statusLabel.setText("Score:" + score/*+"\nthe step you have:"+step*/);
-            this.theStepNumber.setText("step:"+step);
-            this.aimNum.setText("aim:"+aim);
-        }
-        else if(choice==1){
+            this.theStepNumber.setText("step:" + step);
+            this.aimNum.setText("aim:" + aim);
+        } else if (choice == 1) {
             //TODO:hard
-            step=8;
-            allStep=step;
-            aim=50;
-            score=0;
+            step = 8;
+            allStep = step;
+            aim = 50;
+            score = 0;
             onPlayerRefresh();
             this.statusLabel.setText("Score:" + score/*+"\nthe step you have:"+step*/);
-            this.theStepNumber.setText("step:"+step);
-            this.aimNum.setText("aim:"+aim);
-        }
-        else if(choice==2){
+            this.theStepNumber.setText("step:" + step);
+            this.aimNum.setText("aim:" + aim);
+        } else if (choice == 2) {
             //TODO:customize
             int step0 = step;
             int aim0 = aim;
             String str1;
             String str2;
-            try{
+            try {
                 str1 = JOptionPane.showInputDialog("Enter step");
-                if(str1==null){
-                }
-                else {
-                    step= Integer.parseInt(str1);
-                    if(step<=0){
+                if (str1 == null) {
+                } else {
+                    step = Integer.parseInt(str1);
+                    if (step <= 0) {
                         view.numError();
-                        step=step0;
-                    }
-                    else {
+                        step = step0;
+                    } else {
                         str2 = JOptionPane.showInputDialog("Enter aim score");
-                        if (str2==null){
-                        }
-                        else {
+                        if (str2 == null) {
+                        } else {
                             aim = Integer.parseInt(str2);
                             if (aim <= 0) {
                                 view.numError();
@@ -522,14 +525,13 @@ public class GameController implements GameListener, Serializable {
                         }
                     }
                 }
-            }catch (NumberFormatException e){
+            } catch (NumberFormatException e) {
                 view.numError();
-                step=step0;
-                aim=aim0;
+                step = step0;
+                aim = aim0;
             }
 
-        }
-        else {
+        } else {
         }
     }
 
@@ -554,11 +556,11 @@ public class GameController implements GameListener, Serializable {
         return model;
     }
 
-    public void setLabel(){
+    public void setLabel() {
         this.statusLabel.setText("Score:" + score);
-        this.theStepNumber.setText("step:"+step);
-        this.aimNum.setText("aim:"+aim);
-        toDOString="toDo:swap";
+        this.theStepNumber.setText("step:" + step);
+        this.aimNum.setText("aim:" + aim);
+        toDOString = "toDo:swap";
         this.toDO.setText(toDOString);
     }
 
@@ -577,11 +579,12 @@ public class GameController implements GameListener, Serializable {
     public void setAimNum(JLabel aimNum) {
         this.aimNum = aimNum;
     }
+
     public static void showErrorDialog(String message) {
         JOptionPane.showMessageDialog(null, message, null, JOptionPane.ERROR_MESSAGE);
     }
 
-    public void onChangeMusic(){
+    public void onChangeMusic() {
         String[] options = {"Play", "Break"};
         int choice = JOptionPane.showOptionDialog(null,
                 "Choose an option:",
@@ -591,8 +594,8 @@ public class GameController implements GameListener, Serializable {
                 null,
                 options,
                 options[0]);
-        if(choice==0){
-            String[] options1 = {"All", "Music1", "Music2","Music3"};
+        if (choice == 0) {
+            String[] options1 = {"All", "Music1", "Music2", "Music3"};
             int choice1 = JOptionPane.showOptionDialog(null,
                     "Choose an option:",
                     "Options",
@@ -601,7 +604,7 @@ public class GameController implements GameListener, Serializable {
                     null,
                     options1,
                     options1[0]);
-            if(choice1==0){
+            if (choice1 == 0) {
                 if (Main.getOp().backMusic != null) {
                     Main.getOp().backMusic.pauseMusic();
                 }
@@ -616,8 +619,7 @@ public class GameController implements GameListener, Serializable {
                 }
                 Thread thread1 = new Thread(Main.getOp().backMusic);
                 thread1.start();
-            }
-            else if(choice1==1){
+            } else if (choice1 == 1) {
                 System.out.printf("test1");
                 if (Main.getOp().backMusic != null) {
                     Main.getOp().backMusic.pauseMusic();
@@ -634,8 +636,7 @@ public class GameController implements GameListener, Serializable {
                 System.out.printf("test2");
                 Thread thread1 = new Thread(Main.getOp().backMusic1);
                 thread1.start();
-            }
-            else if(choice1==2){
+            } else if (choice1 == 2) {
                 if (Main.getOp().backMusic != null) {
                     Main.getOp().backMusic.pauseMusic();
                 }
@@ -650,8 +651,7 @@ public class GameController implements GameListener, Serializable {
                 }
                 Thread thread1 = new Thread(Main.getOp().backMusic2);
                 thread1.start();
-            }
-            else if(choice1==3){
+            } else if (choice1 == 3) {
                 if (Main.getOp().backMusic != null) {
                     Main.getOp().backMusic.pauseMusic();
                 }
@@ -666,12 +666,10 @@ public class GameController implements GameListener, Serializable {
                 }
                 Thread thread1 = new Thread(Main.getOp().backMusic3);
                 thread1.start();
-            }
-            else {
+            } else {
 
             }
-        }
-        else if(choice==1){
+        } else if (choice == 1) {
             if (Main.getOp().backMusic != null) {
                 Main.getOp().backMusic.pauseMusic();
             }
@@ -684,8 +682,7 @@ public class GameController implements GameListener, Serializable {
             if (Main.getOp().backMusic3 != null) {
                 Main.getOp().backMusic3.pauseMusic();
             }
-        }
-        else {
+        } else {
 
         }
     }
@@ -693,16 +690,15 @@ public class GameController implements GameListener, Serializable {
     @Override
     public boolean equals(GameController gameController) {
         System.out.printf("testtesttest");
-        for (int i=0;i<=Constant.CHESSBOARD_ROW_SIZE.getNum()-1;i++){
-            for(int j=0;j<=Constant.CHESSBOARD_ROW_SIZE.getNum()-1;j++){
-                if(this.model.getGrid()[i][j].getPiece()!=null && gameController.model.getGrid()[i][j].getPiece()!=null) {
+        for (int i = 0; i <= Constant.CHESSBOARD_ROW_SIZE.getNum() - 1; i++) {
+            for (int j = 0; j <= Constant.CHESSBOARD_ROW_SIZE.getNum() - 1; j++) {
+                if (this.model.getGrid()[i][j].getPiece() != null && gameController.model.getGrid()[i][j].getPiece() != null) {
                     if (this.model.getGrid()[i][j].getPiece().getName().equals(gameController.model.getGrid()[i][j].getPiece().getName())) {
-                        System.out.printf("getGrid()[%d][%d] equals\n",i,j);
+                        System.out.printf("getGrid()[%d][%d] equals\n", i, j);
                     } else {
                         return false;
                     }
-                }
-                else {
+                } else {
                     return false;
                 }
             }
@@ -711,7 +707,7 @@ public class GameController implements GameListener, Serializable {
 //            System.out.printf("also OK");
 //            return false;
 //        }
-            return true;
+        return true;
     }
 
     public void setNextstepCount(int nextstepCount) {
@@ -731,16 +727,17 @@ public class GameController implements GameListener, Serializable {
     }
 
 
-
     //todo
-    public void chessDown(){
+    public void chessDown() {
         new SwingWorker<Void, Void>() {
             @Override
             protected Void doInBackground() throws Exception {
                 for (int i = Constant.CHESSBOARD_ROW_SIZE.getNum() - 1; i >= 0; i--) {
                     for (int j = Constant.CHESSBOARD_COL_SIZE.getNum() - 1; j >= 0; j--) {
                         if (model.getGrid()[i][j].getPiece() == null) {
+                            System.out.printf("%d %d is null\n",i,j);
                             for (int k = i; k >= 0; k--) {
+
                                 if (model.getGrid()[k][j].getPiece() != null) {
 //                            grid[i][j].setPiece(grid[k][j].getPiece());
 //                            grid[k][j].removePiece();
@@ -750,9 +747,10 @@ public class GameController implements GameListener, Serializable {
                                         model.getGrid()[m][j].setPiece(model.getGrid()[m - 1][j].getPiece());
                                         model.getGrid()[m - 1][j].removePiece();
                                         ChessboardPoint p = new ChessboardPoint(m, j);
-                                        System.out.printf("10086");
+//                                        System.out.printf("10086");
 //                                        //todo
                                         sync();
+                                        System.out.printf("%d %d down one\n",m-1,j);
                                         try {
                                             // 让当前线程暂停5秒钟
                                             Thread.sleep(35);
@@ -787,15 +785,51 @@ public class GameController implements GameListener, Serializable {
         }.execute();
     }
 
-    public boolean canClick(){
+    public boolean canClick() {
         for (int i = Constant.CHESSBOARD_ROW_SIZE.getNum() - 1; i >= 0; i--) {
             for (int j = Constant.CHESSBOARD_COL_SIZE.getNum() - 1; j >= 0; j--) {
-                if(model.getGrid()[i][j].getPiece() == null){
+                if (model.getGrid()[i][j].getPiece() == null) {
                     for (int k = i; k >= 0; k--) {
                         if (model.getGrid()[k][j].getPiece() != null) {
                             return false;
                         }
                     }
+                }
+            }
+        }
+        return true;
+    }
+
+
+    public void generate() {
+        new SwingWorker<Void, Void>() {
+            @Override
+            protected Void doInBackground() throws Exception {
+                for (int i = Constant.CHESSBOARD_ROW_SIZE.getNum() - 1; i >= 0; i--) {
+                    for (int j = Constant.CHESSBOARD_COL_SIZE.getNum() - 1; j >= 0; j--) {
+                        //grid[i][j].setPiece(new ChessPiece( Util.RandomPick(new String[]{"😅", "😍", "😋", "😡"})));
+                        if (model.getGrid()[i][j].getPiece() == null) {
+                            model.getGrid()[i][j].setPiece(new ChessPiece(Util.RandomPick(new String[]{"😅", "😍", "😋", "😡"})));
+                            sync();
+                            try {
+                                // 让当前线程暂停5秒钟
+                                Thread.sleep(35);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+                }
+                return null;
+            }
+        }.execute();
+    }
+
+    public boolean canClick1() {
+        for (int i = Constant.CHESSBOARD_ROW_SIZE.getNum() - 1; i >= 0; i--) {
+            for (int j = Constant.CHESSBOARD_COL_SIZE.getNum() - 1; j >= 0; j--) {
+                if (model.getGrid()[i][j].getPiece() == null) {
+                    return false;
                 }
             }
         }
