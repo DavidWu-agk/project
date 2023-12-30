@@ -174,10 +174,10 @@ public class GameController implements GameListener, Serializable {
             model.setToDefault();
             selectedPoint = null;
             selectedPoint2 = null;//修复消了以后无法自由点击格子的bug
-            DownPlayer myClassInstance = new DownPlayer();
-            Thread thread2 = new Thread(myClassInstance);
-            //System.out.printf("test");
-            thread2.start();
+//            DownPlayer myClassInstance = new DownPlayer();
+//            Thread thread2 = new Thread(myClassInstance);
+//            System.out.printf("test");
+//            thread2.start();
             toDOString = "toDo:nextStep";
             this.toDO.setText(toDOString);
 
@@ -225,11 +225,11 @@ public class GameController implements GameListener, Serializable {
 //            model.chessDown();
             System.out.printf("\n\n\nchess down");
             chessDown();//down the chess
-            sync();
-            DownPlayer myClassInstance = new DownPlayer();
-            Thread thread2 = new Thread(myClassInstance);
-            System.out.printf("test");
-            thread2.start();
+//            sync();
+//            DownPlayer myClassInstance = new DownPlayer();
+//            Thread thread2 = new Thread(myClassInstance);
+//            System.out.printf("test");
+//            thread2.start();
             nextstepCount++;
         } else if (nextstepCount % 3 == 1) {
             //todo: I try to use this to avoid the quick click on the NextStepButton
@@ -239,10 +239,10 @@ public class GameController implements GameListener, Serializable {
                 model.generate();// generate the new chess in null grid
                 model.generate();
                 sync();
-                DownPlayer myClassInstance = new DownPlayer();
-                Thread thread2 = new Thread(myClassInstance);
-                System.out.printf("test");
-                thread2.start();
+//                DownPlayer myClassInstance = new DownPlayer();
+//                Thread thread2 = new Thread(myClassInstance);
+//                System.out.printf("test");
+//                thread2.start();
                 nextstepCount++;
             }
 
@@ -258,10 +258,10 @@ public class GameController implements GameListener, Serializable {
                 this.statusLabel.setText("Score:" + score);//再次计分
                 selectedPoint = null;
                 selectedPoint2 = null;
-                DownPlayer myClassInstance = new DownPlayer();
-                Thread thread2 = new Thread(myClassInstance);
-                System.out.printf("test");
-                thread2.start();
+//                DownPlayer myClassInstance = new DownPlayer();
+//                Thread thread2 = new Thread(myClassInstance);
+//                System.out.printf("test");
+//                thread2.start();
                 nextstepCount++;
 //            }
         }
@@ -448,13 +448,13 @@ public class GameController implements GameListener, Serializable {
                     }
                     view.setChessComponentAtGrid(p, thisChess);
                     thisChess.repaint();
-                    System.out.printf("repaint1\n");
+//                    System.out.printf("repaint1\n");
                 } else {
                     if (view.getGridComponentAt(p).getComponents().length != 0) {
                         view.removeChessComponentAtGrid(p);
                         view.getGridComponentAt(p).repaint();
                     }
-                    System.out.printf("repaint2\n");
+//                    System.out.printf("repaint2\n");
                 }
 
             }
