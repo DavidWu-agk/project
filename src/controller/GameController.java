@@ -19,6 +19,8 @@ import static java.awt.AWTEventMulticaster.add;
  */
 public class GameController implements GameListener, Serializable {
 
+    private boolean isMotion=true;
+
     private boolean avoidALotOfClick = false;
 
     public boolean isAvoidALotOfClick() {
@@ -223,8 +225,14 @@ public class GameController implements GameListener, Serializable {
         System.out.println("Implement your next step here.");
         if (nextstepCount % 3 == 0) {
 //            model.chessDown();
-            System.out.printf("\n\n\nchess down");
-            chessDown();//down the chess
+            if(isMotion) {
+                System.out.printf("\n\n\nchess down");
+                chessDown();//down the chess
+            }
+            else {
+                model.chessDown();
+                sync();
+            }
 //            sync();
 //            DownPlayer myClassInstance = new DownPlayer();
 //            Thread thread2 = new Thread(myClassInstance);
@@ -233,23 +241,46 @@ public class GameController implements GameListener, Serializable {
             nextstepCount++;
         } else if (nextstepCount % 3 == 1) {
             //todo: I try to use this to avoid the quick click on the NextStepButton
-            if (!(canClick())) {
+            if(isMotion) {
+                if (!(canClick())) {
 
-            } else {
-                model.generate();// generate the new chess in null grid
-                model.generate();
-                sync();
+                } else {
+//                model.generate();// generate the new chess in null grid
+                    generate();
+//                sync();
 //                DownPlayer myClassInstance = new DownPlayer();
 //                Thread thread2 = new Thread(myClassInstance);
 //                System.out.printf("test");
 //                thread2.start();
+                    nextstepCount++;
+                }
+            }
+            else {
+                model.generate();// generate the new chess in null grid
+                sync();
                 nextstepCount++;
             }
-
         } else {
-//            if (!(canClick1())) {
-//
-//            } else {
+            if(isMotion){
+                if (!(canClick1())) {
+
+                } else {
+                    model.scanTheChessBoard();
+                    score = score + model.basicCountPoint();
+                    chessComponentBasicElimilation();
+                    model.basicElimilation();
+                    model.setToDefault();//这些是第一次重复消去
+                    this.statusLabel.setText("Score:" + score);//再次计分
+                    selectedPoint = null;
+                    selectedPoint2 = null;
+//                DownPlayer myClassInstance = new DownPlayer();
+//                Thread thread2 = new Thread(myClassInstance);
+//                System.out.printf("test");
+//                thread2.start();
+                    nextstepCount++;
+                }
+            }
+            else {
                 model.scanTheChessBoard();
                 score = score + model.basicCountPoint();
                 chessComponentBasicElimilation();
@@ -263,7 +294,7 @@ public class GameController implements GameListener, Serializable {
 //                System.out.printf("test");
 //                thread2.start();
                 nextstepCount++;
-//            }
+            }
         }
         if (score >= aim) {
             view.stepOut();
@@ -835,4 +866,48 @@ public class GameController implements GameListener, Serializable {
         }
         return true;
     }
+
+//    public void initLoop(){
+//        new SwingWorker<Void, Void>() {
+//            @Override
+//            protected Void doInBackground() throws Exception {
+//                for (int i = Constant.CHESSBOARD_ROW_SIZE.getNum() - 1; i >= 0; i--) {
+//                    for (int j = Constant.CHESSBOARD_COL_SIZE.getNum() - 1; j >= 0; j--) {
+//                        model.getGrid()[i][j].setPiece(new ChessPiece(Util.RandomPick(new String[]{"😅", "😍", "😋", "😡"})));
+//                        sync();
+//                        try {
+//                            // 让当前线程暂停5秒钟
+//                            Thread.sleep(10);
+//                        } catch (InterruptedException e) {
+//                            e.printStackTrace();
+//                        }
+//                    }
+//                }
+//                return null;
+//            }
+//        }.execute();
+//    }
+
+
+    public void onChangeMotion(){
+        String[] options = {"On", "Off"};
+        int choice = JOptionPane.showOptionDialog(null,
+                "Choose an option:",
+                "Options",
+                JOptionPane.NO_OPTION,
+                JOptionPane.QUESTION_MESSAGE,
+                null,
+                options,
+                options[0]);
+        if (choice == 0) {
+            isMotion=true;
+        }
+        else if (choice == 1){
+            isMotion=false;
+        }
+        else {
+
+        }
+    }
+
 }

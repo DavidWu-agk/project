@@ -70,7 +70,7 @@ public class ChessGameFrame extends JFrame {
         addBackButton();
         addMusicButton();
         add(backgroundLabel);
-
+        addMotionButton();
 
     }
 
@@ -469,6 +469,18 @@ public class ChessGameFrame extends JFrame {
 
         }
 
+    }
+
+    private void addMotionButton() {
+        JButton button = new JButton("Motion");
+        button.setLocation(HEIGTH+200, HEIGTH / 10 + 440);
+        button.setSize(200, 60);
+        button.setFont(new Font("Rockwell", Font.BOLD, 20));
+        add(button);
+
+        button.addActionListener(e -> {
+            chessboardComponent.changeMotion();
+        });
     }
 
 

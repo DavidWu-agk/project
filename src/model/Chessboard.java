@@ -2,6 +2,7 @@ package model;
 
 import controller.GameController;
 
+import javax.swing.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Random;
@@ -30,11 +31,13 @@ public class Chessboard implements Serializable {
     }
 
     public void initLoop(){
-        for (int i = 0; i < Constant.CHESSBOARD_ROW_SIZE.getNum(); i++) {
-            for (int j = 0; j < Constant.CHESSBOARD_COL_SIZE.getNum(); j++) {
-                grid[i][j].setPiece(new ChessPiece( Util.RandomPick(new String[]{"😅", "😍", "😋", "😡"})));
-            }
-        }
+
+                for (int i = Constant.CHESSBOARD_ROW_SIZE.getNum() - 1; i >= 0; i--) {
+                    for (int j = Constant.CHESSBOARD_COL_SIZE.getNum() - 1; j >= 0; j--) {
+                        grid[i][j].setPiece(new ChessPiece(Util.RandomPick(new String[]{"😅", "😍", "😋", "😡"})));
+                    }
+                }
+
     }
 
     private void initPieces() {
@@ -276,8 +279,8 @@ public class Chessboard implements Serializable {
                 if(grid[i][j].getPiece()==null){
                     for(int k=i;k>=0;k--){
                         if(grid[k][j].getPiece()!=null){
-//                            grid[i][j].setPiece(grid[k][j].getPiece());
-//                            grid[k][j].removePiece();
+                            grid[i][j].setPiece(grid[k][j].getPiece());
+                            grid[k][j].removePiece();
 //                            //todo
 //                            for (int m=k+1;m<=i;m++){
 //                                grid[m][j].setPiece(grid[m-1][j].getPiece());
@@ -338,12 +341,7 @@ public class Chessboard implements Serializable {
                 if(grid[i][j].getPiece()==null){
                     grid[i][j].setPiece(new ChessPiece( Util.RandomPick(new String[]{"😅", "😍", "😋", "😡"})));
                     //sync();
-                    try {
-                        // 让当前线程暂停5秒钟
-                        Thread.sleep(20);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
+
                 }
             }
         }
