@@ -276,20 +276,35 @@ public class Chessboard implements Serializable {
                 if(grid[i][j].getPiece()==null){
                     for(int k=i;k>=0;k--){
                         if(grid[k][j].getPiece()!=null){
-                            grid[i][j].setPiece(grid[k][j].getPiece());
-                            grid[k][j].removePiece();
-                            /*for(int m=0;m<Constant.CHESSBOARD_ROW_SIZE.getNum();m++) {
-                                for (int l = 0; l < Constant.CHESSBOARD_COL_SIZE.getNum(); l++) {
-                                    if (grid[m][l].getPiece()==null){
-                                        System.out.printf("-\t");
-                                    }
-                                    else {
-                                        System.out.printf("%s\t",grid[m][l].getPiece().getName());
-                                    }
-                                }
-                                System.out.printf("\n");
-                            }
-                            System.out.printf("\n\n\n");*/
+//                            grid[i][j].setPiece(grid[k][j].getPiece());
+//                            grid[k][j].removePiece();
+//                            //todo
+//                            for (int m=k+1;m<=i;m++){
+//                                grid[m][j].setPiece(grid[m-1][j].getPiece());
+//                                grid[m-1][j].removePiece();
+//                                try {
+//                                    // 让当前线程暂停5秒钟
+//                                    Thread.sleep(500);
+//                                } catch (InterruptedException e) {
+//                                    e.printStackTrace();
+//                                }
+//                            }
+
+
+
+
+//                            for(int m=0;m<Constant.CHESSBOARD_ROW_SIZE.getNum();m++) {
+//                                for (int l = 0; l < Constant.CHESSBOARD_COL_SIZE.getNum(); l++) {
+//                                    if (grid[m][l].getPiece()==null){
+//                                        System.out.printf("-\t");
+//                                    }
+//                                    else {
+//                                        System.out.printf("%s\t",grid[m][l].getPiece().getName());
+//                                    }
+//                                }
+//                                System.out.printf("\n");
+//                            }
+//                            System.out.printf("\n\n\n");
                             break;
                         }
                     }

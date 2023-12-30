@@ -236,13 +236,19 @@ public class ChessGameFrame extends JFrame {
         add(button);
     }
 
+
+
+    private JButton NextStepButton;
     private void addNextStepButton() {
-        JButton button = new JButton("Next Step");
-        button.addActionListener((e) -> chessboardComponent.nextStep());
-        button.setLocation(HEIGTH, HEIGTH / 10 + 280);
-        button.setSize(200, 60);
-        button.setFont(new Font("Rockwell", Font.BOLD, 20));
-        add(button);
+
+        NextStepButton = new JButton("Next Step");
+        NextStepButton.addActionListener((e) -> {
+            chessboardComponent.nextStep();
+        });
+        NextStepButton.setLocation(HEIGTH, HEIGTH / 10 + 280);
+        NextStepButton.setSize(200, 60);
+        NextStepButton.setFont(new Font("Rockwell", Font.BOLD, 20));
+        add(NextStepButton);
     }
 
     private void addLoadButton() {
@@ -300,6 +306,7 @@ public class ChessGameFrame extends JFrame {
         button.setFont(new Font("Rockwell", Font.BOLD, 20));
         add(button);
         button.addActionListener(e -> {
+            if (gameController.getModel().isInMiddleState()==false){
             if (autoMode%2==0){
             if(gameController.getModel().isStuck()==false&isGameFinish()==false){
                 autoMode++;
@@ -329,6 +336,9 @@ public class ChessGameFrame extends JFrame {
                 }, 0, TimeUnit.MILLISECONDS);
             }}else {
                 GameController.showErrorDialog("can't use now");
+            }
+            }else {
+                GameController.showErrorDialog("can't use it now");
             }
 
 

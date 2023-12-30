@@ -22,6 +22,15 @@ import static java.awt.AWTEventMulticaster.add;
  */
 public class GameController implements GameListener, Serializable {
 
+    private boolean avoidALotOfClick=false;
+
+    public boolean isAvoidALotOfClick() {
+        return avoidALotOfClick;
+    }
+
+    public void setAvoidALotOfClick(boolean avoidALotOfClick) {
+        this.avoidALotOfClick = avoidALotOfClick;
+    }
 
     private int step=10;
 
@@ -132,6 +141,8 @@ public class GameController implements GameListener, Serializable {
         // TODO: Init your swap function here.
         if (model.isInMiddleState()==true){
             showErrorDialog("Can't swap now.");
+            setSelectedPoint(null);
+            setSelectedPoint2(null);
             return;
         }
         if (selectedPoint==null|selectedPoint2==null){
@@ -207,13 +218,16 @@ public class GameController implements GameListener, Serializable {
     public void onPlayerNextStep() {
         // TODO: Init your next step function here.
         //TODO:如果不能再下落或消去，则提示需要swap
+//        avoidALotOfClick=true;
         if(model.isInMiddleState()==false){
             showErrorDialog("Can't implement next step now.");
+//            avoidALotOfClick=false;
             return;
         }
         System.out.println("Implement your next step here.");
         if(nextstepCount%3==0){
-            model.chessDown();
+//            model.chessDown();
+            chessDown();//down the chess
             sync();
             DownPlayer myClassInstance = new DownPlayer();
             Thread thread2 = new Thread(myClassInstance);
@@ -221,13 +235,20 @@ public class GameController implements GameListener, Serializable {
             thread2.start();
             nextstepCount++;
         } else if (nextstepCount%3==1) {
-            model.generate();
-            sync();
-            DownPlayer myClassInstance = new DownPlayer();
-            Thread thread2 = new Thread(myClassInstance);
-            System.out.printf("test");
-            thread2.start();
-            nextstepCount++;
+            //todo: I try to use this to avoid the quick click on the NextStepButton
+            if (!(canClick())) {
+
+            }
+            else {
+                model.generate();// generate the new chess in null grid
+                sync();
+                DownPlayer myClassInstance = new DownPlayer();
+                Thread thread2 = new Thread(myClassInstance);
+                System.out.printf("test");
+                thread2.start();
+                nextstepCount++;
+            }
+
         }else{
         model.scanTheChessBoard();
         score=score+model.basicCountPoint();
@@ -263,7 +284,6 @@ public class GameController implements GameListener, Serializable {
             toDOString="toDo:swap";
             this.toDO.setText(toDOString);
         }
-
     }
 
 
@@ -408,7 +428,8 @@ public class GameController implements GameListener, Serializable {
 
 
     public void chessDownInGameController(){
-        model.chessDown();//抽象棋盘里的下降
+//        model.chessDown();//抽象棋盘里的下降
+        chessDown();
         sync();
         sync();
     }
@@ -703,5 +724,81 @@ public class GameController implements GameListener, Serializable {
 
     public void setToDOString(String toDOString) {
         this.toDOString = toDOString;
+    }
+
+    public void setView(ChessboardComponent view) {
+        this.view = view;
+    }
+
+
+
+    //todo
+    public void chessDown(){
+        new SwingWorker<Void, Void>() {
+            @Override
+            protected Void doInBackground() throws Exception {
+                for (int i = Constant.CHESSBOARD_ROW_SIZE.getNum() - 1; i >= 0; i--) {
+                    for (int j = Constant.CHESSBOARD_COL_SIZE.getNum() - 1; j >= 0; j--) {
+                        if (model.getGrid()[i][j].getPiece() == null) {
+                            for (int k = i; k >= 0; k--) {
+                                if (model.getGrid()[k][j].getPiece() != null) {
+//                            grid[i][j].setPiece(grid[k][j].getPiece());
+//                            grid[k][j].removePiece();
+                                    //todo
+
+                                    for (int m = k + 1; m <= i; m++) {
+                                        model.getGrid()[m][j].setPiece(model.getGrid()[m - 1][j].getPiece());
+                                        model.getGrid()[m - 1][j].removePiece();
+                                        ChessboardPoint p = new ChessboardPoint(m, j);
+                                        System.out.printf("10086");
+//                                        //todo
+                                        sync();
+                                        try {
+                                            // 让当前线程暂停5秒钟
+                                            Thread.sleep(35);
+                                        } catch (InterruptedException e) {
+                                            e.printStackTrace();
+                                        }
+                                    }
+
+
+
+
+                            /*for(int m=0;m<Constant.CHESSBOARD_ROW_SIZE.getNum();m++) {
+                                for (int l = 0; l < Constant.CHESSBOARD_COL_SIZE.getNum(); l++) {
+                                    if (grid[m][l].getPiece()==null){
+                                        System.out.printf("-\t");
+                                    }
+                                    else {
+                                        System.out.printf("%s\t",grid[m][l].getPiece().getName());
+                                    }
+                                }
+                                System.out.printf("\n");
+                            }
+                            System.out.printf("\n\n\n");*/
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                }
+                return null;
+            }
+        }.execute();
+    }
+
+    public boolean canClick(){
+        for (int i = Constant.CHESSBOARD_ROW_SIZE.getNum() - 1; i >= 0; i--) {
+            for (int j = Constant.CHESSBOARD_COL_SIZE.getNum() - 1; j >= 0; j--) {
+                if(model.getGrid()[i][j].getPiece() == null){
+                    for (int k = i; k >= 0; k--) {
+                        if (model.getGrid()[k][j].getPiece() != null) {
+                            return false;
+                        }
+                    }
+                }
+            }
+        }
+        return true;
     }
 }
