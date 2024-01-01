@@ -4,6 +4,7 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 import controller.GameController;
 import controller.Load;
+import major.Main;
 import view.*;
 import model.*;
 
@@ -124,6 +125,7 @@ public class OpeningPage extends JFrame {
             backMusic3 = new MusicPlayer3();
             ChessGameFrame mainFrame = new ChessGameFrame(1600, 900);
             GameController gameController = new GameController(mainFrame.getChessboardComponent(), new Chessboard());
+            gameController.setBig(Main.isBig);
             File theAutoSave= new File("src/AutoSave.ser");
             try (FileOutputStream fileOut = new FileOutputStream(theAutoSave);
                  ObjectOutputStream objectOut = new ObjectOutputStream(fileOut)) {
@@ -156,6 +158,7 @@ public class OpeningPage extends JFrame {
         JButton button = new JButton("Load");
         button.addActionListener(e -> {
             GameController gc=Load.loadController();
+//            Main.isBig=gc.isBig();
             if (gc!=null){
                 backMusic = new MusicPlayer();
                 thread1 = new Thread(backMusic);
@@ -165,6 +168,7 @@ public class OpeningPage extends JFrame {
                 backMusic3 = new MusicPlayer3();
             ChessGameFrame mainFrame = new ChessGameFrame(1600, 900);
             GameController gameController = new GameController(mainFrame.getChessboardComponent(), new Chessboard());
+
                 File theAutoSave= new File("src/AutoSave.ser");
                 try (FileOutputStream fileOut = new FileOutputStream(theAutoSave);
                      ObjectOutputStream objectOut = new ObjectOutputStream(fileOut)) {

@@ -4,19 +4,17 @@ import java.awt.*;
 import java.util.HashMap;
 import java.util.Map;
 
-public enum Constant {
+public enum Constant1 {
+    CHESSBOARD_ROW_SIZE1(6),CHESSBOARD_COL_SIZE1(6);
 
 
-    CHESSBOARD_ROW_SIZE(8),CHESSBOARD_COL_SIZE(8);
-
-
-    private final int num;
-    Constant(int num){
-        this.num = num;
+    private final int num1;
+    Constant1(int num1){
+        this.num1 = num1;
     }
 
-    public int getNum() {
-        return num;
+    public int getNum1() {
+        return num1;
     }
 
     static Map<String, Color> colorMap = new HashMap<>(){{

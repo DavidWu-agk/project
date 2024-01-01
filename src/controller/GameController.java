@@ -21,6 +21,16 @@ public class GameController implements GameListener, Serializable {
 
     private boolean isMotion=true;
 
+    private boolean isBig=true;
+
+    public boolean isBig() {
+        return isBig;
+    }
+
+    public void setBig(boolean big) {
+        isBig = big;
+    }
+
     private boolean avoidALotOfClick = false;
 
     public boolean isAvoidALotOfClick() {
@@ -122,9 +132,18 @@ public class GameController implements GameListener, Serializable {
     }
 
     public void initialize() {
-        for (int i = 0; i < Constant.CHESSBOARD_ROW_SIZE.getNum(); i++) {
-            for (int j = 0; j < Constant.CHESSBOARD_COL_SIZE.getNum(); j++) {
-                //todo: complete it when restart game
+        if(Main.isBig){
+            for (int i = 0; i < Constant.CHESSBOARD_ROW_SIZE.getNum(); i++) {
+                for (int j = 0; j < Constant.CHESSBOARD_COL_SIZE.getNum(); j++) {
+                    //todo: complete it when restart game
+                }
+            }
+        }
+        else {
+            for (int i = 0; i < Constant1.CHESSBOARD_ROW_SIZE1.getNum1(); i++) {
+                for (int j = 0; j < Constant1.CHESSBOARD_COL_SIZE1.getNum1(); j++) {
+                    //todo: complete it when restart game
+                }
             }
         }
     }
@@ -441,16 +460,33 @@ public class GameController implements GameListener, Serializable {
     }
 
     public void chessComponentBasicElimilation() {
-        for (int i = 0; i < Constant.CHESSBOARD_ROW_SIZE.getNum(); i++) {
-            for (int j = 0; j < Constant.CHESSBOARD_COL_SIZE.getNum(); j++) {
-                if (model.getGrid()[i][j].isToRemoveRow() == true | model.getGrid()[i][j].isToRemoveCol() == true) {
-                    //ChessComponent noChess=new ChessComponent(view.getCHESS_SIZE(),new ChessPiece("-"));
-                    ChessboardPoint p = new ChessboardPoint(i, j);
-                    view.removeChessComponentAtGrid(p);
-                    view.getGridComponentAt(p).repaint();
-                    //view.setChessComponentAtGrid(p,noChess);
-                    //noChess.repaint();
+        if (Main.isBig){
+            for (int i = 0; i < Constant.CHESSBOARD_ROW_SIZE.getNum(); i++) {
+                for (int j = 0; j < Constant.CHESSBOARD_COL_SIZE.getNum(); j++) {
+                    if (model.getGrid()[i][j].isToRemoveRow() == true | model.getGrid()[i][j].isToRemoveCol() == true) {
+                        //ChessComponent noChess=new ChessComponent(view.getCHESS_SIZE(),new ChessPiece("-"));
+                        ChessboardPoint p = new ChessboardPoint(i, j);
+                        view.removeChessComponentAtGrid(p);
+                        view.getGridComponentAt(p).repaint();
+                        //view.setChessComponentAtGrid(p,noChess);
+                        //noChess.repaint();
 
+                    }
+                }
+            }
+        }
+        else {
+            for (int i = 0; i < Constant1.CHESSBOARD_ROW_SIZE1.getNum1(); i++) {
+                for (int j = 0; j < Constant1.CHESSBOARD_COL_SIZE1.getNum1(); j++) {
+                    if (model.getGrid()[i][j].isToRemoveRow() == true | model.getGrid()[i][j].isToRemoveCol() == true) {
+                        //ChessComponent noChess=new ChessComponent(view.getCHESS_SIZE(),new ChessPiece("-"));
+                        ChessboardPoint p = new ChessboardPoint(i, j);
+                        view.removeChessComponentAtGrid(p);
+                        view.getGridComponentAt(p).repaint();
+                        //view.setChessComponentAtGrid(p,noChess);
+                        //noChess.repaint();
+
+                    }
                 }
             }
         }
@@ -461,14 +497,27 @@ public class GameController implements GameListener, Serializable {
         while (!(model.isGoodInit())) {
             model.toRefresh();
         }
-        for (int i = Constant.CHESSBOARD_ROW_SIZE.getNum() - 1; i >= 0; i--) {
-            for (int j = Constant.CHESSBOARD_COL_SIZE.getNum() - 1; j >= 0; j--) {
-                ChessboardPoint p = new ChessboardPoint(i, j);
-                view.removeChessComponentAtGrid(p);
-                ChessComponent thisChess;
-                thisChess = new ChessComponent(view.getCHESS_SIZE(), new ChessPiece(model.getGridAt(p).getPiece().getName()));
-                view.setChessComponentAtGrid(p, thisChess);
-                thisChess.repaint();
+        if (Main.isBig){
+            for (int i = Constant.CHESSBOARD_ROW_SIZE.getNum() - 1; i >= 0; i--) {
+                for (int j = Constant.CHESSBOARD_COL_SIZE.getNum() - 1; j >= 0; j--) {
+                    ChessboardPoint p = new ChessboardPoint(i, j);
+                    view.removeChessComponentAtGrid(p);
+                    ChessComponent thisChess;
+                    thisChess = new ChessComponent(view.getCHESS_SIZE(), new ChessPiece(model.getGridAt(p).getPiece().getName()));
+                    view.setChessComponentAtGrid(p, thisChess);
+                    thisChess.repaint();
+                }
+            }
+        }else {
+            for (int i = Constant1.CHESSBOARD_ROW_SIZE1.getNum1() - 1; i >= 0; i--) {
+                for (int j = Constant1.CHESSBOARD_COL_SIZE1.getNum1() - 1; j >= 0; j--) {
+                    ChessboardPoint p = new ChessboardPoint(i, j);
+                    view.removeChessComponentAtGrid(p);
+                    ChessComponent thisChess;
+                    thisChess = new ChessComponent(view.getCHESS_SIZE(), new ChessPiece(model.getGridAt(p).getPiece().getName()));
+                    view.setChessComponentAtGrid(p, thisChess);
+                    thisChess.repaint();
+                }
             }
         }
     }
@@ -492,27 +541,52 @@ public class GameController implements GameListener, Serializable {
 
     public void sync() {//需要时同步model和view
         System.out.printf("sync begin\n");
-        for (int i = 0; i < Constant.CHESSBOARD_ROW_SIZE.getNum(); i++) {
-            for (int j = 0; j < Constant.CHESSBOARD_COL_SIZE.getNum(); j++) {
-                ChessboardPoint p = new ChessboardPoint(i, j);
-                if (model.getGrid()[i][j].getPiece() != null) {
-                    ChessComponent thisChess = new ChessComponent(view.getCHESS_SIZE(), new ChessPiece(model.getGridAt(p).getPiece().getName()));
-                    if (view.getGridComponentAt(p).getComponents().length != 0) {
-                        view.removeChessComponentAtGrid(p);
-                    }
-                    view.setChessComponentAtGrid(p, thisChess);
-                    thisChess.repaint();
+        if (Main.isBig){
+            for (int i = 0; i < Constant.CHESSBOARD_ROW_SIZE.getNum(); i++) {
+                for (int j = 0; j < Constant.CHESSBOARD_COL_SIZE.getNum(); j++) {
+                    ChessboardPoint p = new ChessboardPoint(i, j);
+                    if (model.getGrid()[i][j].getPiece() != null) {
+                        ChessComponent thisChess = new ChessComponent(view.getCHESS_SIZE(), new ChessPiece(model.getGridAt(p).getPiece().getName()));
+                        if (view.getGridComponentAt(p).getComponents().length != 0) {
+                            view.removeChessComponentAtGrid(p);
+                        }
+                        view.setChessComponentAtGrid(p, thisChess);
+                        thisChess.repaint();
 //                    System.out.printf("repaint1\n");
-                } else {
-                    if (view.getGridComponentAt(p).getComponents().length != 0) {
-                        view.removeChessComponentAtGrid(p);
-                        view.getGridComponentAt(p).repaint();
-                    }
+                    } else {
+                        if (view.getGridComponentAt(p).getComponents().length != 0) {
+                            view.removeChessComponentAtGrid(p);
+                            view.getGridComponentAt(p).repaint();
+                        }
 //                    System.out.printf("repaint2\n");
-                }
+                    }
 
+                }
+            }
+        }else {
+            for (int i = 0; i < Constant1.CHESSBOARD_ROW_SIZE1.getNum1(); i++) {
+                for (int j = 0; j < Constant1.CHESSBOARD_COL_SIZE1.getNum1(); j++) {
+                    ChessboardPoint p = new ChessboardPoint(i, j);
+                    if (model.getGrid()[i][j].getPiece() != null) {
+                        ChessComponent thisChess = new ChessComponent(view.getCHESS_SIZE(), new ChessPiece(model.getGridAt(p).getPiece().getName()));
+                        if (view.getGridComponentAt(p).getComponents().length != 0) {
+                            view.removeChessComponentAtGrid(p);
+                        }
+                        view.setChessComponentAtGrid(p, thisChess);
+                        thisChess.repaint();
+//                    System.out.printf("repaint1\n");
+                    } else {
+                        if (view.getGridComponentAt(p).getComponents().length != 0) {
+                            view.removeChessComponentAtGrid(p);
+                            view.getGridComponentAt(p).repaint();
+                        }
+//                    System.out.printf("repaint2\n");
+                    }
+
+                }
             }
         }
+
         if (model.isInMiddleState()==false){
             getToDO().setText("toDo:swap");
         }
@@ -763,19 +837,36 @@ public class GameController implements GameListener, Serializable {
     @Override
     public boolean equals(GameController gameController) {
         System.out.printf("testtesttest");
-        for (int i = 0; i <= Constant.CHESSBOARD_ROW_SIZE.getNum() - 1; i++) {
-            for (int j = 0; j <= Constant.CHESSBOARD_ROW_SIZE.getNum() - 1; j++) {
-                if (this.model.getGrid()[i][j].getPiece() != null && gameController.model.getGrid()[i][j].getPiece() != null) {
-                    if (this.model.getGrid()[i][j].getPiece().getName().equals(gameController.model.getGrid()[i][j].getPiece().getName())) {
-                        System.out.printf("getGrid()[%d][%d] equals\n", i, j);
+        if (Main.isBig){
+            for (int i = 0; i <= Constant.CHESSBOARD_ROW_SIZE.getNum() - 1; i++) {
+                for (int j = 0; j <= Constant.CHESSBOARD_ROW_SIZE.getNum() - 1; j++) {
+                    if (this.model.getGrid()[i][j].getPiece() != null && gameController.model.getGrid()[i][j].getPiece() != null) {
+                        if (this.model.getGrid()[i][j].getPiece().getName().equals(gameController.model.getGrid()[i][j].getPiece().getName())) {
+                            System.out.printf("getGrid()[%d][%d] equals\n", i, j);
+                        } else {
+                            return false;
+                        }
                     } else {
                         return false;
                     }
-                } else {
-                    return false;
+                }
+            }
+        }else {
+            for (int i = 0; i <= Constant1.CHESSBOARD_ROW_SIZE1.getNum1() - 1; i++) {
+                for (int j = 0; j <= Constant1.CHESSBOARD_ROW_SIZE1.getNum1() - 1; j++) {
+                    if (this.model.getGrid()[i][j].getPiece() != null && gameController.model.getGrid()[i][j].getPiece() != null) {
+                        if (this.model.getGrid()[i][j].getPiece().getName().equals(gameController.model.getGrid()[i][j].getPiece().getName())) {
+                            System.out.printf("getGrid()[%d][%d] equals\n", i, j);
+                        } else {
+                            return false;
+                        }
+                    } else {
+                        return false;
+                    }
                 }
             }
         }
+
 //        if (!(this.step==gameController.step && this.aimNum==gameController.aimNum && this.score==gameController.score)){
 //            System.out.printf("also OK");
 //            return false;
@@ -805,32 +896,33 @@ public class GameController implements GameListener, Serializable {
         new SwingWorker<Void, Void>() {
             @Override
             protected Void doInBackground() throws Exception {
-                for (int i = Constant.CHESSBOARD_ROW_SIZE.getNum() - 1; i >= 0; i--) {
-                    for (int j = Constant.CHESSBOARD_COL_SIZE.getNum() - 1; j >= 0; j--) {
-                        if (model.getGrid()[i][j].getPiece() == null) {
-                            System.out.printf("%d %d is null\n",i,j);
-                            for (int k = i; k >= 0; k--) {
+                if (Main.isBig){
+                    for (int i = Constant.CHESSBOARD_ROW_SIZE.getNum() - 1; i >= 0; i--) {
+                        for (int j = Constant.CHESSBOARD_COL_SIZE.getNum() - 1; j >= 0; j--) {
+                            if (model.getGrid()[i][j].getPiece() == null) {
+                                System.out.printf("%d %d is null\n",i,j);
+                                for (int k = i; k >= 0; k--) {
 
-                                if (model.getGrid()[k][j].getPiece() != null) {
+                                    if (model.getGrid()[k][j].getPiece() != null) {
 //                            grid[i][j].setPiece(grid[k][j].getPiece());
 //                            grid[k][j].removePiece();
-                                    //todo
+                                        //todo
 
-                                    for (int m = k + 1; m <= i; m++) {
-                                        model.getGrid()[m][j].setPiece(model.getGrid()[m - 1][j].getPiece());
-                                        model.getGrid()[m - 1][j].removePiece();
-                                        ChessboardPoint p = new ChessboardPoint(m, j);
+                                        for (int m = k + 1; m <= i; m++) {
+                                            model.getGrid()[m][j].setPiece(model.getGrid()[m - 1][j].getPiece());
+                                            model.getGrid()[m - 1][j].removePiece();
+                                            ChessboardPoint p = new ChessboardPoint(m, j);
 //                                        System.out.printf("10086");
 //                                        //todo
-                                        sync();
-                                        System.out.printf("%d %d down one\n",m-1,j);
-                                        try {
-                                            // 让当前线程暂停5秒钟
-                                            Thread.sleep(35);
-                                        } catch (InterruptedException e) {
-                                            e.printStackTrace();
+                                            sync();
+                                            System.out.printf("%d %d down one\n",m-1,j);
+                                            try {
+                                                // 让当前线程暂停5秒钟
+                                                Thread.sleep(35);
+                                            } catch (InterruptedException e) {
+                                                e.printStackTrace();
+                                            }
                                         }
-                                    }
 
 
 
@@ -847,7 +939,58 @@ public class GameController implements GameListener, Serializable {
                                 System.out.printf("\n");
                             }
                             System.out.printf("\n\n\n");*/
-                                    break;
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                else {
+                    for (int i = Constant1.CHESSBOARD_ROW_SIZE1.getNum1() - 1; i >= 0; i--) {
+                        for (int j = Constant1.CHESSBOARD_COL_SIZE1.getNum1() - 1; j >= 0; j--) {
+                            if (model.getGrid()[i][j].getPiece() == null) {
+                                System.out.printf("%d %d is null\n",i,j);
+                                for (int k = i; k >= 0; k--) {
+
+                                    if (model.getGrid()[k][j].getPiece() != null) {
+//                            grid[i][j].setPiece(grid[k][j].getPiece());
+//                            grid[k][j].removePiece();
+                                        //todo
+
+                                        for (int m = k + 1; m <= i; m++) {
+                                            model.getGrid()[m][j].setPiece(model.getGrid()[m - 1][j].getPiece());
+                                            model.getGrid()[m - 1][j].removePiece();
+                                            ChessboardPoint p = new ChessboardPoint(m, j);
+//                                        System.out.printf("10086");
+//                                        //todo
+                                            sync();
+                                            System.out.printf("%d %d down one\n",m-1,j);
+                                            try {
+                                                // 让当前线程暂停5秒钟
+                                                Thread.sleep(35);
+                                            } catch (InterruptedException e) {
+                                                e.printStackTrace();
+                                            }
+                                        }
+
+
+
+
+                            /*for(int m=0;m<Constant.CHESSBOARD_ROW_SIZE.getNum();m++) {
+                                for (int l = 0; l < Constant.CHESSBOARD_COL_SIZE.getNum(); l++) {
+                                    if (grid[m][l].getPiece()==null){
+                                        System.out.printf("-\t");
+                                    }
+                                    else {
+                                        System.out.printf("%s\t",grid[m][l].getPiece().getName());
+                                    }
+                                }
+                                System.out.printf("\n");
+                            }
+                            System.out.printf("\n\n\n");*/
+                                        break;
+                                    }
                                 }
                             }
                         }
@@ -859,17 +1002,32 @@ public class GameController implements GameListener, Serializable {
     }
 
     public boolean canClick() {
-        for (int i = Constant.CHESSBOARD_ROW_SIZE.getNum() - 1; i >= 0; i--) {
-            for (int j = Constant.CHESSBOARD_COL_SIZE.getNum() - 1; j >= 0; j--) {
-                if (model.getGrid()[i][j].getPiece() == null) {
-                    for (int k = i; k >= 0; k--) {
-                        if (model.getGrid()[k][j].getPiece() != null) {
-                            return false;
+        if (Main.isBig){
+            for (int i = Constant.CHESSBOARD_ROW_SIZE.getNum() - 1; i >= 0; i--) {
+                for (int j = Constant.CHESSBOARD_COL_SIZE.getNum() - 1; j >= 0; j--) {
+                    if (model.getGrid()[i][j].getPiece() == null) {
+                        for (int k = i; k >= 0; k--) {
+                            if (model.getGrid()[k][j].getPiece() != null) {
+                                return false;
+                            }
+                        }
+                    }
+                }
+            }
+        }else {
+            for (int i = Constant1.CHESSBOARD_ROW_SIZE1.getNum1() - 1; i >= 0; i--) {
+                for (int j = Constant1.CHESSBOARD_COL_SIZE1.getNum1() - 1; j >= 0; j--) {
+                    if (model.getGrid()[i][j].getPiece() == null) {
+                        for (int k = i; k >= 0; k--) {
+                            if (model.getGrid()[k][j].getPiece() != null) {
+                                return false;
+                            }
                         }
                     }
                 }
             }
         }
+
         return true;
     }
 
@@ -878,34 +1036,64 @@ public class GameController implements GameListener, Serializable {
         new SwingWorker<Void, Void>() {
             @Override
             protected Void doInBackground() throws Exception {
-                for (int i = Constant.CHESSBOARD_ROW_SIZE.getNum() - 1; i >= 0; i--) {
-                    for (int j = Constant.CHESSBOARD_COL_SIZE.getNum() - 1; j >= 0; j--) {
-                        //grid[i][j].setPiece(new ChessPiece( Util.RandomPick(new String[]{"😅", "😍", "😋", "😡"})));
-                        if (model.getGrid()[i][j].getPiece() == null) {
-                            model.getGrid()[i][j].setPiece(new ChessPiece(Util.RandomPick(new String[]{"😅", "😍", "😋", "😡"})));
-                            sync();
-                            try {
-                                // 让当前线程暂停5秒钟
-                                Thread.sleep(35);
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
+                if (Main.isBig){
+                    for (int i = Constant.CHESSBOARD_ROW_SIZE.getNum() - 1; i >= 0; i--) {
+                        for (int j = Constant.CHESSBOARD_COL_SIZE.getNum() - 1; j >= 0; j--) {
+                            //grid[i][j].setPiece(new ChessPiece( Util.RandomPick(new String[]{"😅", "😍", "😋", "😡"})));
+                            if (model.getGrid()[i][j].getPiece() == null) {
+                                model.getGrid()[i][j].setPiece(new ChessPiece(Util.RandomPick(new String[]{"😅", "😍", "😋", "😡"})));
+                                sync();
+                                try {
+                                    // 让当前线程暂停5秒钟
+                                    Thread.sleep(35);
+                                } catch (InterruptedException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        }
+                    }
+                }else {
+                    for (int i = Constant1.CHESSBOARD_ROW_SIZE1.getNum1() - 1; i >= 0; i--) {
+                        for (int j = Constant1.CHESSBOARD_COL_SIZE1.getNum1() - 1; j >= 0; j--) {
+                            //grid[i][j].setPiece(new ChessPiece( Util.RandomPick(new String[]{"😅", "😍", "😋", "😡"})));
+                            if (model.getGrid()[i][j].getPiece() == null) {
+                                model.getGrid()[i][j].setPiece(new ChessPiece(Util.RandomPick(new String[]{"😅", "😍", "😋", "😡"})));
+                                sync();
+                                try {
+                                    // 让当前线程暂停5秒钟
+                                    Thread.sleep(35);
+                                } catch (InterruptedException e) {
+                                    e.printStackTrace();
+                                }
                             }
                         }
                     }
                 }
+
                 return null;
             }
         }.execute();
     }
 
     public boolean canClick1() {
-        for (int i = Constant.CHESSBOARD_ROW_SIZE.getNum() - 1; i >= 0; i--) {
-            for (int j = Constant.CHESSBOARD_COL_SIZE.getNum() - 1; j >= 0; j--) {
-                if (model.getGrid()[i][j].getPiece() == null) {
-                    return false;
+        if (Main.isBig){
+            for (int i = Constant.CHESSBOARD_ROW_SIZE.getNum() - 1; i >= 0; i--) {
+                for (int j = Constant.CHESSBOARD_COL_SIZE.getNum() - 1; j >= 0; j--) {
+                    if (model.getGrid()[i][j].getPiece() == null) {
+                        return false;
+                    }
+                }
+            }
+        }else {
+            for (int i = Constant1.CHESSBOARD_ROW_SIZE1.getNum1() - 1; i >= 0; i--) {
+                for (int j = Constant1.CHESSBOARD_COL_SIZE1.getNum1() - 1; j >= 0; j--) {
+                    if (model.getGrid()[i][j].getPiece() == null) {
+                        return false;
+                    }
                 }
             }
         }
+
         return true;
     }
 

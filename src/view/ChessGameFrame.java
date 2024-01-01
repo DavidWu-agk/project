@@ -262,19 +262,42 @@ public class ChessGameFrame extends JFrame {
         button.addActionListener(e -> {
             GameController gc=Load.loadController();
             if(gc!=null){
-            gameController.getModel().setGrid(gc.getModel().getGrid());
-            gameController.sync();
-            gameController.setStep(gc.getStep());
-            gameController.setScore(gc.getScore());
-            gameController.setAim(gc.getAim());
-            gameController.setToDOString(gc.getToDOString());
-            gameController.getStatusLabel().setText("Score:"+gameController.getScore()/*+"\nthe step you have:"+step*/);
-            gameController.getTheStepNumber().setText("step:"+gameController.getStep());
-            gameController.getAimNum().setText("aim:"+gameController.getAim());
-            gameController.getToDO().setText(gameController.getToDOString());//???
-            if (gameController.getModel().isStuck() == true) {
-                GameController.showErrorDialog("you stuck,please refreash");
-            }
+                if(gameController.isBig()==gc.isBig()){
+                    Main.isBig=gc.isBig();
+                    gameController.getModel().setGrid(gc.getModel().getGrid());
+                    gameController.sync();
+                    gameController.setStep(gc.getStep());
+                    gameController.setScore(gc.getScore());
+                    gameController.setAim(gc.getAim());
+                    gameController.setToDOString(gc.getToDOString());
+                    gameController.getStatusLabel().setText("Score:"+gameController.getScore()/*+"\nthe step you have:"+step*/);
+                    gameController.getTheStepNumber().setText("step:"+gameController.getStep());
+                    gameController.getAimNum().setText("aim:"+gameController.getAim());
+                    gameController.getToDO().setText(gameController.getToDOString());//???
+
+                    if (gameController.getModel().isStuck() == true) {
+                        GameController.showErrorDialog("you stuck,please refreash");
+                    }
+                }
+                else {
+                    GameController.showErrorDialog("The chessboard size is wrong.");
+                    return;
+                }
+//                Main.isBig=gc.isBig();
+//                gameController.getModel().setGrid(gc.getModel().getGrid());
+//                gameController.sync();
+//                gameController.setStep(gc.getStep());
+//                gameController.setScore(gc.getScore());
+//                gameController.setAim(gc.getAim());
+//                gameController.setToDOString(gc.getToDOString());
+//                gameController.getStatusLabel().setText("Score:"+gameController.getScore()/*+"\nthe step you have:"+step*/);
+//                gameController.getTheStepNumber().setText("step:"+gameController.getStep());
+//                gameController.getAimNum().setText("aim:"+gameController.getAim());
+//                gameController.getToDO().setText(gameController.getToDOString());//???
+//
+//                if (gameController.getModel().isStuck() == true) {
+//                    GameController.showErrorDialog("you stuck,please refreash");
+//                }
             }
         });
     }

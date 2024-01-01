@@ -2,6 +2,7 @@ package view;
 
 
 import controller.GameController;
+import major.Main;
 import model.*;
 
 import javax.swing.*;
@@ -12,6 +13,8 @@ import java.util.Set;
 
 import static model.Constant.CHESSBOARD_COL_SIZE;
 import static model.Constant.CHESSBOARD_ROW_SIZE;
+import static model.Constant1.CHESSBOARD_COL_SIZE1;
+import static model.Constant1.CHESSBOARD_ROW_SIZE1;
 
 /**
  * This class represents the checkerboard component object on the panel
@@ -19,7 +22,7 @@ import static model.Constant.CHESSBOARD_ROW_SIZE;
 public class ChessboardComponent extends JComponent {
 
     private int deltaStep=0;
-    private final CellComponent[][] gridComponents = new CellComponent[CHESSBOARD_ROW_SIZE.getNum()][CHESSBOARD_COL_SIZE.getNum()];
+    private final CellComponent[][] gridComponents = Main.isBig?new CellComponent[CHESSBOARD_ROW_SIZE.getNum()][CHESSBOARD_COL_SIZE.getNum()]:new CellComponent[CHESSBOARD_ROW_SIZE1.getNum1()][CHESSBOARD_COL_SIZE1.getNum1()];
     private final int CHESS_SIZE;
     private final Set<ChessboardPoint> riverCell = new HashSet<>();
 
@@ -46,12 +49,25 @@ public class ChessboardComponent extends JComponent {
      * according to Chessboard information
      */
     public void initiateChessComponent(Chessboard chessboard) {
-        Cell[][] grid = chessboard.getGrid();
-        for (int i = 0; i < CHESSBOARD_ROW_SIZE.getNum(); i++) {
-            for (int j = 0; j < CHESSBOARD_COL_SIZE.getNum(); j++) {
-                if (grid[i][j].getPiece() != null) {
-                    ChessPiece chessPiece = grid[i][j].getPiece();
-                    gridComponents[i][j].add(new ChessComponent(CHESS_SIZE, chessPiece));
+        if (Main.isBig){
+            Cell[][] grid = chessboard.getGrid();
+            for (int i = 0; i < CHESSBOARD_ROW_SIZE.getNum(); i++) {
+                for (int j = 0; j < CHESSBOARD_COL_SIZE.getNum(); j++) {
+                    if (grid[i][j].getPiece() != null) {
+                        ChessPiece chessPiece = grid[i][j].getPiece();
+                        gridComponents[i][j].add(new ChessComponent(CHESS_SIZE, chessPiece));
+                    }
+                }
+            }
+        }
+        else {
+            Cell[][] grid = chessboard.getGrid();
+            for (int i = 0; i < CHESSBOARD_ROW_SIZE1.getNum1(); i++) {
+                for (int j = 0; j < CHESSBOARD_COL_SIZE1.getNum1(); j++) {
+                    if (grid[i][j].getPiece() != null) {
+                        ChessPiece chessPiece = grid[i][j].getPiece();
+                        gridComponents[i][j].add(new ChessComponent(CHESS_SIZE, chessPiece));
+                    }
                 }
             }
         }
@@ -59,19 +75,36 @@ public class ChessboardComponent extends JComponent {
     }
 
     public void initiateGridComponents() {
-
-        for (int i = 0; i < CHESSBOARD_ROW_SIZE.getNum(); i++) {
-            for (int j = 0; j < CHESSBOARD_COL_SIZE.getNum(); j++) {
-                ChessboardPoint temp = new ChessboardPoint(i, j);
-                CellComponent cell;
-                if (riverCell.contains(temp)) {
-                    cell = new CellComponent(Color.CYAN, calculatePoint(i, j), CHESS_SIZE);
-                    this.add(cell);
-                } else {
-                    cell = new CellComponent(Color.LIGHT_GRAY, calculatePoint(i, j), CHESS_SIZE);
-                    this.add(cell);
+        if (Main.isBig){
+            for (int i = 0; i < CHESSBOARD_ROW_SIZE.getNum(); i++) {
+                for (int j = 0; j < CHESSBOARD_COL_SIZE.getNum(); j++) {
+                    ChessboardPoint temp = new ChessboardPoint(i, j);
+                    CellComponent cell;
+                    if (riverCell.contains(temp)) {
+                        cell = new CellComponent(Color.CYAN, calculatePoint(i, j), CHESS_SIZE);
+                        this.add(cell);
+                    } else {
+                        cell = new CellComponent(Color.LIGHT_GRAY, calculatePoint(i, j), CHESS_SIZE);
+                        this.add(cell);
+                    }
+                    gridComponents[i][j] = cell;
                 }
-                gridComponents[i][j] = cell;
+            }
+        }
+        else {
+            for (int i = 0; i < CHESSBOARD_ROW_SIZE1.getNum1(); i++) {
+                for (int j = 0; j < CHESSBOARD_COL_SIZE1.getNum1(); j++) {
+                    ChessboardPoint temp = new ChessboardPoint(i, j);
+                    CellComponent cell;
+                    if (riverCell.contains(temp)) {
+                        cell = new CellComponent(Color.CYAN, calculatePoint(i, j), CHESS_SIZE);
+                        this.add(cell);
+                    } else {
+                        cell = new CellComponent(Color.LIGHT_GRAY, calculatePoint(i, j), CHESS_SIZE);
+                        this.add(cell);
+                    }
+                    gridComponents[i][j] = cell;
+                }
             }
         }
     }
