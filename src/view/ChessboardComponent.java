@@ -204,4 +204,6 @@ public class ChessboardComponent extends JComponent {
     public void changeMusic(){gameController.onChangeMusic();}
 
     public void changeMotion(){gameController.onChangeMotion();}
+
+    //public void startServer(){gameController.onStartServer();}
 }

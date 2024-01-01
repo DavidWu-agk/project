@@ -2,7 +2,7 @@ package controller;
 import java.io.*;
 import java.net.*;
 
-public class netClient {
+public class NetClient {
     public void Client(){
         String host = "localhost";
         int port = 1145;

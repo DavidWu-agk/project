@@ -233,7 +233,10 @@ public class GameController implements GameListener, Serializable {
                 model.chessDown();
                 sync();
             }
-//            sync();
+            if (model.isInMiddleState()==false){
+                getToDO().setText("toDo:swap");
+            }
+            //            sync();
 //            DownPlayer myClassInstance = new DownPlayer();
 //            Thread thread2 = new Thread(myClassInstance);
 //            System.out.printf("test");
@@ -252,11 +255,18 @@ public class GameController implements GameListener, Serializable {
 //                Thread thread2 = new Thread(myClassInstance);
 //                System.out.printf("test");
 //                thread2.start();
+                    if (model.isInMiddleState()==false){
+                        getToDO().setText("toDo:swap");
+                    }
                     nextstepCount++;
+
                 }
             }
             else {
                 model.generate();// generate the new chess in null grid
+                if (model.isInMiddleState()==false){
+                    getToDO().setText("toDo:swap");
+                }
                 sync();
                 nextstepCount++;
             }
@@ -278,7 +288,9 @@ public class GameController implements GameListener, Serializable {
 //                System.out.printf("test");
 //                thread2.start();
                     nextstepCount++;
-                }
+                    if (model.isInMiddleState()==false){
+                        getToDO().setText("toDo:swap");
+                    }                }
             }
             else {
                 model.scanTheChessBoard();
@@ -294,6 +306,9 @@ public class GameController implements GameListener, Serializable {
 //                System.out.printf("test");
 //                thread2.start();
                 nextstepCount++;
+                if (model.isInMiddleState()==false){
+                    getToDO().setText("toDo:swap");
+                }
             }
         }
         if (score >= aim) {
@@ -313,8 +328,8 @@ public class GameController implements GameListener, Serializable {
                 e.printStackTrace();
                 System.out.printf("error");
             }
-            toDOString = "toDo:swap";
-            this.toDO.setText(toDOString);
+            //toDOString = "toDo:swap";
+            //this.toDO.setText(toDOString);
         }
     }
 
@@ -489,6 +504,25 @@ public class GameController implements GameListener, Serializable {
                 }
 
             }
+        }
+        if (model.isInMiddleState()==false){
+            getToDO().setText("toDo:swap");
+        }
+        if (model.isInMiddleState() == false) {
+            //TODO:自动存档，以便于悔棋，并删除前面一个存档
+            File theAutoSave = new File("src/AutoSave.ser");
+            try (FileOutputStream fileOut = new FileOutputStream(theAutoSave);
+                 ObjectOutputStream objectOut = new ObjectOutputStream(fileOut)) {
+
+                objectOut.writeObject(this);
+                System.out.println("Game has been saved to: " + theAutoSave.getAbsolutePath());
+
+            } catch (IOException e) {
+                e.printStackTrace();
+                System.out.printf("error");
+            }
+            //toDOString = "toDo:swap";
+            //this.toDO.setText(toDOString);
         }
         System.out.printf("sync finish\n");
     }

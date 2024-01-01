@@ -1,7 +1,7 @@
 package controller;
 import java.io.*;
 import java.net.*;
-public class netServer {
+public class NetServer {
     public void Server(){
         int net=1145;
         try (ServerSocket serverSocket = new ServerSocket(net);

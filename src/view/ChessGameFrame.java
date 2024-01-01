@@ -69,8 +69,9 @@ public class ChessGameFrame extends JFrame {
         addHintButton();
         addBackButton();
         addMusicButton();
-        add(backgroundLabel);
         addMotionButton();
+        add(backgroundLabel);
+
 
     }
 
@@ -397,7 +398,23 @@ public class ChessGameFrame extends JFrame {
                     gameController.getStatusLabel().setText("Score:" + gameController.getScore()/*+"\nthe step you have:"+step*/);
                     gameController.getTheStepNumber().setText("step:" + gameController.getStep());
                     gameController.getAimNum().setText("aim:" + gameController.getAim());
-                    gameController.getToDO().setText(gameController.getToDOString());//???
+                    gameController.getToDO().setText("toDo:swap");//???
+                    if (gameController.getModel().isInMiddleState() == false) {
+                        //TODO:自动存档，以便于悔棋，并删除前面一个存档
+                        File theAutoSave = new File("src/AutoSave.ser");
+                        try (FileOutputStream fileOut = new FileOutputStream(theAutoSave);
+                             ObjectOutputStream objectOut = new ObjectOutputStream(fileOut)) {
+
+                            objectOut.writeObject(gameController);
+                            System.out.println("Game has been saved to: " + theAutoSave.getAbsolutePath());
+
+                        } catch (IOException f) {
+                            f.printStackTrace();
+                            System.out.printf("error");
+                        }
+                        //toDOString = "toDo:swap";
+                        //this.toDO.setText(toDOString);
+                    }
                 }
                 else {
                     GameController.showErrorDialog("Only can back after swap.");
