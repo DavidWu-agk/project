@@ -34,7 +34,7 @@ public class GameController implements GameListener, Serializable {
     private int step = 10;
 
     private int allStep = 10;
-    private int aim = 50;
+    private int aim = 500;
     private Chessboard model;
     private ChessboardComponent view;
     //private ChessGameFrame fr;
@@ -290,7 +290,12 @@ public class GameController implements GameListener, Serializable {
                     nextstepCount++;
                     if (model.isInMiddleState()==false){
                         getToDO().setText("toDo:swap");
-                    }                }
+                        if (this.model.isStuck() ==true){
+                            GameController.showErrorDialog("you stuck,please refreash");
+                        }
+                    }
+
+                }
             }
             else {
                 model.scanTheChessBoard();
@@ -308,6 +313,9 @@ public class GameController implements GameListener, Serializable {
                 nextstepCount++;
                 if (model.isInMiddleState()==false){
                     getToDO().setText("toDo:swap");
+                    if (this.model.isStuck() ==true){
+                        GameController.showErrorDialog("you stuck,please refreash");
+                    }
                 }
             }
         }
@@ -541,7 +549,7 @@ public class GameController implements GameListener, Serializable {
             //TODO:easy
             step = 10;
             allStep = step;
-            aim = 50;
+            aim = 500;
             score = 0;
             onPlayerRefresh();
             this.statusLabel.setText("Score:" + score/*+"\nthe step you have:"+step*/);
@@ -551,7 +559,7 @@ public class GameController implements GameListener, Serializable {
             //TODO:hard
             step = 8;
             allStep = step;
-            aim = 50;
+            aim = 500;
             score = 0;
             onPlayerRefresh();
             this.statusLabel.setText("Score:" + score/*+"\nthe step you have:"+step*/);

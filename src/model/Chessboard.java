@@ -36,8 +36,78 @@ public class Chessboard implements Serializable {
                     for (int j = Constant.CHESSBOARD_COL_SIZE.getNum() - 1; j >= 0; j--) {
                         grid[i][j].setPiece(new ChessPiece(Util.RandomPick(new String[]{"😅", "😍", "😋", "😡"})));
                     }
-                }
-
+                }//为了构造样例暂时注释
+//        grid[0][0].setPiece(new ChessPiece(new String("😅")));
+//        grid[0][1].setPiece(new ChessPiece(new String("\uD83D\uDE0D")));
+//        grid[0][2].setPiece(new ChessPiece(new String("\uD83D\uDE0B")));
+//        grid[0][3].setPiece(new ChessPiece(new String("\uD83D\uDE21")));
+//        grid[0][4].setPiece(new ChessPiece(new String("😅")));
+//        grid[0][5].setPiece(new ChessPiece(new String("\uD83D\uDE0D")));
+//        grid[0][6].setPiece(new ChessPiece(new String("\uD83D\uDE0B")));
+//        grid[0][7].setPiece(new ChessPiece(new String("\uD83D\uDE21")));
+//
+//        grid[1][0].setPiece(new ChessPiece(new String("\uD83D\uDE0D")));
+//        grid[1][1].setPiece(new ChessPiece(new String("\uD83D\uDE0B")));
+//        grid[1][2].setPiece(new ChessPiece(new String("\uD83D\uDE21")));
+//        grid[1][3].setPiece(new ChessPiece(new String("😅")));
+//        grid[1][4].setPiece(new ChessPiece(new String("\uD83D\uDE0D")));
+//        grid[1][5].setPiece(new ChessPiece(new String("\uD83D\uDE0B")));
+//        grid[1][6].setPiece(new ChessPiece(new String("\uD83D\uDE21")));
+//        grid[1][7].setPiece(new ChessPiece(new String("😅")));
+//
+//        grid[2][0].setPiece(new ChessPiece(new String("\uD83D\uDE0B")));
+//        grid[2][1].setPiece(new ChessPiece(new String("\uD83D\uDE21")));
+//        grid[2][2].setPiece(new ChessPiece(new String("😅")));
+//        grid[2][3].setPiece(new ChessPiece(new String("\uD83D\uDE0D")));
+//        grid[2][4].setPiece(new ChessPiece(new String("\uD83D\uDE0B")));
+//        grid[2][5].setPiece(new ChessPiece(new String("\uD83D\uDE21")));
+//        grid[2][6].setPiece(new ChessPiece(new String("😅")));
+//        grid[2][7].setPiece(new ChessPiece(new String("\uD83D\uDE0D")));
+//
+//        grid[3][0].setPiece(new ChessPiece(new String("\uD83D\uDE21")));
+//        grid[3][1].setPiece(new ChessPiece(new String("😅")));
+//        grid[3][2].setPiece(new ChessPiece(new String("\uD83D\uDE0D")));
+//        grid[3][3].setPiece(new ChessPiece(new String("\uD83D\uDE0B")));
+//        grid[3][4].setPiece(new ChessPiece(new String("\uD83D\uDE21")));
+//        grid[3][5].setPiece(new ChessPiece(new String("😅")));
+//        grid[3][6].setPiece(new ChessPiece(new String("\uD83D\uDE0D")));
+//        grid[3][7].setPiece(new ChessPiece(new String("\uD83D\uDE0B")));
+//
+//        grid[4][0].setPiece(new ChessPiece(new String("😅")));
+//        grid[4][1].setPiece(new ChessPiece(new String("\uD83D\uDE0D")));
+//        grid[4][2].setPiece(new ChessPiece(new String("\uD83D\uDE0B")));
+//        grid[4][3].setPiece(new ChessPiece(new String("\uD83D\uDE21")));
+//        grid[4][4].setPiece(new ChessPiece(new String("😅")));
+//        grid[4][5].setPiece(new ChessPiece(new String("\uD83D\uDE0D")));
+//        grid[4][6].setPiece(new ChessPiece(new String("\uD83D\uDE0B")));
+//        grid[4][7].setPiece(new ChessPiece(new String("\uD83D\uDE21")));
+//
+//        grid[5][0].setPiece(new ChessPiece(new String("\uD83D\uDE0D")));
+//        grid[5][1].setPiece(new ChessPiece(new String("\uD83D\uDE0B")));
+//        grid[5][2].setPiece(new ChessPiece(new String("\uD83D\uDE21")));
+//        grid[5][3].setPiece(new ChessPiece(new String("😅")));
+//        grid[5][4].setPiece(new ChessPiece(new String("\uD83D\uDE0D")));
+//        grid[5][5].setPiece(new ChessPiece(new String("\uD83D\uDE0B")));
+//        grid[5][6].setPiece(new ChessPiece(new String("\uD83D\uDE21")));
+//        grid[5][7].setPiece(new ChessPiece(new String("😅")));
+//
+//        grid[6][0].setPiece(new ChessPiece(new String("\uD83D\uDE0B")));
+//        grid[6][1].setPiece(new ChessPiece(new String("\uD83D\uDE21")));
+//        grid[6][2].setPiece(new ChessPiece(new String("😅")));
+//        grid[6][3].setPiece(new ChessPiece(new String("\uD83D\uDE0D")));
+//        grid[6][4].setPiece(new ChessPiece(new String("\uD83D\uDE0B")));
+//        grid[6][5].setPiece(new ChessPiece(new String("\uD83D\uDE21")));
+//        grid[6][6].setPiece(new ChessPiece(new String("😅")));
+//        grid[6][7].setPiece(new ChessPiece(new String("\uD83D\uDE0D")));
+//
+//        grid[7][0].setPiece(new ChessPiece(new String("\uD83D\uDE21")));
+//        grid[7][1].setPiece(new ChessPiece(new String("😅")));
+//        grid[7][2].setPiece(new ChessPiece(new String("\uD83D\uDE0D")));
+//        grid[7][3].setPiece(new ChessPiece(new String("\uD83D\uDE0B")));
+//        grid[7][4].setPiece(new ChessPiece(new String("\uD83D\uDE21")));
+//        grid[7][5].setPiece(new ChessPiece(new String("😅")));
+//        grid[7][6].setPiece(new ChessPiece(new String("\uD83D\uDE0D")));
+//        grid[7][7].setPiece(new ChessPiece(new String("\uD83D\uDE0B")));
     }
 
     private void initPieces() {
@@ -237,11 +307,11 @@ public class Chessboard implements Serializable {
         for(int i=0;i<Constant.CHESSBOARD_ROW_SIZE.getNum();i++){
             for(int j=0;j<Constant.CHESSBOARD_COL_SIZE.getNum();j++){
                 if(grid[i][j].isToRemoveRow()==true&grid[i][j].isToRemoveCol()==false){
-                    point++;
+                    point+=10;
                 } else if (grid[i][j].isToRemoveRow()==false&grid[i][j].isToRemoveCol()==true) {
-                    point++;
+                    point+=10;
                 } else if (grid[i][j].isToRemoveRow()==true&grid[i][j].isToRemoveCol()==true) {
-                    point=point+2;
+                    point=point+20;
                 }
             }
         }

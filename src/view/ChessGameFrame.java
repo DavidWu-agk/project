@@ -272,6 +272,9 @@ public class ChessGameFrame extends JFrame {
             gameController.getTheStepNumber().setText("step:"+gameController.getStep());
             gameController.getAimNum().setText("aim:"+gameController.getAim());
             gameController.getToDO().setText(gameController.getToDOString());//???
+            if (gameController.getModel().isStuck() == true) {
+                GameController.showErrorDialog("you stuck,please refreash");
+            }
             }
         });
     }
@@ -359,14 +362,18 @@ public class ChessGameFrame extends JFrame {
         add(button);
         button.addActionListener(e -> {
             if(gameController.getSelectedPoint()==null&gameController.getSelectedPoint2()==null){
-            gameController.setSelectedPoint(gameController.getModel().hint().get(0));
-            gameController.setSelectedPoint2(gameController.getModel().hint().get(1));
-            var point1 = (ChessComponent) gameController.getView().getGridComponentAt(gameController.getSelectedPoint()).getComponent(0);
-            var point2 = (ChessComponent) gameController.getView().getGridComponentAt(gameController.getSelectedPoint2()).getComponent(0);
-            point1.setSelected(true);
-            point2.setSelected(true);
-            point1.repaint();
-            point2.repaint();
+                if (gameController.getModel().isStuck() == true) {
+                    GameController.showErrorDialog("you stuck,please refreash");
+                }else {
+                    gameController.setSelectedPoint(gameController.getModel().hint().get(0));
+                    gameController.setSelectedPoint2(gameController.getModel().hint().get(1));
+                    var point1 = (ChessComponent) gameController.getView().getGridComponentAt(gameController.getSelectedPoint()).getComponent(0);
+                    var point2 = (ChessComponent) gameController.getView().getGridComponentAt(gameController.getSelectedPoint2()).getComponent(0);
+                    point1.setSelected(true);
+                    point2.setSelected(true);
+                    point1.repaint();
+                    point2.repaint();
+                }
             }else{
                 GameController.showErrorDialog("please cancel your current selection");
             }

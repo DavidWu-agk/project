@@ -7,6 +7,8 @@ import java.util.Map;
 public enum Constant {
     CHESSBOARD_ROW_SIZE(8),CHESSBOARD_COL_SIZE(8);
 
+
+
     private final int num;
     Constant(int num){
         this.num = num;
