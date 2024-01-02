@@ -43,4 +43,7 @@ public class Main {
     public static OpeningPage getOp() {
         return op;
     }
+    public static void showErrorDialog(String message) {
+        JOptionPane.showMessageDialog(null, message, null, JOptionPane.ERROR_MESSAGE);
+    }
 }

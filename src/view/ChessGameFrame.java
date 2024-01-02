@@ -280,7 +280,7 @@ public class ChessGameFrame extends JFrame {
                     }
                 }
                 else {
-                    GameController.showErrorDialog("The chessboard size is wrong.");
+                    GameController.showErrorDialog("102,The chessboard size is wrong.");
                     return;
                 }
 //                Main.isBig=gc.isBig();

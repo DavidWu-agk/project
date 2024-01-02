@@ -160,41 +160,48 @@ public class OpeningPage extends JFrame {
             GameController gc=Load.loadController();
 //            Main.isBig=gc.isBig();
             if (gc!=null){
-                backMusic = new MusicPlayer();
-                thread1 = new Thread(backMusic);
-                thread1.start();
-                backMusic1 = new MusicPlayer1();
-                backMusic2 = new MusicPlayer2();
-                backMusic3 = new MusicPlayer3();
-            ChessGameFrame mainFrame = new ChessGameFrame(1600, 900);
-            GameController gameController = new GameController(mainFrame.getChessboardComponent(), new Chessboard());
+                if(Main.isBig==gc.isBig()) {
+                    ChessGameFrame mainFrame = new ChessGameFrame(1600, 900);
+                    GameController gameController = new GameController(mainFrame.getChessboardComponent(), new Chessboard());
 
-                File theAutoSave= new File("src/AutoSave.ser");
-                try (FileOutputStream fileOut = new FileOutputStream(theAutoSave);
-                     ObjectOutputStream objectOut = new ObjectOutputStream(fileOut)) {
+                    backMusic = new MusicPlayer();
+                    thread1 = new Thread(backMusic);
+                    thread1.start();
+                    backMusic1 = new MusicPlayer1();
+                    backMusic2 = new MusicPlayer2();
+                    backMusic3 = new MusicPlayer3();
+                    Main.isBig = gc.isBig();
 
-                    objectOut.writeObject(gameController);
-                    System.out.println("Game has been saved to: " + theAutoSave.getAbsolutePath());
+                    File theAutoSave = new File("src/AutoSave.ser");
+                    try (FileOutputStream fileOut = new FileOutputStream(theAutoSave);
+                         ObjectOutputStream objectOut = new ObjectOutputStream(fileOut)) {
 
-                } catch (IOException f) {
-                    f.printStackTrace();
-                    System.out.printf("error");
+                        objectOut.writeObject(gameController);
+                        System.out.println("Game has been saved to: " + theAutoSave.getAbsolutePath());
+
+                    } catch (IOException f) {
+                        f.printStackTrace();
+                        System.out.printf("error");
+                    }
+                    //gameController.setFr(mainFrame);
+                    mainFrame.setGameController(gameController);
+                    gameController.setStatusLabel(mainFrame.getStatusLabel());
+                    gameController.setTheStepNumber(mainFrame.getTheStepNumber());
+                    gameController.setAimNum(mainFrame.getAimNum());//TODO:when load, we also need load the aim score!
+                    gameController.setToDO(mainFrame.getToDO());
+                    gameController.setLabel();
+                    gameController.getModel().setGrid(gc.getModel().getGrid());
+                    gameController.sync();
+                    gameController.setStep(gc.getStep());
+                    gameController.setScore(gc.getScore());
+                    gameController.getStatusLabel().setText("Score:" + gameController.getScore()/*+"\nthe step you have:"+step*/);
+                    gameController.getTheStepNumber().setText("step:" + gameController.getStep());
+                    gameController.getAimNum().setText("aim:" + gameController.getAim());
+                    mainFrame.setVisible(true);
                 }
-            //gameController.setFr(mainFrame);
-            mainFrame.setGameController(gameController);
-            gameController.setStatusLabel(mainFrame.getStatusLabel());
-            gameController.setTheStepNumber(mainFrame.getTheStepNumber());
-            gameController.setAimNum(mainFrame.getAimNum());//TODO:when load, we also need load the aim score!
-            gameController.setToDO(mainFrame.getToDO());
-            gameController.setLabel();
-            gameController.getModel().setGrid(gc.getModel().getGrid());
-            gameController.sync();
-            gameController.setStep(gc.getStep());
-            gameController.setScore(gc.getScore());
-            gameController.getStatusLabel().setText("Score:"+gameController.getScore()/*+"\nthe step you have:"+step*/);
-            gameController.getTheStepNumber().setText("step:"+gameController.getStep());
-            gameController.getAimNum().setText("aim:"+gameController.getAim());
-            mainFrame.setVisible(true);
+                else {
+                    Main.showErrorDialog("102,The chessboard size is wrong.");
+                }
             }
         });
         button.setAlignmentX(Component.CENTER_ALIGNMENT);
