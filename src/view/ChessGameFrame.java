@@ -58,6 +58,7 @@ public class ChessGameFrame extends JFrame {
         addLabel();
         //addTheStepLabel();
         //addHelloButton();
+        addTipButton();
         addRefreshButton();
         addRestartButton();
         addSwapConfirmButton();
@@ -530,6 +531,18 @@ public class ChessGameFrame extends JFrame {
         });
     }
 
+    private void addTipButton(){
+        JButton button = new JButton("Tips");
+        button.setLocation(HEIGTH+200, HEIGTH / 10 + 520);
+        button.setSize(200, 60);
+        button.setFont(new Font("Rockwell", Font.BOLD, 20));
+        add(button);
+
+        button.addActionListener(e -> {
+            //todo
+
+        });
+    }
 
     public void sleep(){
         System.out.println("Start");
