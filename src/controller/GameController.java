@@ -195,10 +195,10 @@ public class GameController implements GameListener, Serializable {
             model.setToDefault();
             selectedPoint = null;
             selectedPoint2 = null;//修复消了以后无法自由点击格子的bug
-//            DownPlayer myClassInstance = new DownPlayer();
-//            Thread thread2 = new Thread(myClassInstance);
-//            System.out.printf("test");
-//            thread2.start();
+            DownPlayer myClassInstance = new DownPlayer();
+            Thread thread2 = new Thread(myClassInstance);
+            System.out.printf("test");
+            thread2.start();
             toDOString = "toDo:nextStep";
             this.toDO.setText(toDOString);
 
@@ -256,10 +256,10 @@ public class GameController implements GameListener, Serializable {
                 getToDO().setText("toDo:swap");
             }
             //            sync();
-//            DownPlayer myClassInstance = new DownPlayer();
-//            Thread thread2 = new Thread(myClassInstance);
-//            System.out.printf("test");
-//            thread2.start();
+            DownPlayer myClassInstance = new DownPlayer();
+            Thread thread2 = new Thread(myClassInstance);
+            System.out.printf("test");
+            thread2.start();
             nextstepCount++;
         } else if (nextstepCount % 3 == 1) {
             //todo: I try to use this to avoid the quick click on the NextStepButton
@@ -270,10 +270,10 @@ public class GameController implements GameListener, Serializable {
 //                model.generate();// generate the new chess in null grid
                     generate();
 //                sync();
-//                DownPlayer myClassInstance = new DownPlayer();
-//                Thread thread2 = new Thread(myClassInstance);
-//                System.out.printf("test");
-//                thread2.start();
+                DownPlayer myClassInstance = new DownPlayer();
+                Thread thread2 = new Thread(myClassInstance);
+                System.out.printf("test");
+                thread2.start();
                     if (model.isInMiddleState()==false){
                         getToDO().setText("toDo:swap");
                     }
@@ -302,10 +302,10 @@ public class GameController implements GameListener, Serializable {
                     this.statusLabel.setText("Score:" + score);//再次计分
                     selectedPoint = null;
                     selectedPoint2 = null;
-//                DownPlayer myClassInstance = new DownPlayer();
-//                Thread thread2 = new Thread(myClassInstance);
-//                System.out.printf("test");
-//                thread2.start();
+                DownPlayer myClassInstance = new DownPlayer();
+                Thread thread2 = new Thread(myClassInstance);
+                System.out.printf("test");
+                thread2.start();
                     nextstepCount++;
                     if (model.isInMiddleState()==false){
                         getToDO().setText("toDo:swap");
@@ -325,10 +325,12 @@ public class GameController implements GameListener, Serializable {
                 this.statusLabel.setText("Score:" + score);//再次计分
                 selectedPoint = null;
                 selectedPoint2 = null;
-//                DownPlayer myClassInstance = new DownPlayer();
-//                Thread thread2 = new Thread(myClassInstance);
-//                System.out.printf("test");
-//                thread2.start();
+                //todo
+                DownPlayer myClassInstance = new DownPlayer();
+                Thread thread2 = new Thread(myClassInstance);
+                System.out.printf("test");
+                thread2.start();
+                //
                 nextstepCount++;
                 if (model.isInMiddleState()==false){
                     getToDO().setText("toDo:swap");

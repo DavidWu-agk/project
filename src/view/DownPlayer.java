@@ -13,7 +13,7 @@ public class DownPlayer implements Runnable{
     @Override
     public void run() {
         try {
-            FileInputStream fileInputStream = new FileInputStream("src/view/downmusic.m4a");
+            FileInputStream fileInputStream = new FileInputStream("src/view/downmusic.mp3");
             player = new Player(fileInputStream);// 播
             player.play();// 关
             fileInputStream.close();
