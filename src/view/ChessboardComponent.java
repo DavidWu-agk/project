@@ -28,6 +28,8 @@ public class ChessboardComponent extends JComponent {
 
     private GameController gameController;
 
+//    ChessboardComponent
+
     public int getCHESS_SIZE() {
         return CHESS_SIZE;
     }
@@ -203,6 +205,7 @@ public class ChessboardComponent extends JComponent {
             if(choice==0){
                 gameController.setAim(gameController.getAim()+100);
                 gameController.onPlayerRestart();
+                gameController.setTheChance(3);
                 //gameController.getFr().getExecutor().shutdown();
                 //System.out.println("to stop");
                 //gameController.getFr().getExecutor().shutdownNow();
@@ -214,6 +217,7 @@ public class ChessboardComponent extends JComponent {
                 gameController.onPlayerRestart();
                 gameController.setSelectedPoint(null);
                 gameController.setSelectedPoint2(null);
+                gameController.setTheChance(3);
             }
         }
         else {
@@ -232,6 +236,7 @@ public class ChessboardComponent extends JComponent {
             gameController.onPlayerRestart();
             gameController.setSelectedPoint(null);
             gameController.setSelectedPoint2(null);
+            gameController.setTheChance(3);
             //gameController.getFr().getExecutor().shutdown();
             //gameController.getFr().getExecutor().shutdownNow();
 

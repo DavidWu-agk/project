@@ -36,7 +36,7 @@ public class ChessGameFrame extends JFrame {
     private JLabel toDO;
     private int step;
 
-    private int theChance=3;
+
     private int autoMode=0;
     //public ScheduledExecutorService getExecutor() {
         //return executor;
@@ -164,29 +164,30 @@ public class ChessGameFrame extends JFrame {
     }*/
 
 
-    public int getTheChance() {
-        return theChance;
-    }
+//    public int getTheChance() {
+//        return theChance;
+//    }
+//
+//    public void setTheChance(int theChance) {
+//        this.theChance = theChance;
+//    }
 
-    public void setTheChance(int theChance) {
-        this.theChance = theChance;
-    }
-
+    public JButton refreshButton;
     private void addRefreshButton() {
 
-        JButton button = new JButton("Refresh:"+theChance);
-        button.setText("Refresh:"+theChance);
-        button.setFont(new Font("Rockwell", Font.BOLD, 20));
-        button.addActionListener(e -> {
+        refreshButton = new JButton("Refresh");
+        refreshButton.setText("Refresh");
+        refreshButton.setFont(new Font("Rockwell", Font.BOLD, 20));
+        refreshButton.addActionListener(e -> {
             //JOptionPane.showMessageDialog(this, "Show hello world");
             if (gameController.getModel().isInMiddleState()==true){
                 GameController.showErrorDialog("Can't refresh now.");
                 return;
             }
-            if(theChance>0){
+            if(gameController.getTheChance()>0){
                 chessboardComponent.refresh();
-                theChance--;
-                button.setText("Refresh:"+theChance);
+                gameController.setTheChance(gameController.getTheChance()-1);
+                refreshButton.setText("Refresh");
             }
             else {
                 JDialog dialog = new JDialog();
@@ -199,9 +200,9 @@ public class ChessGameFrame extends JFrame {
                 dialog.setVisible(true);
             }
         });
-        button.setLocation(HEIGTH, HEIGTH / 10 + 120);
-        button.setSize(200, 60);
-        add(button);
+        refreshButton.setLocation(HEIGTH, HEIGTH / 10 + 120);
+        refreshButton.setSize(200, 60);
+        add(refreshButton);
     }
     private void addRestartButton() {
         JButton button = new JButton("restart");
@@ -223,8 +224,9 @@ public class ChessGameFrame extends JFrame {
                 f.printStackTrace();
                 System.out.printf("error");
             }
-            theChance=3;
-            addRefreshButton();//TODO:有些bug
+            gameController.setTheChance(3);
+            refreshButton.setText("Refresh");
+            //TODO:有些bug
         });
     }
     private void addSwapConfirmButton() {
@@ -275,7 +277,8 @@ public class ChessGameFrame extends JFrame {
                     gameController.getTheStepNumber().setText("step:"+gameController.getStep());
                     gameController.getAimNum().setText("aim:"+gameController.getAim());
                     gameController.getToDO().setText(gameController.getToDOString());//???
-
+                    gameController.setTheChance(3);
+                    refreshButton.setText("Refresh");
                     if (gameController.getModel().isStuck() == true) {
                         GameController.showErrorDialog("you stuck,please refreash");
                     }
@@ -546,8 +549,8 @@ public class ChessGameFrame extends JFrame {
                     "Back可以允许玩家悔棋",
                     "Music可切换和暂停音乐",
                     "Motion可打开或关闭动画模式",
-                    "Refresh可刷新棋盘，Restart可重启游戏",
-                    "Level选择难度",
+                    "Refresh可刷新棋盘，每局有三次机会，Restart可重新开始这关游戏",
+                    "Level选择难度并重新开始一轮游戏",
                     "Save和Load保存和加载游戏"
             };
             AtomicInteger currentIndex = new AtomicInteger(0);

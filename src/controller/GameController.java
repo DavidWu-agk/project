@@ -18,6 +18,15 @@ import static java.awt.AWTEventMulticaster.add;
  * onPlayerClickChessPiece()]
  */
 public class GameController implements GameListener, Serializable {
+    private int theChance=3;
+
+    public int getTheChance() {
+        return theChance;
+    }
+
+    public void setTheChance(int theChance) {
+        this.theChance = theChance;
+    }
 
     private boolean isMotion=true;
 
